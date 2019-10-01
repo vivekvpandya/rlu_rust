@@ -30,7 +30,7 @@
 
 \hwtitle
   {Assignment 1}
-  {Will Crichton (wcrichto)} %% REPLACE THIS WITH YOUR NAME/ID
+  {Vivek Pandya (vpandya)} %% REPLACE THIS WITH YOUR NAME/ID
 
 \problem{Problem 1}
 
@@ -38,10 +38,17 @@ Part 1:
 
 \begin{alignat*}{1}
 \msf{Property}~p ::= \qamp \varepsilon \\
-\mid \qamp \ldots \\
+\mid \qamp \msf{n} = \msf{val} \mid \msf{n} \ne \msf{val} \mid \msf{n} < \msf{val} \mid \msf{n} > \msf{val} \\
+\mid \qamp \msf{s} = \msf{str} \mid \msf{s} \ne \msf{str} \\
+\mid \qamp \msf{p1} \vee \msf{p2} \\
+\mid \qamp \msf{p1} \wedge \msf{p2} \\
 \\
+\msf{bool} ::= \qamp true \mid false \\
 \msf{Schema}~\tau ::= \qamp \tnum \prop{p} \\
-\mid \qamp \ldots
+\mid \qamp \tstr \prop{p}\\
+\mid \qamp \msf{bool} \\
+\mid \qamp [\, \tau^{k\prop{p}} ]\, \\
+\mid \qamp \{ (\, \tstr \prop{p} : \tau)\, ^{k\prop{p}}\} \\
 \end{alignat*}
 
 Part 2:
@@ -54,6 +61,45 @@ Part 2:
 \ir{S-Bool-False}{\ }{\matches{\falset}{\tbool}}
 
 \ir{S-Bool-True}{\ }{\matches{\truet}{\tbool}}
+\\
+\ir{S-Num}{\ }{\matches{n}{\tnum}} 
+
+\ir{S-String}{\ \msf{seq \, is \, \backslash n \, terminated \, sequence \, of \, characters}}{\matches{seq}{\tstr}}
+
+\\
+
+\ir{S-Num-Property}{\ \matches{n}{properties} }{\ \matches{n}{\tau} }
+
+\ir{S-String-Property}{\ \matches{seq}{properties} }{\ \matches{seq}{\tau} }
+%\ir{S-Number1}{\ ( n > 0  \thinspace \wedge n < 5 ) }{\matches{n}{\tau}}
+
+%\ir{S-Number2}{\ n = 10 }{\matches{n}{\tau}}
+
+\\
+\ir{S-Empty-Object}{\ }{\matches{\{ \}}{\tau}}
+
+\ir{S-Empty-Array}{\ }{\matches{[ \, ] \,}{\tau}}
+
+\\
+
+\ir{S-Cardinality-Object}{ \matches{k}{properties} }{\matches{ \{ (\ s \prop{p}:\tau )\ ^k \} }{ \{ s_1\prop{p} : \tau, ..., s_k\prop{p} : \tau \} }}
+
+\ir{S-Cardinality-Array}{\ \matches{k}{properties}}{\matches{ [ \, \tau^k ]\, }{[\, \tau_1, ...,\tau_k ]\,} }
+%\ir{S-Obj1}{\matches{K_1}{\tstr} \; \matches{V_1}{\tbool}  \; \matches{K_2}{\tstr} \; V_2 = X  }{ \matches{\{ K_1 : V_1, K_2 : V_2\}}{\tau}}
+
+%\ir{S-Obj2}{\matches{K_1}{\tstr} \; \matches{V_1}{\tbool}  \; \matches{K_2}{\tstr} \; V_2 = Y  }{ \matches{\{ K_1 : V_1, K_2 : V_2\}}{\tau}}
+\\
+
+
+\ir{S-Array}{ \msf{all \, the \, elements\, of \, array\, have \, same \, type} }{\matches{ [\, j_1, ..., j_n]\,}{\tau} }
+
+\ir{S-Object}{\ \forall s \in \{s_1, ..., s_n\} \, \, \matches{ s }{properties} \, \, }{\matches{\{ s_1\prop{p} : \tau, ..., s_k\prop{p} : \tau \}}{\tau} }
+
+%\ir{S-Array-Element-0}{\matches{K}{\tstr} \; V = 0 }{\matches{[ \, \{ K : V \} ] \, }{\msf{\tau}}}
+
+%\ir{S-Array-Step1}{\matches{K_0}{\tstr} \;  \matches{V_0}{\tnum}  \; \matches{K_1}{\tstr} \; \matches{V_1}{\tnum} \; K_0 == K_1 }{\matches{[ \, \{ K_0 : V_0 \} , \{ K_1 : V_1\} ] \, }{\msf{\tau}}}
+
+%\ir{S-Array-Reccur}{\matches{K_{n-1}}{\tstr} \; \matches{K_n}{\tstr} \; \matches{V_{n-1}}{\tnum} \;  \matches{V_n}{\tnum} \; K_{n-1} == K_n }{\matches{[ \, ... \{ K_{n-1} : V_{n-1} \} , \{ K_n : V_n\} ] \, }{[ \, ... \{ K_{n-2} : V_{n-2} \} , \{ K_{n-1} : V_{n-1}\} ...] \,}}
 
 % Inference rules go here
 
@@ -64,19 +110,58 @@ Part 2:
 Part 1:
 
 \begin{mathpar}
-% Inference rules go here
+
+\ir{Epsilon-Accessor}{\  }{\  ( \, \aeps a, j ) \, \mapsto ( \, a : j )\, }
+
+\ir{Key-Accessor}{\ \matches{s}{\tstr} }{\  ( \, .sa, \{s:j\} ) \, \mapsto ( \, a : j )\, }
+
+\ir{Array-Accessor}{\ 0 \leq k \leq n}{\ ( \, [\, k]a, \; [ \, v_0, v_1, v_2, ...,v_k,..., v_n]\, )\, \mapsto (\, a, v_k)\,}
+
+\ir{Maps-Accessor}{\ \matches{s}{\tstr} }{( \, |a, [\, \{ s: i\}, \{ s: j\}, ... \{ s: k\} ]\, )\, \mapsto (\,  [\, (a,i) , (a,j) , ..., (a, k)]\,)\,]\, }
 \end{mathpar}
 
 Part 2:
 
 \begin{mathpar}
-% Inference rules go here
+\ir{Valid-Epsilon-Accessor}{\matches{ j }{\tau} \,\, \,  }{\ \matches{\aeps}{\tau}}
+
+\ir{Valid-Key-Accessor}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.s}{\tau}}
+
+\ir{Valid-Array-Accessor}{\matches{  [\, j ]\,}{\tau} \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,}{\tau}}
+
+\ir{Valid-Maps-Accessor}{\matches{  [\, j ]\,}{\tau} }{\matches{|}{\tau}}
+
+\ir{Valid-Key-Accessor1}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{a}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.sa}{\tau}}
+
+\ir{Valid-Array-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,a}{\tau}}
+
+\ir{Valid-Maps-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} }{\matches{|a}{\tau}}
+
 \end{mathpar}
 
 \textit{Accessor safety}: for all $a, j, \tau$, if $\matches{a}{\tau}$ and $\matches{j}{\tau}$, then there exists a $j'$ such that $\evals{(a, j)}{\aeps, j'}$.
 
 \begin{proof}
-% Proof goes here.
+$\bullet$ Induction hypothesis: Let ${A = a_1 a_2 ... a_n}$ is series of accessor  for which $\textbf{\emph{Accessor safety}}$ holds true.
+
+
+$(\, A, j)\, \overset{*}{\mapsto} (\, \aeps, j')\,$
+
+$\bullet$ Let say $(\, .sA, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-KEY-ACCESSOR $\matches{j_0}{ \{(\,s:j)\,\}} $ and due to induction hypothesis 
+$(\, .sA, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+
+$\bullet$ Let say $(\, [n]A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-ARRAY-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis 
+$(\, [n]A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+
+$\bullet$ Let say $(\, |A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-MAPS-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis 
+$(\, |A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+
+Thus with structural induction we have proved that if $\textbf{\emph{Accessor safety}}$ holds on sub-part then it holds for valid composition of accesor sequence.
+
+
+
+
+
 \end{proof}
 
 \end{document}
