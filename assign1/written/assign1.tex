@@ -115,27 +115,27 @@ Part 1:
 
 \ir{Key-Accessor}{\ \matches{s}{\tstr} }{\  ( \, .sa, \{s:j\} ) \, \mapsto ( \, a : j )\, }
 
-\ir{Array-Accessor}{\ 0 \leq k \leq n}{\ ( \, [\, k]a, \; [ \, v_0, v_1, v_2, ...,v_k,..., v_n]\, )\, \mapsto (\, a, v_k)\,}
+\ir{Array-Accessor}{\ 0 \leq k \leq n}{\ ( \, [\, k]a, \; [ \, j_0, j_1, j_2, ...,j_k,..., j_n]\, )\, \mapsto (\, a, j_k)\,}
 
-\ir{Maps-Accessor}{\ \matches{s}{\tstr} }{( \, |a, [\, \{ s: i\}, \{ s: j\}, ... \{ s: k\} ]\, )\, \mapsto (\,  [\, (a,i) , (a,j) , ..., (a, k)]\,)\,]\, }
+\ir{Maps-Accessor}{\ }{( \, |a, [\, j_1, ..., j_k,...,j_n ]\, )\, \mapsto (\,  [\, (a, j_1) , ..., (a,  j_k),...(a, j_n)]\,)\,]\, }
 \end{mathpar}
 
 Part 2:
 
 \begin{mathpar}
-\ir{Valid-Epsilon-Accessor}{\matches{ j }{\tau} \,\, \,  }{\ \matches{\aeps}{\tau}}
+\ir{Valid-Epsilon-Accessor}{\  }{\ \matches{\aeps}{\tau}}
 
-\ir{Valid-Key-Accessor}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.s}{\tau}}
+\ir{Valid-Key-Accessor}{\{(\,s:j)\,\} = \tau \,\,\, \matches{s}{\tstr}  }{\ \matches{.s}{\tau}}
 
-\ir{Valid-Array-Accessor}{\matches{  [\, j ]\,}{\tau} \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,}{\tau}}
+\ir{Valid-Array-Accessor}{ [\, j ]\, = \tau \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,}{\tau}}
 
-\ir{Valid-Maps-Accessor}{\matches{  [\, j ]\,}{\tau} }{\matches{|}{\tau}}
+\ir{Valid-Maps-Accessor}{ [\, j ]\, = \tau }{\matches{|}{\tau}}
 
-\ir{Valid-Key-Accessor1}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{a}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.sa}{\tau}}
+%\ir{Valid-Key-Accessor1}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{a}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.sa}{\tau}}
 
-\ir{Valid-Array-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,a}{\tau}}
+%\ir{Valid-Array-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,a}{\tau}}
 
-\ir{Valid-Maps-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} }{\matches{|a}{\tau}}
+%\ir{Valid-Maps-Accessor1}{\matches{  [\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} }{\matches{|a}{\tau}}
 
 \end{mathpar}
 
@@ -147,13 +147,13 @@ $\bullet$ Induction hypothesis: Let ${A = a_1 a_2 ... a_n}$ is series of accesso
 
 $(\, A, j)\, \overset{*}{\mapsto} (\, \aeps, j')\,$
 
-$\bullet$ Let say $(\, .sA, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-KEY-ACCESSOR $\matches{j_0}{ \{(\,s:j)\,\}} $ and due to induction hypothesis 
+$\bullet$ Let say $(\, .sA, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-KEY-ACCESSOR $\matches{j_0}{ \{(\,s:j)\,\}} $ and due to induction hypothesis following holds true
 $(\, .sA, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
-$\bullet$ Let say $(\, [n]A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-ARRAY-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis 
+$\bullet$ Let say $(\, [n]A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-ARRAY-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis following holds true
 $(\, [n]A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
-$\bullet$ Let say $(\, |A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-MAPS-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis 
+$\bullet$ Let say $(\, |A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-MAPS-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis holds true for all values in $[\, j]\, $, \, folloding holds true
 $(\, |A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
 Thus with structural induction we have proved that if $\textbf{\emph{Accessor safety}}$ holds on sub-part then it holds for valid composition of accesor sequence.
