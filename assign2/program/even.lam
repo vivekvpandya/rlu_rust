@@ -3,7 +3,7 @@ s = fun n -> fun f -> fun x -> f (n f x)
 true = fun a -> fun b -> a
 false = fun a -> fun b -> b
 not = fun p -> fun a -> fun b -> p b a
-even = fun n -> (* fill this in - tests are below *)
+even = fun n -> (n (not)) z false true
 
 booltonum = fun b -> b (s z) z
 
@@ -13,3 +13,6 @@ booltonum (even (s (s z)))
 booltonum (even (s (s (s z))))
 
 booltonum (even (s (s (s (s (s (s (s (s z)))))))))
+
+booltonum (even  (s(s(s (s z)))))
+booltonum (even  (s(s(s(s(s(s(s(s( s (s (s z))))))))))))
