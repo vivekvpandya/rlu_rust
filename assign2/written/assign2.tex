@@ -1,12 +1,12 @@
 \documentclass[11pt]{article}
 
-\input{../../../tex/defs.tex}
+\input{../../tex/defs.tex}
 
 \begin{document}
 
 \hwtitle
   {Assignment 2}
-  {Will Crichton (wcrichto)} %% REPLACE THIS WITH YOUR NAME/ID
+  {Vivek Pandya (vpandya)} %% REPLACE THIS WITH YOUR NAME/ID
 
 \problem{Problem 2}
 
@@ -27,68 +27,200 @@
   {\dynJ{\varnothing}{\steps
     {\app{(\fun{x}{\app{\app{(\fun{x}{\fun{\_}{x}})}{L}}{*}})}{D}}
     {\app{(\fun{x}{\app{(\fun{\_}{x})}{*}})}{D}}}}
-\end{mathpar}
 
-Fill in the remaining steps here.
+ \text{Step 2:}\qquad
+  \ir{D-App-Body}
+  {\ir{D-App-Body}
+  {\ir{D-Var}
+  {(x \rightarrow D \in \Gamma )}
+  {\dynJ{\{ x \rightarrow D ,  \_ \rightarrow * \}}{\steps{x}{D}}}}
+  {\dynJ{\{ x \rightarrow D\}}{\steps{\app{(\fun{\_}{x})}{*}}{\app{(\fun{\_}{D})}{*}}}}}
+  {\dynJ{\varnothing}
+  {\steps
+  {\app{(\fun{x}{\app{(\fun{\_}{x})}{*}})}{D}}
+  {\app{(\fun{x}{\app{(\fun{\_}{D})}{*}})}{D}}}}
+ 
+  \\
+  \text{Step 3:}\qquad
+  \ir{D-App-Body}
+  {\ir{D-App-Done}
+  {\val{D}}
+    {\dynJ{\{x \rightarrow D\}}
+  	{\steps
+    	{\app{(\fun{\_}{D})}{*}}
+    	{D}
+    }
+  }}
+  {\dynJ{\varnothing}
+  	{\steps
+    	{\app{(\fun{x}{\app{(\fun{\_}{D})}{*}})}{D}}
+    	{\app{(\fun{x}{D})}{D}}
+    }
+  }
+  
+ \\
+ \text{Step 4:}\qquad
+ \ir{D-App-Done}{ \val{D} }
+ {{\dynJ{\varnothing}{\steps
+ 		{\app{(\fun{x}{D})}{D}}
+ 		{D}
+ 	}
+ }
+ }
+ \end{mathpar}
 
 \textbf{Part 2:}
 
-Here's examples of how to LaTeX the existing dynamically-scoped lambda calculus rules. Delete them before you submit.
-
+%Here's examples of how to LaTeX the existing dynamically-scoped lambda calculus rules. Delete them before you submit.
+ Following rules in addition to all rules described in problem 2 are required to support let syntax with dynamic scope:
 \begin{mathpar}
-\ir{D-Lam}{ \ }{\val{\fun{x}{e}}}
+%\ir{D-Lam}{ \ }{\val{\fun{x}{e}}}
 
-\ir{D-Var}
-  {x \rightarrow e \in \ctx}
-  {\dynJC{\steps{x}{e}}}
+%\ir{D-Var}
+%  {x \rightarrow e \in \ctx}
+  %{\dynJC{\steps{x}{e}}}
 
-\ir{D-App-Lam}
-  {\dynJC{\steps{e_\msf{lam}}{e_\msf{lam}'}}}
-  {\dynJC{\steps{\app{e_\msf{lam}}{e_\msf{arg}}}{\app{e_\msf{lam}'}{e_\msf{arg}}}}}
+%\ir{D-App-Lam}
+  %{\dynJC{\steps{e_\msf{lam}}{e_\msf{lam}'}}}
+  %{\dynJC{\steps{\app{e_\msf{lam}}{e_\msf{arg}}}{\app{e_\msf{lam}'}{e_\msf{arg}}}}}
 
-\ir{D-App-Body}
-  {\dynJ{\ctx, x \rightarrow e_\msf{arg}}{\steps{e_\msf{body}}{e_\msf{body}'}}}
-  {\dynJC{\steps{\app{(\fun{x}{e_\msf{body}})}{e_\msf{arg}}}{\app{(\fun{x}{e_\msf{body}'})}{e_\msf{arg}}}}} \s
+%\ir{D-App-Body}
+  %{\dynJ{\ctx, x \rightarrow e_\msf{arg}}{\steps{e_\msf{body}}{e_\msf{body}'}}}
+  %{\dynJC{\steps{\app{(\fun{x}{e_\msf{body}})}{e_\msf{arg}}}{\app{(\fun{x}{e_\msf{body}'})}{e_\msf{arg}}}}} \s
 
-\ir{D-App-Done}
-  {\val{e_\msf{body}}}
-  {\dynJC{\steps{\app{(\fun{x}{e_\msf{body}})}{e_\msf{arg}}}{e_\msf{body}}}}
+%\ir{D-App-Done}
+  %{\val{e_\msf{body}}}
+  %{\dynJC{\steps{\app{(\fun{x}{e_\msf{body}})}{e_\msf{arg}}}{e_\msf{body}}}}
+ 
+ % TODO: should context alwasy be empty set in the begining ?
+ 
+
+ 
+\ir{D-Let1}{\dynJ{\ctx, x \rightarrow e_\msf{var}}{\steps{e_\msf{body}}{e_\msf{body}'}}}
+{\dynJC{\steps{let \, x \, = \, e_\msf{var} \, in \, e_\msf{body}}{e_\msf{body}'}}}
+
+\ir{D-Let2}{e_\msf{body} \, \msf{val}}
+{\dynJC{\steps{let \, x \, = \, e_\msf{var} \, in \, e_\msf{body}}{e_\msf{body}}}}
+
+
 \end{mathpar}
 
 \newpage
 
 \problem{Problem 3}
 
-Here are examples using the let and rec syntax inside the provided inference rules. Delete them before you submit.
+Consider follwing counter example for $\msf{let}$ construct.
+
+$let x : (\steps{\tnum}{\tnum}) = 2\, in\, (x \, 2))$
+
+Now given that  x : $(\steps{\tnum}{\tnum})$ by inversion of T-app rule we can say that $(x\, 2) : \tnum$
+
+So premise for T-let holds here so we can say that
+
+$let x : (\steps{\tnum}{\tnum}) = 2 \, in \, (x\, 2)) : \tnum$
+
+but now we try to step the above expression by applying D-let rule then we get
+
+$e^{`}_\msf{body} = (2\, 2)$ which is a stuck state as we don't have any rule to make a further progress also (2 2) it self is not a val.
+Here preservation also don't hold because type of (2 2) is not $\tnum$
+
+Note: This can be fixed if we have restriction on the type of $e_\msf{var}$ , type of $e_\msf{var}$ should be same as                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+\tau_\msf{var} .
+
 
 \begin{mathpar}
-\ir{T-Let}{\typeJ{\ctx,\hasType{x}{\tau_\msf{var}}}{e_\msf{body}}{\tau_\msf{body}}}{\typeJC{(\lett{x}{\tau_\msf{var}}{e_\msf{var}}{e_\msf{body}})}{\tau_\msf{body}}} \\
+%\ir{T-Let}{\typeJ{\ctx,\hasType{x}{\tau_\msf{var}}}{e_\msf{body}}{\tau_\msf{body}}}{\typeJC{(\lett{x}{\tau_\msf{var}}{e_\msf{var}}{e_\msf{body}})}{\tau_\msf{body}}} \\
 
-\ir{D-Let}{\ }{\steps{\lett{x}{\tau}{e_\msf{var}}{e_\msf{body}}}{\subst{x}{e_\msf{var}}{e_\msf{body}}}}
+%\ir{D-Let}{\ }{\steps{\lett{x}{\tau}{e_\msf{var}}{e_\msf{body}}}{\subst{x}{e_\msf{var}}{e_\msf{body}}}}
 
-\ir{T-Rec}
-  {\typeJC{e_\msf{arg}}{\tnum} \\ \typeJC{e_\msf{base}}{\tau} \\
-   \typeJ{\ctx,\hasType{x_\msf{num}}{\tnum},\hasType{x_\msf{acc}}{\tau}}{e_\msf{acc}}{\tau}}
-  {\typeJC{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{\tau}}
+%\ir{T-Rec}
+% {\typeJC{e_\msf{arg}}{\tnum} \\ \typeJC{e_\msf{base}}{\tau} \\
+%   \typeJ{\ctx,\hasType{x_\msf{num}}{\tnum},\hasType{x_\msf{acc}}{\tau}}{e_\msf{acc}}{\tau}}
+% {\typeJC{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{\tau}}
 
-\ir{D-Rec-Step}
-  {\steps{e}{e'}}
-  {\steps
-    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e}}
-    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e'}}}
+%\ir{D-Rec-Step}
+% {\steps{e}{e'}}
+%  {\steps
+%   {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e}}
+%    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e'}}}
 
-\ir{D-Rec-Base}
-  {\ }
-  {\steps
-    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{0}}
-    {e_\msf{base}}}
+%\ir{D-Rec-Base}
+%  {\ }
+%  {\steps
+%   {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{0}}
+%   {e_\msf{base}}}
 
-\ir{D-Rec-Dec}
-  {n >0}
-  {\steps
-    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n}}
-    {[x_\msf{num} \rightarrow n, x_\msf{acc} \rightarrow \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}] \ e_\msf{acc}}}
+%\ir{D-Rec-Dec}
+%  {n >0}
+% {\steps
+%    {\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n}}
+%   {[x_\msf{num} \rightarrow n, x_\msf{acc} \rightarrow \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}] \ e_\msf{acc}}}
 \end{mathpar}
+For $\msf{rec}$ construct consider following proofs.
+\begin{proof}
+Preservation: if$\,  \emptyset \vdash e \, : \tau  \, \text{and} \, \steps{e}{e^\msf{`}} \, \text{then} \, \emptyset \vdash e^\msf{`} : \tau . $\\
+Proof. By rule induction on the static semantics.\\
 
+T-Rec: $ \text{if }  \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}} : \tau and \steps{ \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{e^\msf{`}} then e^{`} : \tnum \\
+\text{ Frist by premises }\\
+e_\msf{arg} : \tnum , e_\msf{base} : \tau , \, \,\, \typeJ{\hasType{x_\msf{num}}{\tnum},\hasType{x_\msf{acc}}{\tau}}{e_\msf{acc}}  {\tau} $
+
+\textbf{ Induction \, Hypothesis } \text{:  For } $ e_\msf{arg}  ,\, e_\msf{base} , \, x_\msf{num}  ,\, x_\msf{acc} , \,e_\msf{acc}$ \text{ preservation rule holds true.} \\
+\text{ Now we have 3 ways for } $\steps{ \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{e^{`}}$
+
+\textbf{(D-Rec-Step)} : Assume $\steps{e_\msf{arg}}{e^{`}_\msf{arg}}$
+	\, so \,  $\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e^{`}_\msf{arg}}} $
+
+\text{Now due to Induction Hypothesis we can have } $ e^{`}_\msf{arg} : \tau$
+\text{and given premises  }\\
+\text{by T-Rec} $\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e^{`}_\msf{arg}} : \tau$
+
+\textbf{(D-Rec-Base)} : Assume \, $e_\msf{arg} = 0 \, \text{then by Inversion T-Num } e_\msf{arg} : \tnum \, so\, \\
+ \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{0} : \tau$
+and $\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{0}}{e_\msf{base}} $
+\text{, now based on premises} $e_\msf{base} : \tau $
+
+\textbf{(D-Rec-Dec)} : Assume $e_\msf{arg}$  =n and n  > 0
+
+$\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n}}{[x_\msf{num} \rightarrow n, x_\msf{acc} \rightarrow \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}] e_\msf{acc}}$
+
+\text{now if} n : $\tnum $ \text{then for} (n - 1) \text{by inversion of T-Binop ,} (n-1) : $\number$
+\text{, based on induction hypothesis we get} $\steps{x_\msf{num}}{n} \text{ and } \steps{x_\msf{acc}}{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}} $\text{ are type preserving operations, and from premises } $\typeJ{\ctx,\hasType{x_\msf{num}}{\tnum},\hasType{x_\msf{acc}}{\tau}}{e_\msf{acc}} {\tau}$
+
+\text{then by the substitution typing lemma ( as reffered in lacture notes (foot note: 6)) }
+
+$[x_\msf{num} \rightarrow n, x_\msf{acc} \rightarrow \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}] \ e_\msf{acc} : \tau$
+
+\text{Hence, preservation holds in either case.}
+
+\end{proof}
+
+\begin{proof}
+Progress: if$\,  \emptyset \vdash e \, : \tau  \, \text{then} \, either\,  e\, \msf{val}\, or \, \steps{e}{e^\msf{`}}  . $\\
+Proof : By rule induction on static semantics.\\
+
+T-Rec: if $e = \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}} : \tau$ then either $\steps{e \, \msf{val}$ or\\
+                     $\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{e^\msf{`}}$
+
+From premises we know that\\
+$e_\msf{arg} : \tnum , e_\msf{base} : \tau , \, \,\, \typeJ{\hasType{x_\msf{num}}{\tnum},\hasType{x_\msf{acc}}{\tau}}{e_\msf{acc}}  {\tau} $
+
+By the inductive hypothesis (IH), we got to assume that progress holds true for $e_\msf{arg}$ so either $e_\msf{arg} val$ or $\steps{e_\msf{arg}}{e^{`}_\msf{arg}}$
+
+Now we case on different possible states of $e_\msf{arg}$ derived from IH:
+
+A:  $\steps{e_\msf{arg}}{e^{`}_\msf{arg}}$ then by D-Rec-Step
+ $\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e_\msf{arg}}}{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{e^{`}_\msf{arg}}} $
+ 
+B: $e_\msf{arg} val$ and by premise $e_\msf{arg} : \tnum$ then by inversion of D-Num we know that $e_\msf{arg} = n$
+ Now if n = 0 then by D-Rec-Base
+ 
+$\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{0}}{e_\msf{base}} $
+
+if n > 0 then by D-Rec-Dec
+
+$\steps{\rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n}}{[x_\msf{num} \rightarrow n, x_\msf{acc} \rightarrow \rec{e_\msf{base}}{x_\msf{num}}{x_\msf{acc}}{e_\msf{acc}}{n-1}] e_\msf{acc}}$\\
+In each case expression steps, so progress holds.
+\end{proof}
 
 \end{document}

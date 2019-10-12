@@ -38,8 +38,8 @@ Part 1:
 
 \begin{alignat*}{1}
 \msf{Property}~p ::= \qamp \varepsilon \\
-\mid \qamp \msf{n} = \msf{val} \mid \msf{n} \ne \msf{val} \mid \msf{n} < \msf{val} \mid \msf{n} > \msf{val} \\
-\mid \qamp \msf{s} = \msf{str} \mid \msf{s} \ne \msf{str} \\
+\mid \qamp = \msf{n} \mid \, \ne \msf{n} \mid  \, < \msf{n} \mid \, > \msf{n} \\
+\mid \qamp = \msf{s} \mid \ne \msf{s} \\
 \mid \qamp \msf{p1} \vee \msf{p2} \\
 \mid \qamp \msf{p1} \wedge \msf{p2} \\
 \\
@@ -47,8 +47,8 @@ Part 1:
 \msf{Schema}~\tau ::= \qamp \tnum \prop{p} \\
 \mid \qamp \tstr \prop{p}\\
 \mid \qamp \msf{bool} \\
-\mid \qamp [\, \tau^{k\prop{p}} ]\, \\
-\mid \qamp \{ (\, \tstr \prop{p} : \tau)\, ^{k\prop{p}}\} \\
+\mid \qamp [\, \tau ]\, \\
+\mid \qamp \{ (\, s : \tau)\, ^{*}\} \\
 \end{alignat*}
 
 Part 2:
@@ -64,16 +64,25 @@ Part 2:
 \\
 \ir{S-Num}{\ }{\matches{n}{\tnum}} 
 
-\ir{S-String}{\ \msf{seq \, is \, \backslash n \, terminated \, sequence \, of \, characters}}{\matches{seq}{\tstr}}
+\ir{S-String}{\ }{\matches{s}{\tstr}}
 
 \\
 
-\ir{S-Num-Property}{\ \matches{n}{properties} }{\ \matches{n}{\tau} }
+\ir{S-Num-Property}{(n \, op\, n_{1})}{\matches{n}{(\tnum<op\, n_{1}>)}}
 
-\ir{S-String-Property}{\ \matches{seq}{properties} }{\ \matches{seq}{\tau} }
+\ir{S-String-Property}{(s \, op\, s_{1})}{\ \matches{s}{\tstr<op \, s_{1}>} }
 %\ir{S-Number1}{\ ( n > 0  \thinspace \wedge n < 5 ) }{\matches{n}{\tau}}
 
 %\ir{S-Number2}{\ n = 10 }{\matches{n}{\tau}}
+
+\\
+\ir{S-Num-Property-And}{\matches{n}{\tnum<p1>} \,\,\,\,\, \matches{n}{\tnum<p2>}}{\matches{n}{\tnum<p_1 \wedge p_2>}}
+
+\ir{S-Num-Property-Or}{\matches{n}{\tnum<p_1>}}{\matches{n}{\tnum<p_1 \vee p_2>}}
+
+\ir{S-String-Property-And}{\matches{s}{\tstr<p1>} \,\,\,\,\, \matches{s}{\tstr<p2>}}{\matches{s}{\tstr<p_1 \wedge p_2>}}
+
+\ir{S-String-Property-Or}{\matches{s}{\tstr<p_1>}}{\matches{s}{\tstr<p_1 \vee p_2>}}
 
 \\
 \ir{S-Empty-Object}{\ }{\matches{\{ \}}{\tau}}
@@ -82,18 +91,15 @@ Part 2:
 
 \\
 
-\ir{S-Cardinality-Object}{ \matches{k}{properties} }{\matches{ \{ (\ s \prop{p}:\tau )\ ^k \} }{ \{ s_1\prop{p} : \tau, ..., s_k\prop{p} : \tau \} }}
-
-\ir{S-Cardinality-Array}{\ \matches{k}{properties}}{\matches{ [ \, \tau^k ]\, }{[\, \tau_1, ...,\tau_k ]\,} }
 %\ir{S-Obj1}{\matches{K_1}{\tstr} \; \matches{V_1}{\tbool}  \; \matches{K_2}{\tstr} \; V_2 = X  }{ \matches{\{ K_1 : V_1, K_2 : V_2\}}{\tau}}
 
 %\ir{S-Obj2}{\matches{K_1}{\tstr} \; \matches{V_1}{\tbool}  \; \matches{K_2}{\tstr} \; V_2 = Y  }{ \matches{\{ K_1 : V_1, K_2 : V_2\}}{\tau}}
 \\
 
 
-\ir{S-Array}{ \msf{all \, the \, elements\, of \, array\, have \, same \, type} }{\matches{ [\, j_1, ..., j_n]\,}{\tau} }
+\ir{S-Array}{ \forall i \in [|j|]. \matches{j_{i}}{\tau} }{\matches{ [\, j_1, ..., j_n]\,}{\tau} }
 
-\ir{S-Object}{\ \forall s \in \{s_1, ..., s_n\} \, \, \matches{ s }{properties} \, \, }{\matches{\{ s_1\prop{p} : \tau, ..., s_k\prop{p} : \tau \}}{\tau} }
+\ir{S-Object}{\ \forall s^{'} \in s. \matches{j_{s^{'}}}{\tau} }{\matches{\{ (s : j)^{*} \}}{\tau} }
 
 %\ir{S-Array-Element-0}{\matches{K}{\tstr} \; V = 0 }{\matches{[ \, \{ K : V \} ] \, }{\msf{\tau}}}
 
@@ -111,13 +117,15 @@ Part 1:
 
 \begin{mathpar}
 
-\ir{Epsilon-Accessor}{\  }{\  ( \, \aeps a, j ) \, \mapsto ( \, a : j )\, }
+\ir{Epsilon-Accessor}{\  }{\  ( \, \aeps , j ) \, \mapsto  j \, }
 
-\ir{Key-Accessor}{\ \matches{s}{\tstr} }{\  ( \, .sa, \{s:j\} ) \, \mapsto ( \, a : j )\, }
+\ir{Key-Accessor}{\ s^{'} \in s }{\  ( \, .s^{'}a, \{(s:j)^{*}\} ) \, \mapsto ( \, a : j_{s^{'}} )\, }
 
 \ir{Array-Accessor}{\ 0 \leq k \leq n}{\ ( \, [\, k]a, \; [ \, j_0, j_1, j_2, ...,j_k,..., j_n]\, )\, \mapsto (\, a, j_k)\,}
 
-\ir{Maps-Accessor}{\ }{( \, |a, [\, j_1, ..., j_k,...,j_n ]\, )\, \mapsto (\,  [\, (a, j_1) , ..., (a,  j_k),...(a, j_n)]\,)\,]\, }
+\ir{Mpas-Epsilon-Accessor}{\ }{ (\,|\aeps , [ \, j_0, j_1, j_2, ...,j_k,..., j_n]\, ) \mapsto( \aeps , \, [ j_0, j_1, j_2, ...,j_k,..., j_n] )  } \\
+
+\ir{Maps-Accessor}{\ \steps{a}{a^{'}} \,\,\,\, \forall i \in [|j|]. \steps{(a, j_{i})}{(a', j^{'}_{i})} }{( \, |a, [\, j_1, ..., j_k,...,j_n ]\, )\, \mapsto (\,  |a^{'}, [\, j^{'}_1, ..., j^{'}_k,...,j^{'}_n ]\,)\,]\, }
 \end{mathpar}
 
 Part 2:
@@ -125,11 +133,11 @@ Part 2:
 \begin{mathpar}
 \ir{Valid-Epsilon-Accessor}{\  }{\ \matches{\aeps}{\tau}}
 
-\ir{Valid-Key-Accessor}{\{(\,s:j)\,\} = \tau \,\,\, \matches{s}{\tstr}  }{\ \matches{.s}{\tau}}
+\ir{Valid-Key-Accessor}{\ \matches{\{(\,s:j)^{*}\,\}}{ \tau} \,\,\, s^{'} \in s \,\,\,\, \matches{a}{\tau} }{\ \matches{.s^{'}a}{\tau}}
 
-\ir{Valid-Array-Accessor}{ [\, j ]\, = \tau \,\,\, n \leq size \, of \, array  }{\ \matches{[\, n ]\,}{\tau}}
+\ir{Valid-Array-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\,   \matches{a}{\tau}}{\ \matches{[\, n ]a\,}{\tau}}
 
-\ir{Valid-Maps-Accessor}{ [\, j ]\, = \tau }{\matches{|}{\tau}}
+\ir{Valid-Maps-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} }{\matches{|a}{\tau}}
 
 %\ir{Valid-Key-Accessor1}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{a}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.sa}{\tau}}
 
@@ -142,21 +150,21 @@ Part 2:
 \textit{Accessor safety}: for all $a, j, \tau$, if $\matches{a}{\tau}$ and $\matches{j}{\tau}$, then there exists a $j'$ such that $\evals{(a, j)}{\aeps, j'}$.
 
 \begin{proof}
-$\bullet$ Induction hypothesis: Let ${A = a_1 a_2 ... a_n}$ is series of accessor  for which $\textbf{\emph{Accessor safety}}$ holds true.
+%$\bullet$ Induction hypothesis: Let ${A = a_1 a_2 ... a_n}$ is series of accessor  for which $\textbf{\emph{Accessor safety}}$ holds true.
 
 
-$(\, A, j)\, \overset{*}{\mapsto} (\, \aeps, j')\,$
+%$(\, A, j)\, \overset{*}{\mapsto} (\, \aeps, j')\,$
 
-$\bullet$ Let say $(\, .sA, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-KEY-ACCESSOR $\matches{j_0}{ \{(\,s:j)\,\}} $ and due to induction hypothesis following holds true
-$(\, .sA, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+%$\bullet$ Let say $(\, .sA, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-KEY-ACCESSOR $\matches{j_0}{ \{(\,s:j)\,\}} $ and due to induction hypothesis following holds true
+%$(\, .sA, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
-$\bullet$ Let say $(\, [n]A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-ARRAY-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis following holds true
-$(\, [n]A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+%$\bullet$ Let say $(\, [n]A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-ARRAY-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis following holds true
+%$(\, [n]A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
-$\bullet$ Let say $(\, |A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-MAPS-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis holds true for all values in $[\, j]\, $, \, folloding holds true
-$(\, |A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
+%$\bullet$ Let say $(\, |A, j_0) \mapsto (\, A, j) $ then by inversion lemma of VALID-MAPS-ACCESSOR $\matches{j_0}{ [\, j ]\,} $ and due to induction hypothesis holds true for all values in $[\, j]\, $, \, folloding holds true
+%$(\, |A, j_0)\, \overset{*}{\mapsto} (\, \aeps, j')\,$ thus accessor safety holds true.
 
-Thus with structural induction we have proved that if $\textbf{\emph{Accessor safety}}$ holds on sub-part then it holds for valid composition of accesor sequence.
+%Thus with structural induction we have proved that if $\textbf{\emph{Accessor safety}}$ holds on sub-part then it holds for valid composition of accesor sequence.
 
 
 

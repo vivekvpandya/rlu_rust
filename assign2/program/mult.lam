@@ -10,6 +10,7 @@ mult (s z) (s (s z))
 mult (s z) (s (s (s z)))
 mult (s (s z)) (s (s (s z)))
 mult z (s (s (s z)))
+mult (s (s (s z))) z
 mult (s (s z)) (mult (s (s z)) (s (s z)))
 
 ten = (s (s (s (s (s (s (s (s (s (s z))))))))))
