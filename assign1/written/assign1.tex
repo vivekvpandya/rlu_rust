@@ -37,9 +37,11 @@
 Part 1:
 
 \begin{alignat*}{1}
+\msf{NumerOperation}~nop ::= \qamp = \mid \ne \mid < \mid > \\
+\msf{StringOperation}~sop ::= \qamp = \mid \ne \\ 
 \msf{Property}~p ::= \qamp \varepsilon \\
-\mid \qamp = \msf{n} \mid \, \ne \msf{n} \mid  \, < \msf{n} \mid \, > \msf{n} \\
-\mid \qamp = \msf{s} \mid \ne \msf{s} \\
+\mid \qamp nop \, \msf{n} \\
+\mid \qamp sop \, \msf{s} \\
 \mid \qamp \msf{p1} \vee \msf{p2} \\
 \mid \qamp \msf{p1} \wedge \msf{p2} \\
 \\
@@ -68,9 +70,9 @@ Part 2:
 
 \\
 
-\ir{S-Num-Property}{(n \, op\, n_{1})}{\matches{n}{(\tnum<op\, n_{1}>)}}
+\ir{S-Num-Property}{(n \, nop\, n_{1})}{\matches{n}{(\tnum<nop\, n_{1}>)}}
 
-\ir{S-String-Property}{(s \, op\, s_{1})}{\ \matches{s}{\tstr<op \, s_{1}>} }
+\ir{S-String-Property}{(s \, sop\, s_{1})}{\ \matches{s}{\tstr<sop \, s_{1}>} }
 %\ir{S-Number1}{\ ( n > 0  \thinspace \wedge n < 5 ) }{\matches{n}{\tau}}
 
 %\ir{S-Number2}{\ n = 10 }{\matches{n}{\tau}}
@@ -133,11 +135,11 @@ Part 2:
 \begin{mathpar}
 \ir{Valid-Epsilon-Accessor}{\  }{\ \matches{\aeps}{\tau}}
 
-\ir{Valid-Key-Accessor}{\ \matches{\{(\,s:j)^{*}\,\}}{ \tau} \,\,\, s^{'} \in s \,\,\,\, \matches{a}{\tau} }{\ \matches{.s^{'}a}{\tau}}
+\ir{Valid-Key-Accessor}{\ \matches{\{(\,s:j)^{*}\,\}}{ \tau} \,\,\, s^{'} \in s \,\,\,\, \matches{j}{\tau^{'}} \,\,\, \matches{a}{\tau^{'}} }{\ \matches{.s^{'}a}{\tau}}
 
-\ir{Valid-Array-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\,   \matches{a}{\tau}}{\ \matches{[\, n ]a\,}{\tau}}
+\ir{Valid-Array-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\, \matches{j}{\tau^{'}} \,\,\,   \matches{a}{\tau^{'}}}{\ \matches{[\, n ]a\,}{\tau}}
 
-\ir{Valid-Maps-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\, \matches{a}{\tau} }{\matches{|a}{\tau}}
+\ir{Valid-Maps-Accessor}{ \matches{[\, j ]\,}{\tau} \,\,\,  \matches{j}{\tau^{'}} \,\,\, \matches{a}{\tau^{'}} }{\matches{|a}{\tau}}
 
 %\ir{Valid-Key-Accessor1}{\matches{ \{(\,s:j)\,\}}{\tau} \,\,\, \matches{a}{\tau} \,\,\, \matches{s}{\tstr}  }{\ \matches{.sa}{\tau}}
 
@@ -150,6 +152,44 @@ Part 2:
 \textit{Accessor safety}: for all $a, j, \tau$, if $\matches{a}{\tau}$ and $\matches{j}{\tau}$, then there exists a $j'$ such that $\evals{(a, j)}{\aeps, j'}$.
 
 \begin{proof}
+$P(a) = \forall j, \tau \, . \,\,\, \matches{a}{\tau} \land \matches{j}{\tau} \implies (a, j) \overset{*}{\mapsto} (\aeps, j^{'}) $
+
+Now we want to prove that
+
+$\forall a P(a) \iff P(\aeps) \land (\forall a P(a) \Rightarrow P(.sa)) \land (\forall a P(a) \Rightarrow P([n]a)) \land (\forall a P(a) \Rightarrow P(|a))$
+
+Induction Hypothesis (IH): 
+$\forall a P(a) \, holds \, true,\, i.e \,we \,accept\, that\,  (a, j) \overset{*}{\mapsto} (\aeps, j^{'}) \,
+where\, \matches{a}{\tau} \land \matches{j}{\tau} $
+
+$\bullet$ Let $a =  \aeps$ then based on EPSILON-ACCESSOR rule defined in problem 2.1 it is trivial to see that accessor safety holds for $\aeps$
+
+$\bullet$ Let P(.sa) if we have $\matches{.sa}{\tau^{'}}$ then by inversion on VALID-KEY-ACCESSOR rule we know that
+$\tau^{'} = {(s : \tau)^{}*} \land \matches{a}{\tau}$ 
+
+now for any $\matches{j^{''}}{\tau^{'}}$ based on KEY-ACCESSOR rule defined in problem 2.1 we have
+$(.sa, j^{''}) \mapsto (a, j)$ and then due to IH we can have $(a, j) \overset{*}{\mapsto} (\aeps, j^{'})$
+thus $(.sa, j^{''}) \overset{*}{\mapsto} (\aeps, j^{'}) $
+
+
+$\bullet$ Let P([n]a) if we have $\matches{[n]a}{\tau^{'}}$ then by inversion on VALID-ARRAY-ACCESSOR rule we know that
+$\tau^{'} = [\tau] \land \matches{a}{\tau}$ 
+
+now for any $\matches{j^{''}}{\tau^{'}}$ based on ARRAY-ACCESSOR rule defined in problem 2.1 we have
+$([n]a, j^{''}) \mapsto (a, j)$ and then due to IH we can have $(a, j) \overset{*}{\mapsto} (\aeps, j^{'})$
+thus $([n]a, j^{''}) \overset{*}{\mapsto} (\aeps, j^{'}) $
+
+$\bullet$ Let P(|a) if we have $\matches{|a}{\tau^{'}}$ then by inversion on VALID-MAPS-ACCESSOR rule we know that
+$\tau^{'} = [\tau] \land \matches{a}{\tau}$ 
+
+now for any $\matches{j^{''}}{\tau^{'}}$ based on MAPS-ACCESSOR rule defined in problem 2.1 we have
+$(|a, j^{''}) \mapsto (|a^{'}, j)$ now based on IH we can assume $a^{'}$ is safe accessor on $j$ by using MAPS-ACCESSOR and MAPS-EPSILON-ACCESSOR as required (each time for next accessor IH holds true) and then  we can have $(|a^{'}, j) \overset{*}{\mapsto} (\aeps, j^{'})$
+thus $(|a, j^{''}) \overset{*}{\mapsto} (\aeps, j^{'}) $
+
+Thus for all cases accessor safety holds.
+
+
+
 %$\bullet$ Induction hypothesis: Let ${A = a_1 a_2 ... a_n}$ is series of accessor  for which $\textbf{\emph{Accessor safety}}$ holds true.
 
 

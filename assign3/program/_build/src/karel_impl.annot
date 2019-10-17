@@ -1,0 +1,4451 @@
+"src/karel_impl.ml" 7 135 139 "src/karel_impl.ml" 7 135 144
+type(
+  bool
+)
+ident(
+  def debug "src/karel_impl.ml" 9 154 154 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 7 135 147 "src/karel_impl.ml" 7 135 152
+type(
+  bool
+)
+"src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+type(
+  grid -> pos -> cell option
+)
+ident(
+  def get_cell "src/karel_impl.ml" 34 476 476 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 30 368 382 "src/karel_impl.ml" 30 368 386
+type(
+  grid
+)
+ident(
+  def grid "src/karel_impl.ml" 30 368 395 "src/karel_impl.ml" 31 426 471
+)
+"src/karel_impl.ml" 30 368 397 "src/karel_impl.ml" 30 368 398
+type(
+  int
+)
+ident(
+  def i "src/karel_impl.ml" 30 368 410 "src/karel_impl.ml" 31 426 471
+)
+"src/karel_impl.ml" 30 368 400 "src/karel_impl.ml" 30 368 401
+type(
+  int
+)
+ident(
+  def j "src/karel_impl.ml" 30 368 410 "src/karel_impl.ml" 31 426 471
+)
+"src/karel_impl.ml" 30 368 396 "src/karel_impl.ml" 30 368 402
+type(
+  pos
+)
+"src/karel_impl.ml" 31 426 429 "src/karel_impl.ml" 31 426 437
+type(
+  cell list list -> int -> cell list option
+)
+ident(
+  int_ref Core.List.nth "src/list.mli" 51 1645 1645 "src/list.mli" 51 1645 1679
+)
+"src/karel_impl.ml" 31 426 438 "src/karel_impl.ml" 31 426 442
+type(
+  grid
+)
+ident(
+  int_ref grid "src/karel_impl.ml" 30 368 382 "src/karel_impl.ml" 30 368 386
+)
+"src/karel_impl.ml" 31 426 443 "src/karel_impl.ml" 31 426 444
+type(
+  int
+)
+ident(
+  int_ref j "src/karel_impl.ml" 30 368 400 "src/karel_impl.ml" 30 368 401
+)
+"src/karel_impl.ml" 31 426 428 "src/karel_impl.ml" 31 426 445
+call(
+  stack
+)
+type(
+  cell list option
+)
+"src/karel_impl.ml" 31 426 446 "src/karel_impl.ml" 31 426 449
+type(
+  cell list option -> (cell list -> cell option) -> cell option
+)
+ident(
+  int_ref Core.Option.Monad_infix.( >>= ) "src/monad_intf.ml" 33 1201 1203 "src/monad_intf.ml" 33 1201 1243
+)
+"src/karel_impl.ml" 31 426 454 "src/karel_impl.ml" 31 426 455
+type(
+  cell list
+)
+ident(
+  def l "src/karel_impl.ml" 31 426 459 "src/karel_impl.ml" 31 426 471
+)
+"src/karel_impl.ml" 31 426 459 "src/karel_impl.ml" 31 426 467
+type(
+  cell list -> int -> cell option
+)
+ident(
+  int_ref Core.List.nth "src/list.mli" 51 1645 1645 "src/list.mli" 51 1645 1679
+)
+"src/karel_impl.ml" 31 426 468 "src/karel_impl.ml" 31 426 469
+type(
+  cell list
+)
+ident(
+  int_ref l "src/karel_impl.ml" 31 426 454 "src/karel_impl.ml" 31 426 455
+)
+"src/karel_impl.ml" 31 426 470 "src/karel_impl.ml" 31 426 471
+type(
+  int
+)
+ident(
+  int_ref i "src/karel_impl.ml" 30 368 397 "src/karel_impl.ml" 30 368 398
+)
+"src/karel_impl.ml" 31 426 459 "src/karel_impl.ml" 31 426 471
+call(
+  tail
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 31 426 450 "src/karel_impl.ml" 31 426 471
+type(
+  cell list -> cell option
+)
+"src/karel_impl.ml" 31 426 428 "src/karel_impl.ml" 31 426 471
+call(
+  tail
+)
+type(
+  cell option
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 34 476 480 "src/karel_impl.ml" 34 476 488
+type(
+  grid -> pos -> cell -> grid
+)
+ident(
+  def set_cell "src/karel_impl.ml" 41 735 735 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 34 476 490 "src/karel_impl.ml" 34 476 494
+type(
+  grid
+)
+ident(
+  def grid "src/karel_impl.ml" 34 476 503 "src/karel_impl.ml" 37 649 660
+)
+"src/karel_impl.ml" 34 476 505 "src/karel_impl.ml" 34 476 506
+type(
+  int
+)
+ident(
+  def i "src/karel_impl.ml" 34 476 518 "src/karel_impl.ml" 37 649 660
+)
+"src/karel_impl.ml" 34 476 508 "src/karel_impl.ml" 34 476 509
+type(
+  int
+)
+ident(
+  def j "src/karel_impl.ml" 34 476 518 "src/karel_impl.ml" 37 649 660
+)
+"src/karel_impl.ml" 34 476 504 "src/karel_impl.ml" 34 476 510
+type(
+  pos
+)
+"src/karel_impl.ml" 34 476 519 "src/karel_impl.ml" 34 476 523
+type(
+  cell
+)
+ident(
+  def cell "src/karel_impl.ml" 34 476 532 "src/karel_impl.ml" 37 649 660
+)
+"src/karel_impl.ml" 35 541 543 "src/karel_impl.ml" 35 541 552
+type(
+  cell list list -> f:(int -> cell list -> cell list) -> cell list list
+)
+ident(
+  int_ref Core.List.mapi "src/list.mli" 250 10807 10807 "src/list.mli" 250 10807 10853
+)
+"src/karel_impl.ml" 35 541 553 "src/karel_impl.ml" 35 541 557
+type(
+  grid
+)
+ident(
+  int_ref grid "src/karel_impl.ml" 34 476 490 "src/karel_impl.ml" 34 476 494
+)
+"src/karel_impl.ml" 35 541 566 "src/karel_impl.ml" 35 541 568
+type(
+  int
+)
+ident(
+  def j' "src/karel_impl.ml" 35 541 569 "src/karel_impl.ml" 37 649 659
+)
+"src/karel_impl.ml" 35 541 569 "src/karel_impl.ml" 35 541 570
+type(
+  cell list
+)
+ident(
+  def l "src/karel_impl.ml" 36 574 578 "src/karel_impl.ml" 37 649 659
+)
+"src/karel_impl.ml" 36 574 581 "src/karel_impl.ml" 36 574 582
+type(
+  int
+)
+ident(
+  int_ref j "src/karel_impl.ml" 34 476 508 "src/karel_impl.ml" 34 476 509
+)
+"src/karel_impl.ml" 36 574 583 "src/karel_impl.ml" 36 574 584
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 36 574 585 "src/karel_impl.ml" 36 574 587
+type(
+  int
+)
+ident(
+  int_ref j' "src/karel_impl.ml" 35 541 566 "src/karel_impl.ml" 35 541 568
+)
+"src/karel_impl.ml" 36 574 581 "src/karel_impl.ml" 36 574 587
+type(
+  bool
+)
+"src/karel_impl.ml" 36 574 593 "src/karel_impl.ml" 36 574 602
+type(
+  cell list -> f:(int -> cell -> cell) -> cell list
+)
+ident(
+  int_ref Core.List.mapi "src/list.mli" 250 10807 10807 "src/list.mli" 250 10807 10853
+)
+"src/karel_impl.ml" 36 574 603 "src/karel_impl.ml" 36 574 604
+type(
+  cell list
+)
+ident(
+  int_ref l "src/karel_impl.ml" 35 541 569 "src/karel_impl.ml" 35 541 570
+)
+"src/karel_impl.ml" 36 574 613 "src/karel_impl.ml" 36 574 615
+type(
+  int
+)
+ident(
+  def i' "src/karel_impl.ml" 36 574 616 "src/karel_impl.ml" 36 574 647
+)
+"src/karel_impl.ml" 36 574 616 "src/karel_impl.ml" 36 574 617
+type(
+  cell
+)
+ident(
+  def c "src/karel_impl.ml" 36 574 621 "src/karel_impl.ml" 36 574 647
+)
+"src/karel_impl.ml" 36 574 624 "src/karel_impl.ml" 36 574 625
+type(
+  int
+)
+ident(
+  int_ref i "src/karel_impl.ml" 34 476 505 "src/karel_impl.ml" 34 476 506
+)
+"src/karel_impl.ml" 36 574 626 "src/karel_impl.ml" 36 574 627
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 36 574 628 "src/karel_impl.ml" 36 574 630
+type(
+  int
+)
+ident(
+  int_ref i' "src/karel_impl.ml" 36 574 613 "src/karel_impl.ml" 36 574 615
+)
+"src/karel_impl.ml" 36 574 624 "src/karel_impl.ml" 36 574 630
+type(
+  bool
+)
+"src/karel_impl.ml" 36 574 636 "src/karel_impl.ml" 36 574 640
+type(
+  cell
+)
+ident(
+  int_ref cell "src/karel_impl.ml" 34 476 519 "src/karel_impl.ml" 34 476 523
+)
+"src/karel_impl.ml" 36 574 646 "src/karel_impl.ml" 36 574 647
+type(
+  cell
+)
+ident(
+  int_ref c "src/karel_impl.ml" 36 574 616 "src/karel_impl.ml" 36 574 617
+)
+"src/karel_impl.ml" 36 574 621 "src/karel_impl.ml" 36 574 647
+type(
+  cell
+)
+"src/karel_impl.ml" 36 574 608 "src/karel_impl.ml" 36 574 648
+type(
+  int -> cell -> cell
+)
+"src/karel_impl.ml" 36 574 593 "src/karel_impl.ml" 36 574 648
+call(
+  tail
+)
+type(
+  cell list
+)
+"src/karel_impl.ml" 37 649 658 "src/karel_impl.ml" 37 649 659
+type(
+  cell list
+)
+ident(
+  int_ref l "src/karel_impl.ml" 35 541 569 "src/karel_impl.ml" 35 541 570
+)
+"src/karel_impl.ml" 36 574 578 "src/karel_impl.ml" 37 649 659
+type(
+  cell list
+)
+"src/karel_impl.ml" 35 541 561 "src/karel_impl.ml" 37 649 660
+type(
+  int -> cell list -> cell list
+)
+"src/karel_impl.ml" 35 541 543 "src/karel_impl.ml" 37 649 660
+call(
+  tail
+)
+type(
+  grid
+)
+type(
+  cell list list
+)
+"src/karel_impl.ml" 41 735 739 "src/karel_impl.ml" 41 735 754
+type(
+  state -> string
+)
+ident(
+  def state_to_string "src/karel_impl.ml" 56 1249 1249 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 41 735 756 "src/karel_impl.ml" 41 735 761
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 41 735 771 "src/karel_impl.ml" 53 1213 1244
+)
+"src/karel_impl.ml" 42 782 788 "src/karel_impl.ml" 42 782 797
+type(
+  string list list
+)
+ident(
+  def slistList "src/karel_impl.ml" 51 1115 1117 "src/karel_impl.ml" 53 1213 1244
+)
+"src/karel_impl.ml" 42 782 800 "src/karel_impl.ml" 42 782 809
+type(
+  cell list list -> f:(int -> cell list -> string list) -> string list list
+)
+ident(
+  int_ref Core.List.mapi "src/list.mli" 250 10807 10807 "src/list.mli" 250 10807 10853
+)
+"src/karel_impl.ml" 42 782 810 "src/karel_impl.ml" 42 782 815
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 41 735 756 "src/karel_impl.ml" 41 735 761
+)
+"src/karel_impl.ml" 42 782 810 "src/karel_impl.ml" 42 782 820
+type(
+  grid
+)
+"src/karel_impl.ml" 42 782 831 "src/karel_impl.ml" 42 782 832
+type(
+  int
+)
+ident(
+  def r "src/karel_impl.ml" 42 782 839 "src/karel_impl.ml" 50 1098 1110
+)
+"src/karel_impl.ml" 42 782 840 "src/karel_impl.ml" 42 782 843
+type(
+  cell list
+)
+ident(
+  def row "src/karel_impl.ml" 43 860 861 "src/karel_impl.ml" 50 1098 1110
+)
+"src/karel_impl.ml" 43 860 861 "src/karel_impl.ml" 43 860 870
+type(
+  cell list -> f:(int -> cell -> string) -> string list
+)
+ident(
+  int_ref Core.List.mapi "src/list.mli" 250 10807 10807 "src/list.mli" 250 10807 10853
+)
+"src/karel_impl.ml" 43 860 871 "src/karel_impl.ml" 43 860 874
+type(
+  cell list
+)
+ident(
+  int_ref row "src/karel_impl.ml" 42 782 840 "src/karel_impl.ml" 42 782 843
+)
+"src/karel_impl.ml" 43 860 884 "src/karel_impl.ml" 43 860 887
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 43 860 894 "src/karel_impl.ml" 49 1079 1097
+)
+"src/karel_impl.ml" 43 860 895 "src/karel_impl.ml" 43 860 896
+type(
+  cell
+)
+ident(
+  def c "src/karel_impl.ml" 44 909 920 "src/karel_impl.ml" 49 1079 1097
+)
+"src/karel_impl.ml" 44 909 925 "src/karel_impl.ml" 44 909 926
+type(
+  int
+)
+ident(
+  def x "src/karel_impl.ml" 45 951 962 "src/karel_impl.ml" 49 1079 1097
+)
+"src/karel_impl.ml" 44 909 927 "src/karel_impl.ml" 44 909 928
+type(
+  int
+)
+ident(
+  def y "src/karel_impl.ml" 45 951 962 "src/karel_impl.ml" 49 1079 1097
+)
+"src/karel_impl.ml" 44 909 924 "src/karel_impl.ml" 44 909 929
+type(
+  pos
+)
+"src/karel_impl.ml" 44 909 932 "src/karel_impl.ml" 44 909 937
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 41 735 756 "src/karel_impl.ml" 41 735 761
+)
+"src/karel_impl.ml" 44 909 932 "src/karel_impl.ml" 44 909 947
+type(
+  pos
+)
+"src/karel_impl.ml" 45 951 967 "src/karel_impl.ml" 45 951 970
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 43 860 884 "src/karel_impl.ml" 43 860 887
+)
+"src/karel_impl.ml" 45 951 971 "src/karel_impl.ml" 45 951 972
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 45 951 973 "src/karel_impl.ml" 45 951 974
+type(
+  int
+)
+ident(
+  int_ref x "src/karel_impl.ml" 44 909 925 "src/karel_impl.ml" 44 909 926
+)
+"src/karel_impl.ml" 45 951 967 "src/karel_impl.ml" 45 951 974
+type(
+  bool
+)
+"src/karel_impl.ml" 45 951 975 "src/karel_impl.ml" 45 951 977
+type(
+  bool -> bool -> bool
+)
+ident(
+  int_ref Core.( && ) "src/core_pervasives.mli" 117 4625 4625 "src/core_pervasives.mli" 117 4625 4676
+)
+"src/karel_impl.ml" 45 951 978 "src/karel_impl.ml" 45 951 979
+type(
+  int
+)
+ident(
+  int_ref r "src/karel_impl.ml" 42 782 831 "src/karel_impl.ml" 42 782 832
+)
+"src/karel_impl.ml" 45 951 980 "src/karel_impl.ml" 45 951 981
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 45 951 982 "src/karel_impl.ml" 45 951 983
+type(
+  int
+)
+ident(
+  int_ref y "src/karel_impl.ml" 44 909 927 "src/karel_impl.ml" 44 909 928
+)
+"src/karel_impl.ml" 45 951 978 "src/karel_impl.ml" 45 951 983
+type(
+  bool
+)
+"src/karel_impl.ml" 45 951 965 "src/karel_impl.ml" 45 951 984
+type(
+  bool
+)
+"src/karel_impl.ml" 45 951 990 "src/karel_impl.ml" 45 951 993
+type(
+  string
+)
+"src/karel_impl.ml" 47 1011 1024 "src/karel_impl.ml" 47 1011 1025
+type(
+  cell
+)
+ident(
+  int_ref c "src/karel_impl.ml" 43 860 895 "src/karel_impl.ml" 43 860 896
+)
+"src/karel_impl.ml" 47 1011 1026 "src/karel_impl.ml" 47 1011 1027
+type(
+  cell -> cell -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 47 1011 1028 "src/karel_impl.ml" 47 1011 1033
+type(
+  cell
+)
+"src/karel_impl.ml" 47 1011 1024 "src/karel_impl.ml" 47 1011 1033
+type(
+  bool
+)
+"src/karel_impl.ml" 47 1011 1039 "src/karel_impl.ml" 47 1011 1042
+type(
+  string
+)
+"src/karel_impl.ml" 48 1043 1061 "src/karel_impl.ml" 48 1043 1062
+type(
+  cell
+)
+ident(
+  int_ref c "src/karel_impl.ml" 43 860 895 "src/karel_impl.ml" 43 860 896
+)
+"src/karel_impl.ml" 48 1043 1063 "src/karel_impl.ml" 48 1043 1064
+type(
+  cell -> cell -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 48 1043 1065 "src/karel_impl.ml" 48 1043 1069
+type(
+  cell
+)
+"src/karel_impl.ml" 48 1043 1061 "src/karel_impl.ml" 48 1043 1069
+type(
+  bool
+)
+"src/karel_impl.ml" 48 1043 1075 "src/karel_impl.ml" 48 1043 1078
+type(
+  string
+)
+"src/karel_impl.ml" 49 1079 1094 "src/karel_impl.ml" 49 1079 1097
+type(
+  string
+)
+"src/karel_impl.ml" 48 1043 1058 "src/karel_impl.ml" 49 1079 1097
+type(
+  string
+)
+"src/karel_impl.ml" 47 1011 1021 "src/karel_impl.ml" 49 1079 1097
+type(
+  string
+)
+"src/karel_impl.ml" 45 951 962 "src/karel_impl.ml" 49 1079 1097
+type(
+  string
+)
+"src/karel_impl.ml" 44 909 920 "src/karel_impl.ml" 49 1079 1097
+type(
+  string
+)
+"src/karel_impl.ml" 43 860 878 "src/karel_impl.ml" 50 1098 1110
+type(
+  int -> cell -> string
+)
+"src/karel_impl.ml" 43 860 861 "src/karel_impl.ml" 50 1098 1110
+call(
+  tail
+)
+type(
+  string list
+)
+"src/karel_impl.ml" 42 782 824 "src/karel_impl.ml" 50 1098 1111
+type(
+  int -> cell list -> string list
+)
+"src/karel_impl.ml" 42 782 800 "src/karel_impl.ml" 50 1098 1111
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/karel_impl.ml" 51 1115 1121 "src/karel_impl.ml" 51 1115 1126
+type(
+  string list
+)
+ident(
+  def slist "src/karel_impl.ml" 53 1213 1215 "src/karel_impl.ml" 53 1213 1244
+)
+"src/karel_impl.ml" 51 1115 1129 "src/karel_impl.ml" 51 1115 1137
+type(
+  string list list -> f:(string list -> string) -> string list
+)
+ident(
+  int_ref Core.List.map "src/list.mli" 191 8217 8217 "src/list.mli" 191 8217 8255
+)
+"src/karel_impl.ml" 51 1115 1138 "src/karel_impl.ml" 51 1115 1147
+type(
+  string list list
+)
+ident(
+  int_ref slistList "src/karel_impl.ml" 42 782 788 "src/karel_impl.ml" 42 782 797
+)
+"src/karel_impl.ml" 51 1115 1158 "src/karel_impl.ml" 51 1115 1161
+type(
+  string list
+)
+ident(
+  def row "src/karel_impl.ml" 52 1180 1182 "src/karel_impl.ml" 52 1180 1208
+)
+"src/karel_impl.ml" 52 1180 1182 "src/karel_impl.ml" 52 1180 1195
+type(
+  ?sep:string -> string list -> string
+)
+ident(
+  int_ref Core.String.concat "src/string.mli" 85 3219 3219 "src/string.mli" 85 3219 3253
+)
+"src/karel_impl.ml" 52 1180 1201 "src/karel_impl.ml" 52 1180 1204
+type(
+  string
+)
+"src/karel_impl.ml" 52 1180 1205 "src/karel_impl.ml" 52 1180 1208
+type(
+  string list
+)
+ident(
+  int_ref row "src/karel_impl.ml" 51 1115 1158 "src/karel_impl.ml" 51 1115 1161
+)
+"src/karel_impl.ml" 52 1180 1182 "src/karel_impl.ml" 52 1180 1208
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 51 1115 1151 "src/karel_impl.ml" 52 1180 1209
+type(
+  string list -> string
+)
+"src/karel_impl.ml" 51 1115 1129 "src/karel_impl.ml" 52 1180 1209
+call(
+  stack
+)
+type(
+  string list
+)
+"src/karel_impl.ml" 53 1213 1215 "src/karel_impl.ml" 53 1213 1228
+type(
+  ?sep:string -> string list -> string
+)
+ident(
+  int_ref Core.String.concat "src/string.mli" 85 3219 3219 "src/string.mli" 85 3219 3253
+)
+"src/karel_impl.ml" 53 1213 1234 "src/karel_impl.ml" 53 1213 1238
+type(
+  string
+)
+"src/karel_impl.ml" 53 1213 1239 "src/karel_impl.ml" 53 1213 1244
+type(
+  string list
+)
+ident(
+  int_ref slist "src/karel_impl.ml" 51 1115 1121 "src/karel_impl.ml" 51 1115 1126
+)
+"src/karel_impl.ml" 53 1213 1215 "src/karel_impl.ml" 53 1213 1244
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 51 1115 1117 "src/karel_impl.ml" 53 1213 1244
+type(
+  string
+)
+"src/karel_impl.ml" 42 782 784 "src/karel_impl.ml" 53 1213 1244
+type(
+  string
+)
+type(
+  string
+)
+"src/karel_impl.ml" 56 1249 1253 "src/karel_impl.ml" 56 1249 1263
+type(
+  int -> int -> grid
+)
+ident(
+  def empty_grid "src/karel_impl.ml" 61 1389 1389 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 56 1249 1265 "src/karel_impl.ml" 56 1249 1266
+type(
+  int
+)
+ident(
+  def m "src/karel_impl.ml" 56 1249 1274 "src/karel_impl.ml" 58 1334 1384
+)
+"src/karel_impl.ml" 56 1249 1275 "src/karel_impl.ml" 56 1249 1276
+type(
+  int
+)
+ident(
+  def n "src/karel_impl.ml" 56 1249 1284 "src/karel_impl.ml" 58 1334 1384
+)
+"src/karel_impl.ml" 57 1293 1295 "src/karel_impl.ml" 57 1293 1303
+type(
+  int list -> f:(int -> cell list) -> cell list list
+)
+ident(
+  int_ref Core.List.map "src/list.mli" 191 8217 8217 "src/list.mli" 191 8217 8255
+)
+"src/karel_impl.ml" 57 1293 1305 "src/karel_impl.ml" 57 1293 1315
+type(
+  ?stride:int ->
+  ?start:[ `exclusive | `inclusive ] ->
+  ?stop:[ `exclusive | `inclusive ] -> int -> int -> int list
+)
+ident(
+  int_ref Core.List.range "src/list.mli" 355 15625 15625 "src/list.mli" 361 15860 15870
+)
+"src/karel_impl.ml" 57 1293 1316 "src/karel_impl.ml" 57 1293 1317
+type(
+  int
+)
+"src/karel_impl.ml" 57 1293 1318 "src/karel_impl.ml" 57 1293 1319
+type(
+  int
+)
+ident(
+  int_ref m "src/karel_impl.ml" 56 1249 1265 "src/karel_impl.ml" 56 1249 1266
+)
+"src/karel_impl.ml" 57 1293 1304 "src/karel_impl.ml" 57 1293 1320
+call(
+  stack
+)
+type(
+  int list
+)
+"src/karel_impl.ml" 57 1293 1329 "src/karel_impl.ml" 57 1293 1330
+type(
+  int
+)
+"src/karel_impl.ml" 58 1334 1338 "src/karel_impl.ml" 58 1334 1346
+type(
+  int list -> f:(int -> cell) -> cell list
+)
+ident(
+  int_ref Core.List.map "src/list.mli" 191 8217 8217 "src/list.mli" 191 8217 8255
+)
+"src/karel_impl.ml" 58 1334 1348 "src/karel_impl.ml" 58 1334 1358
+type(
+  ?stride:int ->
+  ?start:[ `exclusive | `inclusive ] ->
+  ?stop:[ `exclusive | `inclusive ] -> int -> int -> int list
+)
+ident(
+  int_ref Core.List.range "src/list.mli" 355 15625 15625 "src/list.mli" 361 15860 15870
+)
+"src/karel_impl.ml" 58 1334 1359 "src/karel_impl.ml" 58 1334 1360
+type(
+  int
+)
+"src/karel_impl.ml" 58 1334 1361 "src/karel_impl.ml" 58 1334 1362
+type(
+  int
+)
+ident(
+  int_ref n "src/karel_impl.ml" 56 1249 1275 "src/karel_impl.ml" 56 1249 1276
+)
+"src/karel_impl.ml" 58 1334 1347 "src/karel_impl.ml" 58 1334 1363
+call(
+  stack
+)
+type(
+  int list
+)
+"src/karel_impl.ml" 58 1334 1372 "src/karel_impl.ml" 58 1334 1373
+type(
+  int
+)
+"src/karel_impl.ml" 58 1334 1377 "src/karel_impl.ml" 58 1334 1382
+type(
+  cell
+)
+"src/karel_impl.ml" 58 1334 1367 "src/karel_impl.ml" 58 1334 1383
+type(
+  int -> cell
+)
+"src/karel_impl.ml" 58 1334 1338 "src/karel_impl.ml" 58 1334 1383
+call(
+  tail
+)
+type(
+  cell list
+)
+"src/karel_impl.ml" 57 1293 1324 "src/karel_impl.ml" 58 1334 1384
+type(
+  int -> cell list
+)
+"src/karel_impl.ml" 57 1293 1295 "src/karel_impl.ml" 58 1334 1384
+call(
+  tail
+)
+type(
+  grid
+)
+type(
+  cell list list
+)
+"src/karel_impl.ml" 75 1658 1666 "src/karel_impl.ml" 75 1658 1685
+type(
+  predicate -> string
+)
+ident(
+  def predicate_to_string "src/karel_impl.ml" 75 1658 1658 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 75 1658 1687 "src/karel_impl.ml" 75 1658 1691
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 75 1658 1705 "src/karel_impl.ml" 88 2110 2179
+)
+"src/karel_impl.ml" 76 1716 1724 "src/karel_impl.ml" 76 1716 1728
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 75 1658 1687 "src/karel_impl.ml" 75 1658 1691
+)
+"src/karel_impl.ml" 77 1734 1746 "src/karel_impl.ml" 77 1734 1747
+type(
+  cell
+)
+ident(
+  def c "src/karel_impl.ml" 78 1751 1755 "src/karel_impl.ml" 81 1852 1892
+)
+"src/karel_impl.ml" 77 1734 1738 "src/karel_impl.ml" 77 1734 1747
+type(
+  predicate
+)
+"src/karel_impl.ml" 78 1751 1759 "src/karel_impl.ml" 78 1751 1766
+type(
+  string
+)
+ident(
+  def cellstr "src/karel_impl.ml" 81 1852 1856 "src/karel_impl.ml" 81 1852 1892
+)
+"src/karel_impl.ml" 78 1751 1775 "src/karel_impl.ml" 78 1751 1776
+type(
+  cell
+)
+ident(
+  int_ref c "src/karel_impl.ml" 77 1734 1746 "src/karel_impl.ml" 77 1734 1747
+)
+"src/karel_impl.ml" 79 1782 1790 "src/karel_impl.ml" 79 1782 1795
+type(
+  cell
+)
+"src/karel_impl.ml" 79 1782 1799 "src/karel_impl.ml" 79 1782 1806
+type(
+  string
+)
+"src/karel_impl.ml" 79 1782 1809 "src/karel_impl.ml" 79 1782 1815
+type(
+  cell
+)
+"src/karel_impl.ml" 79 1782 1819 "src/karel_impl.ml" 79 1782 1827
+type(
+  string
+)
+"src/karel_impl.ml" 79 1782 1830 "src/karel_impl.ml" 79 1782 1834
+type(
+  cell
+)
+"src/karel_impl.ml" 79 1782 1838 "src/karel_impl.ml" 79 1782 1844
+type(
+  string
+)
+"src/karel_impl.ml" 78 1751 1769 "src/karel_impl.ml" 79 1782 1844
+type(
+  string
+)
+"src/karel_impl.ml" 81 1852 1856 "src/karel_impl.ml" 81 1852 1870
+type(
+  (string -> string, unit, string) Base.format -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/karel_impl.ml" 81 1852 1871 "src/karel_impl.ml" 81 1852 1884
+type(
+  (string -> string, unit, string) Base.format
+)
+"src/karel_impl.ml" 81 1852 1885 "src/karel_impl.ml" 81 1852 1892
+type(
+  string
+)
+ident(
+  int_ref cellstr "src/karel_impl.ml" 78 1751 1759 "src/karel_impl.ml" 78 1751 1766
+)
+"src/karel_impl.ml" 81 1852 1856 "src/karel_impl.ml" 81 1852 1892
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 78 1751 1755 "src/karel_impl.ml" 81 1852 1892
+type(
+  string
+)
+"src/karel_impl.ml" 82 1893 1897 "src/karel_impl.ml" 82 1893 1913
+type(
+  predicate
+)
+"src/karel_impl.ml" 82 1893 1917 "src/karel_impl.ml" 82 1893 1935
+type(
+  string
+)
+"src/karel_impl.ml" 83 1936 1947 "src/karel_impl.ml" 83 1936 1950
+type(
+  dir
+)
+ident(
+  def dir "src/karel_impl.ml" 84 1954 1958 "src/karel_impl.ml" 87 2071 2109
+)
+"src/karel_impl.ml" 83 1936 1940 "src/karel_impl.ml" 83 1936 1950
+type(
+  predicate
+)
+"src/karel_impl.ml" 84 1954 1962 "src/karel_impl.ml" 84 1954 1968
+type(
+  string
+)
+ident(
+  def dirstr "src/karel_impl.ml" 87 2071 2075 "src/karel_impl.ml" 87 2071 2109
+)
+"src/karel_impl.ml" 84 1954 1977 "src/karel_impl.ml" 84 1954 1980
+type(
+  dir
+)
+ident(
+  int_ref dir "src/karel_impl.ml" 83 1936 1947 "src/karel_impl.ml" 83 1936 1950
+)
+"src/karel_impl.ml" 85 1986 1994 "src/karel_impl.ml" 85 1986 1999
+type(
+  dir
+)
+"src/karel_impl.ml" 85 1986 2003 "src/karel_impl.ml" 85 1986 2010
+type(
+  string
+)
+"src/karel_impl.ml" 85 1986 2013 "src/karel_impl.ml" 85 1986 2018
+type(
+  dir
+)
+"src/karel_impl.ml" 85 1986 2022 "src/karel_impl.ml" 85 1986 2029
+type(
+  string
+)
+"src/karel_impl.ml" 85 1986 2032 "src/karel_impl.ml" 85 1986 2036
+type(
+  dir
+)
+"src/karel_impl.ml" 85 1986 2040 "src/karel_impl.ml" 85 1986 2046
+type(
+  string
+)
+"src/karel_impl.ml" 85 1986 2049 "src/karel_impl.ml" 85 1986 2053
+type(
+  dir
+)
+"src/karel_impl.ml" 85 1986 2057 "src/karel_impl.ml" 85 1986 2063
+type(
+  string
+)
+"src/karel_impl.ml" 84 1954 1971 "src/karel_impl.ml" 85 1986 2063
+type(
+  string
+)
+"src/karel_impl.ml" 87 2071 2075 "src/karel_impl.ml" 87 2071 2089
+type(
+  (string -> string, unit, string) Base.format -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/karel_impl.ml" 87 2071 2090 "src/karel_impl.ml" 87 2071 2102
+type(
+  (string -> string, unit, string) Base.format
+)
+"src/karel_impl.ml" 87 2071 2103 "src/karel_impl.ml" 87 2071 2109
+type(
+  string
+)
+ident(
+  int_ref dirstr "src/karel_impl.ml" 84 1954 1962 "src/karel_impl.ml" 84 1954 1968
+)
+"src/karel_impl.ml" 87 2071 2075 "src/karel_impl.ml" 87 2071 2109
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 84 1954 1958 "src/karel_impl.ml" 87 2071 2109
+type(
+  string
+)
+"src/karel_impl.ml" 88 2110 2118 "src/karel_impl.ml" 88 2110 2123
+type(
+  predicate
+)
+ident(
+  def pred' "src/karel_impl.ml" 88 2110 2127 "src/karel_impl.ml" 88 2110 2179
+)
+"src/karel_impl.ml" 88 2110 2114 "src/karel_impl.ml" 88 2110 2123
+type(
+  predicate
+)
+"src/karel_impl.ml" 88 2110 2127 "src/karel_impl.ml" 88 2110 2141
+type(
+  (string -> string, unit, string) Base.format -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/karel_impl.ml" 88 2110 2142 "src/karel_impl.ml" 88 2110 2151
+type(
+  (string -> string, unit, string) Base.format
+)
+"src/karel_impl.ml" 88 2110 2153 "src/karel_impl.ml" 88 2110 2172
+type(
+  predicate -> string
+)
+ident(
+  int_ref predicate_to_string "src/karel_impl.ml" 75 1658 1666 "src/karel_impl.ml" 75 1658 1685
+)
+"src/karel_impl.ml" 88 2110 2173 "src/karel_impl.ml" 88 2110 2178
+type(
+  predicate
+)
+ident(
+  int_ref pred' "src/karel_impl.ml" 88 2110 2118 "src/karel_impl.ml" 88 2110 2123
+)
+"src/karel_impl.ml" 88 2110 2152 "src/karel_impl.ml" 88 2110 2179
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 88 2110 2127 "src/karel_impl.ml" 88 2110 2179
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 76 1716 1718 "src/karel_impl.ml" 88 2110 2179
+type(
+  string
+)
+type(
+  string
+)
+"src/karel_impl.ml" 90 2181 2189 "src/karel_impl.ml" 90 2181 2210
+type(
+  instruction -> string
+)
+ident(
+  def instruction_to_string "src/karel_impl.ml" 90 2181 2181 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 90 2181 2212 "src/karel_impl.ml" 90 2181 2217
+type(
+  instruction
+)
+ident(
+  def instr "src/karel_impl.ml" 90 2181 2233 "src/karel_impl.ml" 104 2654 2694
+)
+"src/karel_impl.ml" 91 2244 2252 "src/karel_impl.ml" 91 2244 2257
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 90 2181 2212 "src/karel_impl.ml" 90 2181 2217
+)
+"src/karel_impl.ml" 92 2263 2267 "src/karel_impl.ml" 92 2263 2271
+type(
+  instruction
+)
+"src/karel_impl.ml" 92 2263 2275 "src/karel_impl.ml" 92 2263 2281
+type(
+  string
+)
+"src/karel_impl.ml" 93 2282 2286 "src/karel_impl.ml" 93 2282 2294
+type(
+  instruction
+)
+"src/karel_impl.ml" 93 2282 2298 "src/karel_impl.ml" 93 2282 2308
+type(
+  string
+)
+"src/karel_impl.ml" 94 2309 2313 "src/karel_impl.ml" 94 2309 2323
+type(
+  instruction
+)
+"src/karel_impl.ml" 94 2309 2327 "src/karel_impl.ml" 94 2309 2339
+type(
+  string
+)
+"src/karel_impl.ml" 95 2340 2344 "src/karel_impl.ml" 95 2340 2353
+type(
+  instruction
+)
+"src/karel_impl.ml" 95 2340 2357 "src/karel_impl.ml" 95 2340 2368
+type(
+  string
+)
+"src/karel_impl.ml" 96 2369 2380 "src/karel_impl.ml" 96 2369 2384
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 97 2397 2401 "src/karel_impl.ml" 99 2467 2508
+)
+"src/karel_impl.ml" 96 2369 2386 "src/karel_impl.ml" 96 2369 2392
+type(
+  instruction list
+)
+ident(
+  def instrs "src/karel_impl.ml" 97 2397 2401 "src/karel_impl.ml" 99 2467 2508
+)
+"src/karel_impl.ml" 96 2369 2373 "src/karel_impl.ml" 96 2369 2393
+type(
+  instruction
+)
+"src/karel_impl.ml" 97 2397 2401 "src/karel_impl.ml" 97 2397 2415
+type(
+  (string -> string -> string, unit, string) Base.format ->
+  string -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/karel_impl.ml" 97 2397 2416 "src/karel_impl.ml" 97 2397 2433
+type(
+  (string -> string -> string, unit, string) Base.format
+)
+"src/karel_impl.ml" 98 2434 2441 "src/karel_impl.ml" 98 2434 2460
+type(
+  predicate -> string
+)
+ident(
+  int_ref predicate_to_string "src/karel_impl.ml" 75 1658 1666 "src/karel_impl.ml" 75 1658 1685
+)
+"src/karel_impl.ml" 98 2434 2461 "src/karel_impl.ml" 98 2434 2465
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 96 2369 2380 "src/karel_impl.ml" 96 2369 2384
+)
+"src/karel_impl.ml" 98 2434 2440 "src/karel_impl.ml" 98 2434 2466
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 99 2467 2474 "src/karel_impl.ml" 99 2467 2500
+type(
+  instruction list -> string
+)
+ident(
+  int_ref instruction_list_to_string "src/karel_impl.ml" 105 2695 2699 "src/karel_impl.ml" 105 2695 2725
+)
+"src/karel_impl.ml" 99 2467 2501 "src/karel_impl.ml" 99 2467 2507
+type(
+  instruction list
+)
+ident(
+  int_ref instrs "src/karel_impl.ml" 96 2369 2386 "src/karel_impl.ml" 96 2369 2392
+)
+"src/karel_impl.ml" 99 2467 2473 "src/karel_impl.ml" 99 2467 2508
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 97 2397 2401 "src/karel_impl.ml" 99 2467 2508
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 100 2509 2517 "src/karel_impl.ml" 100 2509 2521
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 101 2540 2544 "src/karel_impl.ml" 104 2654 2694
+)
+"src/karel_impl.ml" 100 2509 2523 "src/karel_impl.ml" 100 2509 2528
+type(
+  instruction list
+)
+ident(
+  def then_ "src/karel_impl.ml" 101 2540 2544 "src/karel_impl.ml" 104 2654 2694
+)
+"src/karel_impl.ml" 100 2509 2530 "src/karel_impl.ml" 100 2509 2535
+type(
+  instruction list
+)
+ident(
+  def else_ "src/karel_impl.ml" 101 2540 2544 "src/karel_impl.ml" 104 2654 2694
+)
+"src/karel_impl.ml" 100 2509 2513 "src/karel_impl.ml" 100 2509 2536
+type(
+  instruction
+)
+"src/karel_impl.ml" 101 2540 2544 "src/karel_impl.ml" 101 2540 2558
+type(
+  (string -> string -> string -> string, unit, string) Base.format ->
+  string -> string -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/karel_impl.ml" 101 2540 2559 "src/karel_impl.ml" 101 2540 2579
+type(
+  (string -> string -> string -> string, unit, string) Base.format
+)
+"src/karel_impl.ml" 102 2580 2587 "src/karel_impl.ml" 102 2580 2606
+type(
+  predicate -> string
+)
+ident(
+  int_ref predicate_to_string "src/karel_impl.ml" 75 1658 1666 "src/karel_impl.ml" 75 1658 1685
+)
+"src/karel_impl.ml" 102 2580 2607 "src/karel_impl.ml" 102 2580 2611
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 100 2509 2517 "src/karel_impl.ml" 100 2509 2521
+)
+"src/karel_impl.ml" 102 2580 2586 "src/karel_impl.ml" 102 2580 2612
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 103 2613 2620 "src/karel_impl.ml" 103 2613 2646
+type(
+  instruction list -> string
+)
+ident(
+  int_ref instruction_list_to_string "src/karel_impl.ml" 105 2695 2699 "src/karel_impl.ml" 105 2695 2725
+)
+"src/karel_impl.ml" 103 2613 2647 "src/karel_impl.ml" 103 2613 2652
+type(
+  instruction list
+)
+ident(
+  int_ref then_ "src/karel_impl.ml" 100 2509 2523 "src/karel_impl.ml" 100 2509 2528
+)
+"src/karel_impl.ml" 103 2613 2619 "src/karel_impl.ml" 103 2613 2653
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 104 2654 2661 "src/karel_impl.ml" 104 2654 2687
+type(
+  instruction list -> string
+)
+ident(
+  int_ref instruction_list_to_string "src/karel_impl.ml" 105 2695 2699 "src/karel_impl.ml" 105 2695 2725
+)
+"src/karel_impl.ml" 104 2654 2688 "src/karel_impl.ml" 104 2654 2693
+type(
+  instruction list
+)
+ident(
+  int_ref else_ "src/karel_impl.ml" 100 2509 2530 "src/karel_impl.ml" 100 2509 2535
+)
+"src/karel_impl.ml" 104 2654 2660 "src/karel_impl.ml" 104 2654 2694
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 101 2540 2544 "src/karel_impl.ml" 104 2654 2694
+call(
+  tail
+)
+type(
+  string
+)
+"src/karel_impl.ml" 91 2244 2246 "src/karel_impl.ml" 104 2654 2694
+type(
+  string
+)
+type(
+  string
+)
+"src/karel_impl.ml" 105 2695 2699 "src/karel_impl.ml" 105 2695 2725
+type(
+  instruction list -> string
+)
+ident(
+  def instruction_list_to_string "src/karel_impl.ml" 90 2181 2181 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 105 2695 2727 "src/karel_impl.ml" 105 2695 2733
+type(
+  instruction list
+)
+ident(
+  def instrs "src/karel_impl.ml" 105 2695 2753 "src/karel_impl.ml" 106 2764 2832
+)
+"src/karel_impl.ml" 106 2764 2766 "src/karel_impl.ml" 106 2764 2779
+type(
+  ?sep:string -> string list -> string
+)
+ident(
+  int_ref Core.String.concat "src/string.mli" 85 3219 3219 "src/string.mli" 85 3219 3253
+)
+"src/karel_impl.ml" 106 2764 2785 "src/karel_impl.ml" 106 2764 2789
+type(
+  string
+)
+"src/karel_impl.ml" 106 2764 2791 "src/karel_impl.ml" 106 2764 2799
+type(
+  instruction list -> f:(instruction -> string) -> string list
+)
+ident(
+  int_ref Core.List.map "src/list.mli" 191 8217 8217 "src/list.mli" 191 8217 8255
+)
+"src/karel_impl.ml" 106 2764 2803 "src/karel_impl.ml" 106 2764 2824
+type(
+  instruction -> string
+)
+ident(
+  int_ref instruction_to_string "src/karel_impl.ml" 90 2181 2189 "src/karel_impl.ml" 90 2181 2210
+)
+"src/karel_impl.ml" 106 2764 2825 "src/karel_impl.ml" 106 2764 2831
+type(
+  instruction list
+)
+ident(
+  int_ref instrs "src/karel_impl.ml" 105 2695 2727 "src/karel_impl.ml" 105 2695 2733
+)
+"src/karel_impl.ml" 106 2764 2790 "src/karel_impl.ml" 106 2764 2832
+call(
+  stack
+)
+type(
+  string list
+)
+"src/karel_impl.ml" 106 2764 2766 "src/karel_impl.ml" 106 2764 2832
+call(
+  tail
+)
+type(
+  string
+)
+type(
+  string
+)
+"src/karel_impl.ml" 109 2835 2843 "src/karel_impl.ml" 109 2835 2852
+type(
+  state -> predicate -> bool
+)
+ident(
+  def eval_pred "src/karel_impl.ml" 109 2835 2835 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 109 2835 2869 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 109 2835 2870 "src/karel_impl.ml" 109 2835 2874
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 109 2835 2888 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 110 2897 2904 "src/karel_impl.ml" 110 2897 2908
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 109 2835 2870 "src/karel_impl.ml" 109 2835 2874
+)
+"src/karel_impl.ml" 111 2914 2924 "src/karel_impl.ml" 111 2914 2927
+type(
+  dir
+)
+ident(
+  def dir "src/karel_impl.ml" 111 2914 2931 "src/karel_impl.ml" 111 2914 2978
+)
+"src/karel_impl.ml" 111 2914 2917 "src/karel_impl.ml" 111 2914 2927
+type(
+  predicate
+)
+"src/karel_impl.ml" 111 2914 2935 "src/karel_impl.ml" 111 2914 2940
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 111 2914 2935 "src/karel_impl.ml" 111 2914 2950
+type(
+  dir
+)
+"src/karel_impl.ml" 111 2914 2951 "src/karel_impl.ml" 111 2914 2952
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 111 2914 2953 "src/karel_impl.ml" 111 2914 2956
+type(
+  dir
+)
+ident(
+  int_ref dir "src/karel_impl.ml" 111 2914 2924 "src/karel_impl.ml" 111 2914 2927
+)
+"src/karel_impl.ml" 111 2914 2934 "src/karel_impl.ml" 111 2914 2957
+type(
+  bool
+)
+"src/karel_impl.ml" 111 2914 2963 "src/karel_impl.ml" 111 2914 2967
+type(
+  bool
+)
+"src/karel_impl.ml" 111 2914 2973 "src/karel_impl.ml" 111 2914 2978
+type(
+  bool
+)
+"src/karel_impl.ml" 111 2914 2931 "src/karel_impl.ml" 111 2914 2978
+type(
+  bool
+)
+"src/karel_impl.ml" 112 2979 2986 "src/karel_impl.ml" 112 2979 2991
+type(
+  predicate
+)
+ident(
+  def pred' "src/karel_impl.ml" 112 2979 2995 "src/karel_impl.ml" 112 2979 3022
+)
+"src/karel_impl.ml" 112 2979 2982 "src/karel_impl.ml" 112 2979 2991
+type(
+  predicate
+)
+"src/karel_impl.ml" 112 2979 2995 "src/karel_impl.ml" 112 2979 2998
+type(
+  bool -> bool
+)
+ident(
+  int_ref Core.not "src/core_pervasives.mli" 114 4554 4554 "src/core_pervasives.mli" 114 4554 4594
+)
+"src/karel_impl.ml" 112 2979 3000 "src/karel_impl.ml" 112 2979 3009
+type(
+  state -> predicate -> bool
+)
+ident(
+  int_ref eval_pred "src/karel_impl.ml" 109 2835 2843 "src/karel_impl.ml" 109 2835 2852
+)
+"src/karel_impl.ml" 112 2979 3010 "src/karel_impl.ml" 112 2979 3015
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 112 2979 3016 "src/karel_impl.ml" 112 2979 3021
+type(
+  predicate
+)
+ident(
+  int_ref pred' "src/karel_impl.ml" 112 2979 2986 "src/karel_impl.ml" 112 2979 2991
+)
+"src/karel_impl.ml" 112 2979 2999 "src/karel_impl.ml" 112 2979 3022
+call(
+  stack
+)
+type(
+  bool
+)
+"src/karel_impl.ml" 112 2979 2995 "src/karel_impl.ml" 112 2979 3022
+type(
+  bool
+)
+"src/karel_impl.ml" 113 3024 3027 "src/karel_impl.ml" 113 3024 3043
+type(
+  predicate
+)
+"src/karel_impl.ml" 114 3048 3056 "src/karel_impl.ml" 114 3048 3059
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 115 3086 3089 "src/karel_impl.ml" 115 3086 3158
+)
+"src/karel_impl.ml" 114 3048 3060 "src/karel_impl.ml" 114 3048 3063
+type(
+  int
+)
+ident(
+  def row "src/karel_impl.ml" 115 3086 3089 "src/karel_impl.ml" 115 3086 3158
+)
+"src/karel_impl.ml" 114 3048 3055 "src/karel_impl.ml" 114 3048 3064
+type(
+  pos
+)
+"src/karel_impl.ml" 114 3048 3067 "src/karel_impl.ml" 114 3048 3072
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 114 3048 3067 "src/karel_impl.ml" 114 3048 3082
+type(
+  pos
+)
+"src/karel_impl.ml" 115 3086 3092 "src/karel_impl.ml" 115 3086 3100
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 115 3086 3101 "src/karel_impl.ml" 115 3086 3106
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 115 3086 3101 "src/karel_impl.ml" 115 3086 3111
+type(
+  grid
+)
+"src/karel_impl.ml" 115 3086 3113 "src/karel_impl.ml" 115 3086 3116
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 114 3048 3056 "src/karel_impl.ml" 114 3048 3059
+)
+"src/karel_impl.ml" 115 3086 3118 "src/karel_impl.ml" 115 3086 3121
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 114 3048 3060 "src/karel_impl.ml" 114 3048 3063
+)
+"src/karel_impl.ml" 115 3086 3112 "src/karel_impl.ml" 115 3086 3122
+type(
+  pos
+)
+"src/karel_impl.ml" 115 3086 3092 "src/karel_impl.ml" 115 3086 3122
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 115 3086 3123 "src/karel_impl.ml" 115 3086 3125
+type(
+  cell option -> cell option -> bool
+)
+ident(
+  int_ref Core.( <> ) "src/core_pervasives.mli" 45 1606 1606 "src/core_pervasives.mli" 45 1606 1654
+)
+"src/karel_impl.ml" 115 3086 3131 "src/karel_impl.ml" 115 3086 3137
+type(
+  cell
+)
+"src/karel_impl.ml" 115 3086 3126 "src/karel_impl.ml" 115 3086 3137
+type(
+  cell option
+)
+"src/karel_impl.ml" 115 3086 3092 "src/karel_impl.ml" 115 3086 3137
+type(
+  bool
+)
+"src/karel_impl.ml" 115 3086 3143 "src/karel_impl.ml" 115 3086 3147
+type(
+  bool
+)
+"src/karel_impl.ml" 115 3086 3153 "src/karel_impl.ml" 115 3086 3158
+type(
+  bool
+)
+"src/karel_impl.ml" 115 3086 3089 "src/karel_impl.ml" 115 3086 3158
+type(
+  bool
+)
+"src/karel_impl.ml" 114 3048 3051 "src/karel_impl.ml" 115 3086 3158
+type(
+  bool
+)
+"src/karel_impl.ml" 116 3159 3170 "src/karel_impl.ml" 116 3159 3171
+type(
+  cell
+)
+ident(
+  def c "src/karel_impl.ml" 117 3175 3178 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 116 3159 3162 "src/karel_impl.ml" 116 3159 3171
+type(
+  predicate
+)
+"src/karel_impl.ml" 117 3175 3183 "src/karel_impl.ml" 117 3175 3186
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 118 3213 3215 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 117 3175 3187 "src/karel_impl.ml" 117 3175 3190
+type(
+  int
+)
+ident(
+  def row "src/karel_impl.ml" 118 3213 3215 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 117 3175 3182 "src/karel_impl.ml" 117 3175 3191
+type(
+  pos
+)
+"src/karel_impl.ml" 117 3175 3194 "src/karel_impl.ml" 117 3175 3199
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 117 3175 3194 "src/karel_impl.ml" 117 3175 3209
+type(
+  pos
+)
+"src/karel_impl.ml" 118 3213 3219 "src/karel_impl.ml" 118 3213 3224
+type(
+  cell option
+)
+ident(
+  def front "src/karel_impl.ml" 123 3492 3494 "src/karel_impl.ml" 125 3530 3576
+)
+"src/karel_impl.ml" 118 3213 3230 "src/karel_impl.ml" 118 3213 3235
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 118 3213 3230 "src/karel_impl.ml" 118 3213 3245
+type(
+  dir
+)
+"src/karel_impl.ml" 118 3213 3246 "src/karel_impl.ml" 118 3213 3247
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 118 3213 3248 "src/karel_impl.ml" 118 3213 3253
+type(
+  dir
+)
+"src/karel_impl.ml" 118 3213 3230 "src/karel_impl.ml" 118 3213 3253
+type(
+  bool
+)
+"src/karel_impl.ml" 118 3213 3259 "src/karel_impl.ml" 118 3213 3267
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 118 3213 3268 "src/karel_impl.ml" 118 3213 3273
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 118 3213 3268 "src/karel_impl.ml" 118 3213 3278
+type(
+  grid
+)
+"src/karel_impl.ml" 118 3213 3280 "src/karel_impl.ml" 118 3213 3283
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 117 3175 3183 "src/karel_impl.ml" 117 3175 3186
+)
+"src/karel_impl.ml" 118 3213 3285 "src/karel_impl.ml" 118 3213 3288
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 117 3175 3187 "src/karel_impl.ml" 117 3175 3190
+)
+"src/karel_impl.ml" 118 3213 3288 "src/karel_impl.ml" 118 3213 3289
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 118 3213 3289 "src/karel_impl.ml" 118 3213 3290
+type(
+  int
+)
+"src/karel_impl.ml" 118 3213 3285 "src/karel_impl.ml" 118 3213 3290
+type(
+  int
+)
+"src/karel_impl.ml" 118 3213 3279 "src/karel_impl.ml" 118 3213 3291
+type(
+  pos
+)
+"src/karel_impl.ml" 118 3213 3259 "src/karel_impl.ml" 118 3213 3291
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 119 3292 3305 "src/karel_impl.ml" 119 3292 3310
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 119 3292 3305 "src/karel_impl.ml" 119 3292 3320
+type(
+  dir
+)
+"src/karel_impl.ml" 119 3292 3321 "src/karel_impl.ml" 119 3292 3322
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 119 3292 3323 "src/karel_impl.ml" 119 3292 3328
+type(
+  dir
+)
+"src/karel_impl.ml" 119 3292 3305 "src/karel_impl.ml" 119 3292 3328
+type(
+  bool
+)
+"src/karel_impl.ml" 119 3292 3334 "src/karel_impl.ml" 119 3292 3342
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 119 3292 3343 "src/karel_impl.ml" 119 3292 3348
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 119 3292 3343 "src/karel_impl.ml" 119 3292 3353
+type(
+  grid
+)
+"src/karel_impl.ml" 119 3292 3355 "src/karel_impl.ml" 119 3292 3358
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 117 3175 3183 "src/karel_impl.ml" 117 3175 3186
+)
+"src/karel_impl.ml" 119 3292 3360 "src/karel_impl.ml" 119 3292 3363
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 117 3175 3187 "src/karel_impl.ml" 117 3175 3190
+)
+"src/karel_impl.ml" 119 3292 3364 "src/karel_impl.ml" 119 3292 3365
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 119 3292 3366 "src/karel_impl.ml" 119 3292 3367
+type(
+  int
+)
+"src/karel_impl.ml" 119 3292 3360 "src/karel_impl.ml" 119 3292 3367
+type(
+  int
+)
+"src/karel_impl.ml" 119 3292 3354 "src/karel_impl.ml" 119 3292 3368
+type(
+  pos
+)
+"src/karel_impl.ml" 119 3292 3334 "src/karel_impl.ml" 119 3292 3368
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 120 3369 3382 "src/karel_impl.ml" 120 3369 3387
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 120 3369 3382 "src/karel_impl.ml" 120 3369 3397
+type(
+  dir
+)
+"src/karel_impl.ml" 120 3369 3398 "src/karel_impl.ml" 120 3369 3399
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 120 3369 3400 "src/karel_impl.ml" 120 3369 3404
+type(
+  dir
+)
+"src/karel_impl.ml" 120 3369 3382 "src/karel_impl.ml" 120 3369 3404
+type(
+  bool
+)
+"src/karel_impl.ml" 120 3369 3410 "src/karel_impl.ml" 120 3369 3418
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 120 3369 3419 "src/karel_impl.ml" 120 3369 3424
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 120 3369 3419 "src/karel_impl.ml" 120 3369 3429
+type(
+  grid
+)
+"src/karel_impl.ml" 120 3369 3431 "src/karel_impl.ml" 120 3369 3434
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 117 3175 3183 "src/karel_impl.ml" 117 3175 3186
+)
+"src/karel_impl.ml" 120 3369 3434 "src/karel_impl.ml" 120 3369 3435
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 120 3369 3435 "src/karel_impl.ml" 120 3369 3436
+type(
+  int
+)
+"src/karel_impl.ml" 120 3369 3431 "src/karel_impl.ml" 120 3369 3436
+type(
+  int
+)
+"src/karel_impl.ml" 120 3369 3438 "src/karel_impl.ml" 120 3369 3441
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 117 3175 3187 "src/karel_impl.ml" 117 3175 3190
+)
+"src/karel_impl.ml" 120 3369 3430 "src/karel_impl.ml" 120 3369 3442
+type(
+  pos
+)
+"src/karel_impl.ml" 120 3369 3410 "src/karel_impl.ml" 120 3369 3442
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 121 3443 3453 "src/karel_impl.ml" 121 3443 3461
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 121 3443 3462 "src/karel_impl.ml" 121 3443 3467
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 109 2835 2854 "src/karel_impl.ml" 109 2835 2859
+)
+"src/karel_impl.ml" 121 3443 3462 "src/karel_impl.ml" 121 3443 3472
+type(
+  grid
+)
+"src/karel_impl.ml" 121 3443 3474 "src/karel_impl.ml" 121 3443 3477
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 117 3175 3183 "src/karel_impl.ml" 117 3175 3186
+)
+"src/karel_impl.ml" 121 3443 3477 "src/karel_impl.ml" 121 3443 3478
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 121 3443 3478 "src/karel_impl.ml" 121 3443 3479
+type(
+  int
+)
+"src/karel_impl.ml" 121 3443 3474 "src/karel_impl.ml" 121 3443 3479
+type(
+  int
+)
+"src/karel_impl.ml" 121 3443 3481 "src/karel_impl.ml" 121 3443 3484
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 117 3175 3187 "src/karel_impl.ml" 117 3175 3190
+)
+"src/karel_impl.ml" 121 3443 3473 "src/karel_impl.ml" 121 3443 3485
+type(
+  pos
+)
+"src/karel_impl.ml" 121 3443 3453 "src/karel_impl.ml" 121 3443 3485
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 120 3369 3379 "src/karel_impl.ml" 121 3443 3485
+type(
+  cell option
+)
+"src/karel_impl.ml" 119 3292 3302 "src/karel_impl.ml" 121 3443 3485
+type(
+  cell option
+)
+"src/karel_impl.ml" 118 3213 3227 "src/karel_impl.ml" 121 3443 3485
+type(
+  cell option
+)
+"src/karel_impl.ml" 123 3492 3501 "src/karel_impl.ml" 123 3492 3506
+type(
+  cell option
+)
+ident(
+  int_ref front "src/karel_impl.ml" 118 3213 3219 "src/karel_impl.ml" 118 3213 3224
+)
+"src/karel_impl.ml" 124 3513 3517 "src/karel_impl.ml" 124 3513 3521
+type(
+  cell option
+)
+"src/karel_impl.ml" 124 3513 3525 "src/karel_impl.ml" 124 3513 3529
+type(
+  bool
+)
+"src/karel_impl.ml" 125 3530 3539 "src/karel_impl.ml" 125 3530 3540
+type(
+  cell
+)
+ident(
+  def x "src/karel_impl.ml" 125 3530 3544 "src/karel_impl.ml" 125 3530 3575
+)
+"src/karel_impl.ml" 125 3530 3534 "src/karel_impl.ml" 125 3530 3540
+type(
+  cell option
+)
+"src/karel_impl.ml" 125 3530 3548 "src/karel_impl.ml" 125 3530 3549
+type(
+  cell
+)
+ident(
+  int_ref c "src/karel_impl.ml" 116 3159 3170 "src/karel_impl.ml" 116 3159 3171
+)
+"src/karel_impl.ml" 125 3530 3550 "src/karel_impl.ml" 125 3530 3551
+type(
+  cell -> cell -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 125 3530 3552 "src/karel_impl.ml" 125 3530 3553
+type(
+  cell
+)
+ident(
+  int_ref x "src/karel_impl.ml" 125 3530 3539 "src/karel_impl.ml" 125 3530 3540
+)
+"src/karel_impl.ml" 125 3530 3547 "src/karel_impl.ml" 125 3530 3554
+type(
+  bool
+)
+"src/karel_impl.ml" 125 3530 3560 "src/karel_impl.ml" 125 3530 3564
+type(
+  bool
+)
+"src/karel_impl.ml" 125 3530 3570 "src/karel_impl.ml" 125 3530 3575
+type(
+  bool
+)
+"src/karel_impl.ml" 125 3530 3544 "src/karel_impl.ml" 125 3530 3575
+type(
+  bool
+)
+"src/karel_impl.ml" 123 3492 3494 "src/karel_impl.ml" 125 3530 3576
+type(
+  bool
+)
+"src/karel_impl.ml" 118 3213 3215 "src/karel_impl.ml" 125 3530 3576
+type(
+  bool
+)
+"src/karel_impl.ml" 117 3175 3178 "src/karel_impl.ml" 125 3530 3576
+type(
+  bool
+)
+"src/karel_impl.ml" 110 2897 2898 "src/karel_impl.ml" 125 3530 3576
+type(
+  bool
+)
+type(
+  bool
+)
+"src/karel_impl.ml" 132 3744 3752 "src/karel_impl.ml" 132 3744 3756
+type(
+  state -> instruction -> state
+)
+ident(
+  def step "src/karel_impl.ml" 132 3744 3744 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 132 3744 3773 "src/karel_impl.ml" 167 5488 5563
+)
+"src/karel_impl.ml" 132 3744 3774 "src/karel_impl.ml" 132 3744 3778
+type(
+  instruction
+)
+ident(
+  def code "src/karel_impl.ml" 132 3744 3794 "src/karel_impl.ml" 167 5488 5563
+)
+"src/karel_impl.ml" 133 3804 3812 "src/karel_impl.ml" 133 3804 3816
+type(
+  instruction
+)
+ident(
+  int_ref code "src/karel_impl.ml" 132 3744 3774 "src/karel_impl.ml" 132 3744 3778
+)
+"src/karel_impl.ml" 134 3822 3826 "src/karel_impl.ml" 134 3822 3830
+type(
+  instruction
+)
+"src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 136 3875 3877 "src/karel_impl.ml" 148 4481 4530
+)
+"src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+type(
+  int
+)
+ident(
+  def row "src/karel_impl.ml" 136 3875 3877 "src/karel_impl.ml" 148 4481 4530
+)
+"src/karel_impl.ml" 135 3834 3844 "src/karel_impl.ml" 135 3834 3853
+type(
+  pos
+)
+"src/karel_impl.ml" 135 3834 3856 "src/karel_impl.ml" 135 3834 3861
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 135 3834 3856 "src/karel_impl.ml" 135 3834 3871
+type(
+  pos
+)
+"src/karel_impl.ml" 136 3875 3881 "src/karel_impl.ml" 136 3875 3886
+type(
+  cell option
+)
+ident(
+  def front "src/karel_impl.ml" 141 4154 4156 "src/karel_impl.ml" 148 4481 4530
+)
+"src/karel_impl.ml" 136 3875 3892 "src/karel_impl.ml" 136 3875 3897
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 136 3875 3892 "src/karel_impl.ml" 136 3875 3907
+type(
+  dir
+)
+"src/karel_impl.ml" 136 3875 3908 "src/karel_impl.ml" 136 3875 3909
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 136 3875 3910 "src/karel_impl.ml" 136 3875 3915
+type(
+  dir
+)
+"src/karel_impl.ml" 136 3875 3892 "src/karel_impl.ml" 136 3875 3915
+type(
+  bool
+)
+"src/karel_impl.ml" 136 3875 3921 "src/karel_impl.ml" 136 3875 3929
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 136 3875 3930 "src/karel_impl.ml" 136 3875 3935
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 136 3875 3930 "src/karel_impl.ml" 136 3875 3940
+type(
+  grid
+)
+"src/karel_impl.ml" 136 3875 3942 "src/karel_impl.ml" 136 3875 3945
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 136 3875 3947 "src/karel_impl.ml" 136 3875 3950
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 136 3875 3950 "src/karel_impl.ml" 136 3875 3951
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 136 3875 3951 "src/karel_impl.ml" 136 3875 3952
+type(
+  int
+)
+"src/karel_impl.ml" 136 3875 3947 "src/karel_impl.ml" 136 3875 3952
+type(
+  int
+)
+"src/karel_impl.ml" 136 3875 3941 "src/karel_impl.ml" 136 3875 3953
+type(
+  pos
+)
+"src/karel_impl.ml" 136 3875 3921 "src/karel_impl.ml" 136 3875 3953
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 137 3954 3967 "src/karel_impl.ml" 137 3954 3972
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 137 3954 3967 "src/karel_impl.ml" 137 3954 3982
+type(
+  dir
+)
+"src/karel_impl.ml" 137 3954 3983 "src/karel_impl.ml" 137 3954 3984
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 137 3954 3985 "src/karel_impl.ml" 137 3954 3990
+type(
+  dir
+)
+"src/karel_impl.ml" 137 3954 3967 "src/karel_impl.ml" 137 3954 3990
+type(
+  bool
+)
+"src/karel_impl.ml" 137 3954 3996 "src/karel_impl.ml" 137 3954 4004
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 137 3954 4005 "src/karel_impl.ml" 137 3954 4010
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 137 3954 4005 "src/karel_impl.ml" 137 3954 4015
+type(
+  grid
+)
+"src/karel_impl.ml" 137 3954 4017 "src/karel_impl.ml" 137 3954 4020
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 137 3954 4022 "src/karel_impl.ml" 137 3954 4025
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 137 3954 4026 "src/karel_impl.ml" 137 3954 4027
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 137 3954 4028 "src/karel_impl.ml" 137 3954 4029
+type(
+  int
+)
+"src/karel_impl.ml" 137 3954 4022 "src/karel_impl.ml" 137 3954 4029
+type(
+  int
+)
+"src/karel_impl.ml" 137 3954 4016 "src/karel_impl.ml" 137 3954 4030
+type(
+  pos
+)
+"src/karel_impl.ml" 137 3954 3996 "src/karel_impl.ml" 137 3954 4030
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 138 4031 4044 "src/karel_impl.ml" 138 4031 4049
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 138 4031 4044 "src/karel_impl.ml" 138 4031 4059
+type(
+  dir
+)
+"src/karel_impl.ml" 138 4031 4060 "src/karel_impl.ml" 138 4031 4061
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 138 4031 4062 "src/karel_impl.ml" 138 4031 4066
+type(
+  dir
+)
+"src/karel_impl.ml" 138 4031 4044 "src/karel_impl.ml" 138 4031 4066
+type(
+  bool
+)
+"src/karel_impl.ml" 138 4031 4072 "src/karel_impl.ml" 138 4031 4080
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 138 4031 4081 "src/karel_impl.ml" 138 4031 4086
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 138 4031 4081 "src/karel_impl.ml" 138 4031 4091
+type(
+  grid
+)
+"src/karel_impl.ml" 138 4031 4093 "src/karel_impl.ml" 138 4031 4096
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 138 4031 4096 "src/karel_impl.ml" 138 4031 4097
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 138 4031 4097 "src/karel_impl.ml" 138 4031 4098
+type(
+  int
+)
+"src/karel_impl.ml" 138 4031 4093 "src/karel_impl.ml" 138 4031 4098
+type(
+  int
+)
+"src/karel_impl.ml" 138 4031 4100 "src/karel_impl.ml" 138 4031 4103
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 138 4031 4092 "src/karel_impl.ml" 138 4031 4104
+type(
+  pos
+)
+"src/karel_impl.ml" 138 4031 4072 "src/karel_impl.ml" 138 4031 4104
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 139 4105 4115 "src/karel_impl.ml" 139 4105 4123
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 139 4105 4124 "src/karel_impl.ml" 139 4105 4129
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 139 4105 4124 "src/karel_impl.ml" 139 4105 4134
+type(
+  grid
+)
+"src/karel_impl.ml" 139 4105 4136 "src/karel_impl.ml" 139 4105 4139
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 139 4105 4139 "src/karel_impl.ml" 139 4105 4140
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 139 4105 4140 "src/karel_impl.ml" 139 4105 4141
+type(
+  int
+)
+"src/karel_impl.ml" 139 4105 4136 "src/karel_impl.ml" 139 4105 4141
+type(
+  int
+)
+"src/karel_impl.ml" 139 4105 4143 "src/karel_impl.ml" 139 4105 4146
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 139 4105 4135 "src/karel_impl.ml" 139 4105 4147
+type(
+  pos
+)
+"src/karel_impl.ml" 139 4105 4115 "src/karel_impl.ml" 139 4105 4147
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 138 4031 4041 "src/karel_impl.ml" 139 4105 4147
+type(
+  cell option
+)
+"src/karel_impl.ml" 137 3954 3964 "src/karel_impl.ml" 139 4105 4147
+type(
+  cell option
+)
+"src/karel_impl.ml" 136 3875 3889 "src/karel_impl.ml" 139 4105 4147
+type(
+  cell option
+)
+"src/karel_impl.ml" 141 4154 4163 "src/karel_impl.ml" 141 4154 4168
+type(
+  cell option
+)
+ident(
+  int_ref front "src/karel_impl.ml" 136 3875 3881 "src/karel_impl.ml" 136 3875 3886
+)
+"src/karel_impl.ml" 142 4175 4179 "src/karel_impl.ml" 142 4175 4183
+type(
+  cell option
+)
+"src/karel_impl.ml" 142 4175 4187 "src/karel_impl.ml" 142 4175 4192
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 143 4193 4202 "src/karel_impl.ml" 143 4193 4203
+type(
+  cell
+)
+ident(
+  def x "src/karel_impl.ml" 143 4193 4207 "src/karel_impl.ml" 148 4481 4529
+)
+"src/karel_impl.ml" 143 4193 4197 "src/karel_impl.ml" 143 4193 4203
+type(
+  cell option
+)
+"src/karel_impl.ml" 143 4193 4212 "src/karel_impl.ml" 143 4193 4213
+type(
+  cell
+)
+ident(
+  int_ref x "src/karel_impl.ml" 143 4193 4202 "src/karel_impl.ml" 143 4193 4203
+)
+"src/karel_impl.ml" 143 4193 4214 "src/karel_impl.ml" 143 4193 4215
+type(
+  cell -> cell -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 143 4193 4216 "src/karel_impl.ml" 143 4193 4220
+type(
+  cell
+)
+"src/karel_impl.ml" 143 4193 4210 "src/karel_impl.ml" 143 4193 4222
+type(
+  bool
+)
+"src/karel_impl.ml" 143 4193 4228 "src/karel_impl.ml" 143 4193 4233
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 145 4244 4253 "src/karel_impl.ml" 145 4244 4258
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 145 4244 4253 "src/karel_impl.ml" 145 4244 4268
+type(
+  dir
+)
+"src/karel_impl.ml" 145 4244 4269 "src/karel_impl.ml" 145 4244 4270
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 145 4244 4271 "src/karel_impl.ml" 145 4244 4276
+type(
+  dir
+)
+"src/karel_impl.ml" 145 4244 4253 "src/karel_impl.ml" 145 4244 4276
+type(
+  bool
+)
+"src/karel_impl.ml" 145 4244 4283 "src/karel_impl.ml" 145 4244 4288
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 145 4244 4307 "src/karel_impl.ml" 145 4244 4310
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 145 4244 4312 "src/karel_impl.ml" 145 4244 4315
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 145 4244 4315 "src/karel_impl.ml" 145 4244 4316
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 145 4244 4316 "src/karel_impl.ml" 145 4244 4317
+type(
+  int
+)
+"src/karel_impl.ml" 145 4244 4312 "src/karel_impl.ml" 145 4244 4317
+type(
+  int
+)
+"src/karel_impl.ml" 145 4244 4306 "src/karel_impl.ml" 145 4244 4318
+type(
+  pos
+)
+"src/karel_impl.ml" 145 4244 4282 "src/karel_impl.ml" 145 4244 4319
+type(
+  state
+)
+"src/karel_impl.ml" 146 4320 4334 "src/karel_impl.ml" 146 4320 4339
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 146 4320 4334 "src/karel_impl.ml" 146 4320 4349
+type(
+  dir
+)
+"src/karel_impl.ml" 146 4320 4350 "src/karel_impl.ml" 146 4320 4351
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 146 4320 4352 "src/karel_impl.ml" 146 4320 4357
+type(
+  dir
+)
+"src/karel_impl.ml" 146 4320 4334 "src/karel_impl.ml" 146 4320 4357
+type(
+  bool
+)
+"src/karel_impl.ml" 146 4320 4364 "src/karel_impl.ml" 146 4320 4369
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 146 4320 4388 "src/karel_impl.ml" 146 4320 4391
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 146 4320 4393 "src/karel_impl.ml" 146 4320 4396
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 146 4320 4396 "src/karel_impl.ml" 146 4320 4397
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 146 4320 4397 "src/karel_impl.ml" 146 4320 4398
+type(
+  int
+)
+"src/karel_impl.ml" 146 4320 4393 "src/karel_impl.ml" 146 4320 4398
+type(
+  int
+)
+"src/karel_impl.ml" 146 4320 4387 "src/karel_impl.ml" 146 4320 4399
+type(
+  pos
+)
+"src/karel_impl.ml" 146 4320 4363 "src/karel_impl.ml" 146 4320 4400
+type(
+  state
+)
+"src/karel_impl.ml" 147 4401 4415 "src/karel_impl.ml" 147 4401 4420
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 147 4401 4415 "src/karel_impl.ml" 147 4401 4430
+type(
+  dir
+)
+"src/karel_impl.ml" 147 4401 4431 "src/karel_impl.ml" 147 4401 4432
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 147 4401 4433 "src/karel_impl.ml" 147 4401 4437
+type(
+  dir
+)
+"src/karel_impl.ml" 147 4401 4415 "src/karel_impl.ml" 147 4401 4437
+type(
+  bool
+)
+"src/karel_impl.ml" 147 4401 4444 "src/karel_impl.ml" 147 4401 4449
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 147 4401 4468 "src/karel_impl.ml" 147 4401 4471
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 147 4401 4471 "src/karel_impl.ml" 147 4401 4472
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/karel_impl.ml" 147 4401 4472 "src/karel_impl.ml" 147 4401 4473
+type(
+  int
+)
+"src/karel_impl.ml" 147 4401 4468 "src/karel_impl.ml" 147 4401 4473
+type(
+  int
+)
+"src/karel_impl.ml" 147 4401 4475 "src/karel_impl.ml" 147 4401 4478
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 147 4401 4467 "src/karel_impl.ml" 147 4401 4479
+type(
+  pos
+)
+"src/karel_impl.ml" 147 4401 4443 "src/karel_impl.ml" 147 4401 4480
+type(
+  state
+)
+"src/karel_impl.ml" 148 4481 4493 "src/karel_impl.ml" 148 4481 4498
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 148 4481 4517 "src/karel_impl.ml" 148 4481 4520
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 135 3834 3845 "src/karel_impl.ml" 135 3834 3848
+)
+"src/karel_impl.ml" 148 4481 4520 "src/karel_impl.ml" 148 4481 4521
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( + ) "src/core_pervasives.mli" 212 8365 8365 "src/core_pervasives.mli" 212 8365 8411
+)
+"src/karel_impl.ml" 148 4481 4521 "src/karel_impl.ml" 148 4481 4522
+type(
+  int
+)
+"src/karel_impl.ml" 148 4481 4517 "src/karel_impl.ml" 148 4481 4522
+type(
+  int
+)
+"src/karel_impl.ml" 148 4481 4524 "src/karel_impl.ml" 148 4481 4527
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 135 3834 3849 "src/karel_impl.ml" 135 3834 3852
+)
+"src/karel_impl.ml" 148 4481 4516 "src/karel_impl.ml" 148 4481 4528
+type(
+  pos
+)
+"src/karel_impl.ml" 148 4481 4492 "src/karel_impl.ml" 148 4481 4529
+type(
+  state
+)
+"src/karel_impl.ml" 147 4401 4412 "src/karel_impl.ml" 148 4481 4529
+type(
+  state
+)
+"src/karel_impl.ml" 146 4320 4331 "src/karel_impl.ml" 148 4481 4529
+type(
+  state
+)
+"src/karel_impl.ml" 145 4244 4250 "src/karel_impl.ml" 148 4481 4529
+type(
+  state
+)
+"src/karel_impl.ml" 143 4193 4207 "src/karel_impl.ml" 148 4481 4529
+type(
+  state
+)
+"src/karel_impl.ml" 141 4154 4156 "src/karel_impl.ml" 148 4481 4530
+type(
+  state
+)
+"src/karel_impl.ml" 136 3875 3877 "src/karel_impl.ml" 148 4481 4530
+type(
+  state
+)
+"src/karel_impl.ml" 135 3834 3839 "src/karel_impl.ml" 148 4481 4531
+type(
+  state
+)
+"src/karel_impl.ml" 150 4536 4540 "src/karel_impl.ml" 150 4536 4548
+type(
+  instruction
+)
+"src/karel_impl.ml" 151 4552 4556 "src/karel_impl.ml" 151 4552 4561
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 151 4552 4556 "src/karel_impl.ml" 151 4552 4571
+type(
+  dir
+)
+"src/karel_impl.ml" 151 4552 4572 "src/karel_impl.ml" 151 4552 4573
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 151 4552 4574 "src/karel_impl.ml" 151 4552 4579
+type(
+  dir
+)
+"src/karel_impl.ml" 151 4552 4556 "src/karel_impl.ml" 151 4552 4579
+type(
+  bool
+)
+"src/karel_impl.ml" 151 4552 4586 "src/karel_impl.ml" 151 4552 4591
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 151 4552 4609 "src/karel_impl.ml" 151 4552 4613
+type(
+  dir
+)
+"src/karel_impl.ml" 151 4552 4585 "src/karel_impl.ml" 151 4552 4614
+type(
+  state
+)
+"src/karel_impl.ml" 152 4615 4624 "src/karel_impl.ml" 152 4615 4629
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 152 4615 4624 "src/karel_impl.ml" 152 4615 4639
+type(
+  dir
+)
+"src/karel_impl.ml" 152 4615 4640 "src/karel_impl.ml" 152 4615 4641
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 152 4615 4642 "src/karel_impl.ml" 152 4615 4646
+type(
+  dir
+)
+"src/karel_impl.ml" 152 4615 4624 "src/karel_impl.ml" 152 4615 4646
+type(
+  bool
+)
+"src/karel_impl.ml" 152 4615 4653 "src/karel_impl.ml" 152 4615 4658
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 152 4615 4676 "src/karel_impl.ml" 152 4615 4681
+type(
+  dir
+)
+"src/karel_impl.ml" 152 4615 4652 "src/karel_impl.ml" 152 4615 4682
+type(
+  state
+)
+"src/karel_impl.ml" 153 4683 4692 "src/karel_impl.ml" 153 4683 4697
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 153 4683 4692 "src/karel_impl.ml" 153 4683 4707
+type(
+  dir
+)
+"src/karel_impl.ml" 153 4683 4708 "src/karel_impl.ml" 153 4683 4709
+type(
+  dir -> dir -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 153 4683 4710 "src/karel_impl.ml" 153 4683 4715
+type(
+  dir
+)
+"src/karel_impl.ml" 153 4683 4692 "src/karel_impl.ml" 153 4683 4715
+type(
+  bool
+)
+"src/karel_impl.ml" 153 4683 4722 "src/karel_impl.ml" 153 4683 4727
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 153 4683 4745 "src/karel_impl.ml" 153 4683 4749
+type(
+  dir
+)
+"src/karel_impl.ml" 153 4683 4721 "src/karel_impl.ml" 153 4683 4750
+type(
+  state
+)
+"src/karel_impl.ml" 154 4751 4758 "src/karel_impl.ml" 154 4751 4763
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 154 4751 4781 "src/karel_impl.ml" 154 4751 4786
+type(
+  dir
+)
+"src/karel_impl.ml" 154 4751 4757 "src/karel_impl.ml" 154 4751 4787
+type(
+  state
+)
+"src/karel_impl.ml" 153 4683 4689 "src/karel_impl.ml" 154 4751 4787
+type(
+  state
+)
+"src/karel_impl.ml" 152 4615 4621 "src/karel_impl.ml" 154 4751 4787
+type(
+  state
+)
+"src/karel_impl.ml" 151 4552 4553 "src/karel_impl.ml" 154 4751 4787
+type(
+  state
+)
+"src/karel_impl.ml" 155 4788 4792 "src/karel_impl.ml" 155 4788 4802
+type(
+  instruction
+)
+"src/karel_impl.ml" 156 4806 4812 "src/karel_impl.ml" 156 4806 4815
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 157 4842 4844 "src/karel_impl.ml" 158 4893 4999
+)
+"src/karel_impl.ml" 156 4806 4816 "src/karel_impl.ml" 156 4806 4819
+type(
+  int
+)
+ident(
+  def row "src/karel_impl.ml" 157 4842 4844 "src/karel_impl.ml" 158 4893 4999
+)
+"src/karel_impl.ml" 156 4806 4811 "src/karel_impl.ml" 156 4806 4820
+type(
+  pos
+)
+"src/karel_impl.ml" 156 4806 4823 "src/karel_impl.ml" 156 4806 4828
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 156 4806 4823 "src/karel_impl.ml" 156 4806 4838
+type(
+  pos
+)
+"src/karel_impl.ml" 157 4842 4848 "src/karel_impl.ml" 157 4842 4857
+type(
+  cell option
+)
+ident(
+  def curr_cell "src/karel_impl.ml" 158 4893 4896 "src/karel_impl.ml" 158 4893 4999
+)
+"src/karel_impl.ml" 157 4842 4860 "src/karel_impl.ml" 157 4842 4868
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 157 4842 4869 "src/karel_impl.ml" 157 4842 4874
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 157 4842 4869 "src/karel_impl.ml" 157 4842 4879
+type(
+  grid
+)
+"src/karel_impl.ml" 157 4842 4881 "src/karel_impl.ml" 157 4842 4884
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 156 4806 4812 "src/karel_impl.ml" 156 4806 4815
+)
+"src/karel_impl.ml" 157 4842 4885 "src/karel_impl.ml" 157 4842 4888
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 156 4806 4816 "src/karel_impl.ml" 156 4806 4819
+)
+"src/karel_impl.ml" 157 4842 4880 "src/karel_impl.ml" 157 4842 4889
+type(
+  pos
+)
+"src/karel_impl.ml" 157 4842 4860 "src/karel_impl.ml" 157 4842 4889
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 158 4893 4900 "src/karel_impl.ml" 158 4893 4909
+type(
+  cell option
+)
+ident(
+  int_ref curr_cell "src/karel_impl.ml" 157 4842 4848 "src/karel_impl.ml" 157 4842 4857
+)
+"src/karel_impl.ml" 158 4893 4910 "src/karel_impl.ml" 158 4893 4911
+type(
+  cell option -> cell option -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 158 4893 4917 "src/karel_impl.ml" 158 4893 4923
+type(
+  cell
+)
+"src/karel_impl.ml" 158 4893 4912 "src/karel_impl.ml" 158 4893 4923
+type(
+  cell option
+)
+"src/karel_impl.ml" 158 4893 4899 "src/karel_impl.ml" 158 4893 4924
+type(
+  bool
+)
+"src/karel_impl.ml" 158 4893 4931 "src/karel_impl.ml" 158 4893 4936
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 158 4893 4950 "src/karel_impl.ml" 158 4893 4958
+type(
+  grid -> pos -> cell -> grid
+)
+ident(
+  int_ref set_cell "src/karel_impl.ml" 34 476 480 "src/karel_impl.ml" 34 476 488
+)
+"src/karel_impl.ml" 158 4893 4959 "src/karel_impl.ml" 158 4893 4964
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 158 4893 4959 "src/karel_impl.ml" 158 4893 4969
+type(
+  grid
+)
+"src/karel_impl.ml" 158 4893 4971 "src/karel_impl.ml" 158 4893 4974
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 156 4806 4812 "src/karel_impl.ml" 156 4806 4815
+)
+"src/karel_impl.ml" 158 4893 4976 "src/karel_impl.ml" 158 4893 4979
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 156 4806 4816 "src/karel_impl.ml" 156 4806 4819
+)
+"src/karel_impl.ml" 158 4893 4970 "src/karel_impl.ml" 158 4893 4980
+type(
+  pos
+)
+"src/karel_impl.ml" 158 4893 4981 "src/karel_impl.ml" 158 4893 4986
+type(
+  cell
+)
+"src/karel_impl.ml" 158 4893 4949 "src/karel_impl.ml" 158 4893 4987
+call(
+  stack
+)
+type(
+  grid
+)
+"src/karel_impl.ml" 158 4893 4930 "src/karel_impl.ml" 158 4893 4988
+type(
+  state
+)
+"src/karel_impl.ml" 158 4893 4994 "src/karel_impl.ml" 158 4893 4999
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 158 4893 4896 "src/karel_impl.ml" 158 4893 4999
+type(
+  state
+)
+"src/karel_impl.ml" 157 4842 4844 "src/karel_impl.ml" 158 4893 4999
+type(
+  state
+)
+"src/karel_impl.ml" 156 4806 4807 "src/karel_impl.ml" 158 4893 4999
+type(
+  state
+)
+"src/karel_impl.ml" 159 5000 5004 "src/karel_impl.ml" 159 5000 5013
+type(
+  instruction
+)
+"src/karel_impl.ml" 160 5017 5023 "src/karel_impl.ml" 160 5017 5026
+type(
+  int
+)
+ident(
+  def col "src/karel_impl.ml" 161 5053 5055 "src/karel_impl.ml" 162 5104 5212
+)
+"src/karel_impl.ml" 160 5017 5027 "src/karel_impl.ml" 160 5017 5030
+type(
+  int
+)
+ident(
+  def row "src/karel_impl.ml" 161 5053 5055 "src/karel_impl.ml" 162 5104 5212
+)
+"src/karel_impl.ml" 160 5017 5022 "src/karel_impl.ml" 160 5017 5031
+type(
+  pos
+)
+"src/karel_impl.ml" 160 5017 5034 "src/karel_impl.ml" 160 5017 5039
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 160 5017 5034 "src/karel_impl.ml" 160 5017 5049
+type(
+  pos
+)
+"src/karel_impl.ml" 161 5053 5059 "src/karel_impl.ml" 161 5053 5068
+type(
+  cell option
+)
+ident(
+  def curr_cell "src/karel_impl.ml" 162 5104 5107 "src/karel_impl.ml" 162 5104 5212
+)
+"src/karel_impl.ml" 161 5053 5071 "src/karel_impl.ml" 161 5053 5079
+type(
+  grid -> pos -> cell option
+)
+ident(
+  int_ref get_cell "src/karel_impl.ml" 30 368 372 "src/karel_impl.ml" 30 368 380
+)
+"src/karel_impl.ml" 161 5053 5080 "src/karel_impl.ml" 161 5053 5085
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 161 5053 5080 "src/karel_impl.ml" 161 5053 5090
+type(
+  grid
+)
+"src/karel_impl.ml" 161 5053 5092 "src/karel_impl.ml" 161 5053 5095
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 160 5017 5023 "src/karel_impl.ml" 160 5017 5026
+)
+"src/karel_impl.ml" 161 5053 5096 "src/karel_impl.ml" 161 5053 5099
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 160 5017 5027 "src/karel_impl.ml" 160 5017 5030
+)
+"src/karel_impl.ml" 161 5053 5091 "src/karel_impl.ml" 161 5053 5100
+type(
+  pos
+)
+"src/karel_impl.ml" 161 5053 5071 "src/karel_impl.ml" 161 5053 5100
+call(
+  stack
+)
+type(
+  cell option
+)
+"src/karel_impl.ml" 162 5104 5111 "src/karel_impl.ml" 162 5104 5120
+type(
+  cell option
+)
+ident(
+  int_ref curr_cell "src/karel_impl.ml" 161 5053 5059 "src/karel_impl.ml" 161 5053 5068
+)
+"src/karel_impl.ml" 162 5104 5121 "src/karel_impl.ml" 162 5104 5123
+type(
+  cell option -> cell option -> bool
+)
+ident(
+  int_ref Core.( <> ) "src/core_pervasives.mli" 45 1606 1606 "src/core_pervasives.mli" 45 1606 1654
+)
+"src/karel_impl.ml" 162 5104 5129 "src/karel_impl.ml" 162 5104 5135
+type(
+  cell
+)
+"src/karel_impl.ml" 162 5104 5124 "src/karel_impl.ml" 162 5104 5135
+type(
+  cell option
+)
+"src/karel_impl.ml" 162 5104 5110 "src/karel_impl.ml" 162 5104 5136
+type(
+  bool
+)
+"src/karel_impl.ml" 162 5104 5143 "src/karel_impl.ml" 162 5104 5148
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 162 5104 5162 "src/karel_impl.ml" 162 5104 5170
+type(
+  grid -> pos -> cell -> grid
+)
+ident(
+  int_ref set_cell "src/karel_impl.ml" 34 476 480 "src/karel_impl.ml" 34 476 488
+)
+"src/karel_impl.ml" 162 5104 5171 "src/karel_impl.ml" 162 5104 5176
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 162 5104 5171 "src/karel_impl.ml" 162 5104 5181
+type(
+  grid
+)
+"src/karel_impl.ml" 162 5104 5183 "src/karel_impl.ml" 162 5104 5186
+type(
+  int
+)
+ident(
+  int_ref col "src/karel_impl.ml" 160 5017 5023 "src/karel_impl.ml" 160 5017 5026
+)
+"src/karel_impl.ml" 162 5104 5188 "src/karel_impl.ml" 162 5104 5191
+type(
+  int
+)
+ident(
+  int_ref row "src/karel_impl.ml" 160 5017 5027 "src/karel_impl.ml" 160 5017 5030
+)
+"src/karel_impl.ml" 162 5104 5182 "src/karel_impl.ml" 162 5104 5192
+type(
+  pos
+)
+"src/karel_impl.ml" 162 5104 5193 "src/karel_impl.ml" 162 5104 5199
+type(
+  cell
+)
+"src/karel_impl.ml" 162 5104 5161 "src/karel_impl.ml" 162 5104 5200
+call(
+  stack
+)
+type(
+  grid
+)
+"src/karel_impl.ml" 162 5104 5142 "src/karel_impl.ml" 162 5104 5201
+type(
+  state
+)
+"src/karel_impl.ml" 162 5104 5207 "src/karel_impl.ml" 162 5104 5212
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 162 5104 5107 "src/karel_impl.ml" 162 5104 5212
+type(
+  state
+)
+"src/karel_impl.ml" 161 5053 5055 "src/karel_impl.ml" 162 5104 5212
+type(
+  state
+)
+"src/karel_impl.ml" 160 5017 5018 "src/karel_impl.ml" 162 5104 5212
+type(
+  state
+)
+"src/karel_impl.ml" 163 5213 5224 "src/karel_impl.ml" 163 5213 5228
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 164 5241 5242 "src/karel_impl.ml" 164 5241 5344
+)
+"src/karel_impl.ml" 163 5213 5230 "src/karel_impl.ml" 163 5213 5236
+type(
+  instruction list
+)
+ident(
+  def instrs "src/karel_impl.ml" 164 5241 5242 "src/karel_impl.ml" 164 5241 5344
+)
+"src/karel_impl.ml" 163 5213 5217 "src/karel_impl.ml" 163 5213 5237
+type(
+  instruction
+)
+"src/karel_impl.ml" 164 5241 5247 "src/karel_impl.ml" 164 5241 5256
+type(
+  state -> predicate -> bool
+)
+ident(
+  int_ref eval_pred "src/karel_impl.ml" 109 2835 2843 "src/karel_impl.ml" 109 2835 2852
+)
+"src/karel_impl.ml" 164 5241 5257 "src/karel_impl.ml" 164 5241 5262
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 164 5241 5263 "src/karel_impl.ml" 164 5241 5267
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 163 5213 5224 "src/karel_impl.ml" 163 5213 5228
+)
+"src/karel_impl.ml" 164 5241 5246 "src/karel_impl.ml" 164 5241 5268
+call(
+  stack
+)
+type(
+  bool
+)
+"src/karel_impl.ml" 164 5241 5269 "src/karel_impl.ml" 164 5241 5270
+type(
+  bool -> bool -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 164 5241 5271 "src/karel_impl.ml" 164 5241 5275
+type(
+  bool
+)
+"src/karel_impl.ml" 164 5241 5245 "src/karel_impl.ml" 164 5241 5276
+type(
+  bool
+)
+"src/karel_impl.ml" 164 5241 5282 "src/karel_impl.ml" 164 5241 5291
+type(
+  state -> instruction list -> state
+)
+ident(
+  int_ref step_list "src/karel_impl.ml" 174 5575 5579 "src/karel_impl.ml" 174 5575 5588
+)
+"src/karel_impl.ml" 164 5241 5292 "src/karel_impl.ml" 164 5241 5299
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 164 5241 5301 "src/karel_impl.ml" 164 5241 5307
+type(
+  instruction list
+)
+ident(
+  int_ref instrs "src/karel_impl.ml" 163 5213 5230 "src/karel_impl.ml" 163 5213 5236
+)
+"src/karel_impl.ml" 164 5241 5308 "src/karel_impl.ml" 164 5241 5309
+type(
+  instruction list -> instruction list -> instruction list
+)
+ident(
+  int_ref Core.( @ ) "src/list.mli" 497 21588 21590 "src/list.mli" 497 21588 21622
+)
+"src/karel_impl.ml" 164 5241 5318 "src/karel_impl.ml" 164 5241 5322
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 163 5213 5224 "src/karel_impl.ml" 163 5213 5228
+)
+"src/karel_impl.ml" 164 5241 5324 "src/karel_impl.ml" 164 5241 5330
+type(
+  instruction list
+)
+ident(
+  int_ref instrs "src/karel_impl.ml" 163 5213 5230 "src/karel_impl.ml" 163 5213 5236
+)
+"src/karel_impl.ml" 164 5241 5311 "src/karel_impl.ml" 164 5241 5331
+type(
+  instruction
+)
+"src/karel_impl.ml" 164 5241 5310 "src/karel_impl.ml" 164 5241 5332
+type(
+  instruction list
+)
+"src/karel_impl.ml" 164 5241 5300 "src/karel_impl.ml" 164 5241 5333
+call(
+  stack
+)
+type(
+  instruction list
+)
+"src/karel_impl.ml" 164 5241 5282 "src/karel_impl.ml" 164 5241 5333
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 164 5241 5339 "src/karel_impl.ml" 164 5241 5344
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 164 5241 5242 "src/karel_impl.ml" 164 5241 5344
+type(
+  state
+)
+"src/karel_impl.ml" 165 5345 5353 "src/karel_impl.ml" 165 5345 5357
+type(
+  predicate
+)
+ident(
+  def pred "src/karel_impl.ml" 166 5376 5378 "src/karel_impl.ml" 167 5488 5563
+)
+"src/karel_impl.ml" 165 5345 5359 "src/karel_impl.ml" 165 5345 5364
+type(
+  instruction list
+)
+ident(
+  def then_ "src/karel_impl.ml" 166 5376 5378 "src/karel_impl.ml" 167 5488 5563
+)
+"src/karel_impl.ml" 165 5345 5366 "src/karel_impl.ml" 165 5345 5371
+type(
+  instruction list
+)
+ident(
+  def else_ "src/karel_impl.ml" 166 5376 5378 "src/karel_impl.ml" 167 5488 5563
+)
+"src/karel_impl.ml" 165 5345 5349 "src/karel_impl.ml" 165 5345 5372
+type(
+  instruction
+)
+"src/karel_impl.ml" 166 5376 5383 "src/karel_impl.ml" 166 5376 5392
+type(
+  state -> predicate -> bool
+)
+ident(
+  int_ref eval_pred "src/karel_impl.ml" 109 2835 2843 "src/karel_impl.ml" 109 2835 2852
+)
+"src/karel_impl.ml" 166 5376 5393 "src/karel_impl.ml" 166 5376 5398
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 166 5376 5399 "src/karel_impl.ml" 166 5376 5403
+type(
+  predicate
+)
+ident(
+  int_ref pred "src/karel_impl.ml" 165 5345 5353 "src/karel_impl.ml" 165 5345 5357
+)
+"src/karel_impl.ml" 166 5376 5382 "src/karel_impl.ml" 166 5376 5404
+call(
+  stack
+)
+type(
+  bool
+)
+"src/karel_impl.ml" 166 5376 5405 "src/karel_impl.ml" 166 5376 5406
+type(
+  bool -> bool -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/karel_impl.ml" 166 5376 5407 "src/karel_impl.ml" 166 5376 5411
+type(
+  bool
+)
+"src/karel_impl.ml" 166 5376 5381 "src/karel_impl.ml" 166 5376 5413
+type(
+  bool
+)
+"src/karel_impl.ml" 166 5376 5419 "src/karel_impl.ml" 166 5376 5428
+type(
+  instruction list ->
+  init:state -> f:(state -> instruction -> state) -> state
+)
+ident(
+  int_ref Core.List.fold "src/container_intf.ml" 180 6928 6930 "src/container_intf.ml" 180 6928 7004
+)
+"src/karel_impl.ml" 166 5376 5429 "src/karel_impl.ml" 166 5376 5434
+type(
+  instruction list
+)
+ident(
+  int_ref then_ "src/karel_impl.ml" 165 5345 5359 "src/karel_impl.ml" 165 5345 5364
+)
+"src/karel_impl.ml" 166 5376 5441 "src/karel_impl.ml" 166 5376 5446
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 166 5376 5455 "src/karel_impl.ml" 166 5376 5460
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 166 5376 5461 "src/karel_impl.ml" 166 5376 5486
+)
+"src/karel_impl.ml" 166 5376 5461 "src/karel_impl.ml" 166 5376 5466
+type(
+  instruction
+)
+ident(
+  def instr "src/karel_impl.ml" 166 5376 5470 "src/karel_impl.ml" 166 5376 5486
+)
+"src/karel_impl.ml" 166 5376 5470 "src/karel_impl.ml" 166 5376 5474
+type(
+  state -> instruction -> state
+)
+ident(
+  int_ref step "src/karel_impl.ml" 132 3744 3752 "src/karel_impl.ml" 132 3744 3756
+)
+"src/karel_impl.ml" 166 5376 5475 "src/karel_impl.ml" 166 5376 5480
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 166 5376 5455 "src/karel_impl.ml" 166 5376 5460
+)
+"src/karel_impl.ml" 166 5376 5481 "src/karel_impl.ml" 166 5376 5486
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 166 5376 5461 "src/karel_impl.ml" 166 5376 5466
+)
+"src/karel_impl.ml" 166 5376 5470 "src/karel_impl.ml" 166 5376 5486
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 166 5376 5450 "src/karel_impl.ml" 166 5376 5487
+type(
+  state -> instruction -> state
+)
+"src/karel_impl.ml" 166 5376 5419 "src/karel_impl.ml" 166 5376 5487
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 167 5488 5495 "src/karel_impl.ml" 167 5488 5504
+type(
+  instruction list ->
+  init:state -> f:(state -> instruction -> state) -> state
+)
+ident(
+  int_ref Core.List.fold "src/container_intf.ml" 180 6928 6930 "src/container_intf.ml" 180 6928 7004
+)
+"src/karel_impl.ml" 167 5488 5505 "src/karel_impl.ml" 167 5488 5510
+type(
+  instruction list
+)
+ident(
+  int_ref else_ "src/karel_impl.ml" 165 5345 5366 "src/karel_impl.ml" 165 5345 5371
+)
+"src/karel_impl.ml" 167 5488 5517 "src/karel_impl.ml" 167 5488 5522
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 132 3744 3758 "src/karel_impl.ml" 132 3744 3763
+)
+"src/karel_impl.ml" 167 5488 5531 "src/karel_impl.ml" 167 5488 5536
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 167 5488 5537 "src/karel_impl.ml" 167 5488 5562
+)
+"src/karel_impl.ml" 167 5488 5537 "src/karel_impl.ml" 167 5488 5542
+type(
+  instruction
+)
+ident(
+  def instr "src/karel_impl.ml" 167 5488 5546 "src/karel_impl.ml" 167 5488 5562
+)
+"src/karel_impl.ml" 167 5488 5546 "src/karel_impl.ml" 167 5488 5550
+type(
+  state -> instruction -> state
+)
+ident(
+  int_ref step "src/karel_impl.ml" 132 3744 3752 "src/karel_impl.ml" 132 3744 3756
+)
+"src/karel_impl.ml" 167 5488 5551 "src/karel_impl.ml" 167 5488 5556
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 167 5488 5531 "src/karel_impl.ml" 167 5488 5536
+)
+"src/karel_impl.ml" 167 5488 5557 "src/karel_impl.ml" 167 5488 5562
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 167 5488 5537 "src/karel_impl.ml" 167 5488 5542
+)
+"src/karel_impl.ml" 167 5488 5546 "src/karel_impl.ml" 167 5488 5562
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 167 5488 5526 "src/karel_impl.ml" 167 5488 5563
+type(
+  state -> instruction -> state
+)
+"src/karel_impl.ml" 167 5488 5495 "src/karel_impl.ml" 167 5488 5563
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 166 5376 5378 "src/karel_impl.ml" 167 5488 5563
+type(
+  state
+)
+"src/karel_impl.ml" 133 3804 3806 "src/karel_impl.ml" 167 5488 5563
+type(
+  state
+)
+type(
+  state
+)
+"src/karel_impl.ml" 174 5575 5579 "src/karel_impl.ml" 174 5575 5588
+type(
+  state -> instruction list -> state
+)
+ident(
+  def step_list "src/karel_impl.ml" 132 3744 3744 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 174 5575 5590 "src/karel_impl.ml" 174 5575 5595
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 174 5575 5605 "src/karel_impl.ml" 185 6019 6043
+)
+"src/karel_impl.ml" 174 5575 5606 "src/karel_impl.ml" 174 5575 5612
+type(
+  instruction list
+)
+ident(
+  def instrs "src/karel_impl.ml" 174 5575 5633 "src/karel_impl.ml" 185 6019 6043
+)
+"src/karel_impl.ml" 175 5643 5645 "src/karel_impl.ml" 175 5643 5654
+type(
+  instruction list ->
+  init:state -> f:(state -> instruction -> state) -> state
+)
+ident(
+  int_ref Core.List.fold "src/container_intf.ml" 180 6928 6930 "src/container_intf.ml" 180 6928 7004
+)
+"src/karel_impl.ml" 175 5643 5655 "src/karel_impl.ml" 175 5643 5661
+type(
+  instruction list
+)
+ident(
+  int_ref instrs "src/karel_impl.ml" 174 5575 5606 "src/karel_impl.ml" 174 5575 5612
+)
+"src/karel_impl.ml" 175 5643 5668 "src/karel_impl.ml" 175 5643 5673
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 174 5575 5590 "src/karel_impl.ml" 174 5575 5595
+)
+"src/karel_impl.ml" 175 5643 5682 "src/karel_impl.ml" 175 5643 5687
+type(
+  state
+)
+ident(
+  def state "src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 185 6019 6042
+)
+"src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 175 5643 5693
+type(
+  instruction
+)
+ident(
+  def instr "src/karel_impl.ml" 176 5697 5701 "src/karel_impl.ml" 185 6019 6042
+)
+"src/karel_impl.ml" 176 5697 5704 "src/karel_impl.ml" 176 5697 5709
+type(
+  bool
+)
+ident(
+  int_ref debug "src/karel_impl.ml" 7 135 139 "src/karel_impl.ml" 7 135 144
+)
+"src/karel_impl.ml" 177 5715 5723 "src/karel_impl.ml" 177 5715 5736
+type(
+  (string -> unit, Out_channel.t, unit) Base.format -> string -> unit
+)
+ident(
+  int_ref Core.Printf.printf "src/printf.ml" 10 231 235 "src/printf.ml" 10 231 241
+)
+"src/karel_impl.ml" 177 5715 5737 "src/karel_impl.ml" 177 5715 5768
+type(
+  (string -> unit, Out_channel.t, unit) Base.format
+)
+"src/karel_impl.ml" 178 5769 5780 "src/karel_impl.ml" 178 5769 5801
+type(
+  instruction -> string
+)
+ident(
+  int_ref instruction_to_string "src/karel_impl.ml" 90 2181 2189 "src/karel_impl.ml" 90 2181 2210
+)
+"src/karel_impl.ml" 178 5769 5802 "src/karel_impl.ml" 178 5769 5807
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 175 5643 5693
+)
+"src/karel_impl.ml" 178 5769 5779 "src/karel_impl.ml" 178 5769 5808
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 177 5715 5723 "src/karel_impl.ml" 178 5769 5808
+call(
+  stack
+)
+type(
+  unit
+)
+"src/karel_impl.ml" 179 5810 5822 "src/karel_impl.ml" 179 5810 5828
+type(
+  state
+)
+ident(
+  def state' "src/karel_impl.ml" 180 5851 5859 "src/karel_impl.ml" 183 5993 6007
+)
+"src/karel_impl.ml" 179 5810 5831 "src/karel_impl.ml" 179 5810 5835
+type(
+  state -> instruction -> state
+)
+ident(
+  int_ref step "src/karel_impl.ml" 132 3744 3752 "src/karel_impl.ml" 132 3744 3756
+)
+"src/karel_impl.ml" 179 5810 5836 "src/karel_impl.ml" 179 5810 5841
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 175 5643 5682 "src/karel_impl.ml" 175 5643 5687
+)
+"src/karel_impl.ml" 179 5810 5842 "src/karel_impl.ml" 179 5810 5847
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 175 5643 5693
+)
+"src/karel_impl.ml" 179 5810 5831 "src/karel_impl.ml" 179 5810 5847
+call(
+  stack
+)
+type(
+  state
+)
+"src/karel_impl.ml" 180 5851 5859 "src/karel_impl.ml" 180 5851 5872
+type(
+  (string -> string -> unit, Out_channel.t, unit) Base.format ->
+  string -> string -> unit
+)
+ident(
+  int_ref Core.Printf.printf "src/printf.ml" 10 231 235 "src/printf.ml" 10 231 241
+)
+"src/karel_impl.ml" 180 5851 5873 "src/karel_impl.ml" 180 5851 5916
+type(
+  (string -> string -> unit, Out_channel.t, unit) Base.format
+)
+"src/karel_impl.ml" 181 5917 5928 "src/karel_impl.ml" 181 5917 5949
+type(
+  instruction -> string
+)
+ident(
+  int_ref instruction_to_string "src/karel_impl.ml" 90 2181 2189 "src/karel_impl.ml" 90 2181 2210
+)
+"src/karel_impl.ml" 181 5917 5950 "src/karel_impl.ml" 181 5917 5955
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 175 5643 5693
+)
+"src/karel_impl.ml" 181 5917 5927 "src/karel_impl.ml" 181 5917 5956
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 182 5957 5968 "src/karel_impl.ml" 182 5957 5983
+type(
+  state -> string
+)
+ident(
+  int_ref state_to_string "src/karel_impl.ml" 41 735 739 "src/karel_impl.ml" 41 735 754
+)
+"src/karel_impl.ml" 182 5957 5984 "src/karel_impl.ml" 182 5957 5990
+type(
+  state
+)
+ident(
+  int_ref state' "src/karel_impl.ml" 179 5810 5822 "src/karel_impl.ml" 179 5810 5828
+)
+"src/karel_impl.ml" 182 5957 5967 "src/karel_impl.ml" 182 5957 5991
+call(
+  stack
+)
+type(
+  string
+)
+"src/karel_impl.ml" 180 5851 5859 "src/karel_impl.ml" 182 5957 5991
+call(
+  stack
+)
+type(
+  unit
+)
+"src/karel_impl.ml" 183 5993 6001 "src/karel_impl.ml" 183 5993 6007
+type(
+  state
+)
+ident(
+  int_ref state' "src/karel_impl.ml" 179 5810 5822 "src/karel_impl.ml" 179 5810 5828
+)
+"src/karel_impl.ml" 180 5851 5859 "src/karel_impl.ml" 183 5993 6007
+type(
+  state
+)
+"src/karel_impl.ml" 179 5810 5818 "src/karel_impl.ml" 183 5993 6007
+type(
+  state
+)
+"src/karel_impl.ml" 177 5715 5722 "src/karel_impl.ml" 183 5993 6008
+type(
+  state
+)
+"src/karel_impl.ml" 185 6019 6026 "src/karel_impl.ml" 185 6019 6030
+type(
+  state -> instruction -> state
+)
+ident(
+  int_ref step "src/karel_impl.ml" 132 3744 3752 "src/karel_impl.ml" 132 3744 3756
+)
+"src/karel_impl.ml" 185 6019 6031 "src/karel_impl.ml" 185 6019 6036
+type(
+  state
+)
+ident(
+  int_ref state "src/karel_impl.ml" 175 5643 5682 "src/karel_impl.ml" 175 5643 5687
+)
+"src/karel_impl.ml" 185 6019 6037 "src/karel_impl.ml" 185 6019 6042
+type(
+  instruction
+)
+ident(
+  int_ref instr "src/karel_impl.ml" 175 5643 5688 "src/karel_impl.ml" 175 5643 5693
+)
+"src/karel_impl.ml" 185 6019 6026 "src/karel_impl.ml" 185 6019 6042
+call(
+  tail
+)
+type(
+  state
+)
+"src/karel_impl.ml" 176 5697 5701 "src/karel_impl.ml" 185 6019 6042
+type(
+  state
+)
+"src/karel_impl.ml" 175 5643 5677 "src/karel_impl.ml" 185 6019 6043
+type(
+  state -> instruction -> state
+)
+"src/karel_impl.ml" 175 5643 5645 "src/karel_impl.ml" 185 6019 6043
+call(
+  tail
+)
+type(
+  state
+)
+type(
+  state
+)
+"src/karel_impl.ml" 194 6292 6296 "src/karel_impl.ml" 194 6292 6309
+type(
+  instruction list
+)
+ident(
+  def checkers_algo "src/karel_impl.ml" 256 7263 7264 "src/karel_impl.ml" 1 0 -1
+)
+"src/karel_impl.ml" 195 6333 6354 "src/karel_impl.ml" 195 6333 6358
+type(
+  cell
+)
+"src/karel_impl.ml" 195 6333 6345 "src/karel_impl.ml" 195 6333 6359
+type(
+  predicate
+)
+"src/karel_impl.ml" 195 6333 6340 "src/karel_impl.ml" 195 6333 6360
+type(
+  predicate
+)
+"src/karel_impl.ml" 196 6365 6386 "src/karel_impl.ml" 196 6365 6390
+type(
+  cell
+)
+"src/karel_impl.ml" 196 6365 6377 "src/karel_impl.ml" 196 6365 6391
+type(
+  predicate
+)
+"src/karel_impl.ml" 196 6365 6372 "src/karel_impl.ml" 196 6365 6392
+type(
+  predicate
+)
+"src/karel_impl.ml" 198 6397 6398 "src/karel_impl.ml" 198 6397 6407
+type(
+  instruction
+)
+"src/karel_impl.ml" 198 6397 6409 "src/karel_impl.ml" 198 6397 6413
+type(
+  instruction
+)
+"src/karel_impl.ml" 198 6397 6415 "src/karel_impl.ml" 198 6397 6419
+type(
+  instruction
+)
+"src/karel_impl.ml" 197 6395 6395 "src/karel_impl.ml" 199 6422 6423
+type(
+  instruction list
+)
+"src/karel_impl.ml" 196 6365 6365 "src/karel_impl.ml" 200 6424 6425
+type(
+  instruction
+)
+"src/karel_impl.ml" 202 6428 6428 "src/karel_impl.ml" 202 6428 6436
+type(
+  instruction
+)
+"src/karel_impl.ml" 202 6428 6438 "src/karel_impl.ml" 202 6428 6446
+type(
+  instruction
+)
+"src/karel_impl.ml" 203 6448 6448 "src/karel_impl.ml" 203 6448 6452
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6458 "src/karel_impl.ml" 204 6454 6476
+type(
+  predicate
+)
+"src/karel_impl.ml" 204 6454 6480 "src/karel_impl.ml" 204 6454 6488
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6490 "src/karel_impl.ml" 204 6454 6498
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6500 "src/karel_impl.ml" 204 6454 6504
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6506 "src/karel_impl.ml" 204 6454 6515
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6478 "src/karel_impl.ml" 204 6454 6516
+type(
+  instruction list
+)
+"src/karel_impl.ml" 204 6454 6519 "src/karel_impl.ml" 204 6454 6527
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6529 "src/karel_impl.ml" 204 6454 6537
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6539 "src/karel_impl.ml" 204 6454 6543
+type(
+  instruction
+)
+"src/karel_impl.ml" 204 6454 6518 "src/karel_impl.ml" 204 6454 6544
+type(
+  instruction list
+)
+"src/karel_impl.ml" 204 6454 6454 "src/karel_impl.ml" 204 6454 6545
+type(
+  instruction
+)
+"src/karel_impl.ml" 205 6547 6547 "src/karel_impl.ml" 205 6547 6555
+type(
+  instruction
+)
+"src/karel_impl.ml" 205 6547 6557 "src/karel_impl.ml" 205 6547 6565
+type(
+  instruction
+)
+"src/karel_impl.ml" 205 6547 6567 "src/karel_impl.ml" 205 6547 6575
+type(
+  instruction
+)
+"src/karel_impl.ml" 207 6578 6596 "src/karel_impl.ml" 207 6578 6600
+type(
+  cell
+)
+"src/karel_impl.ml" 207 6578 6587 "src/karel_impl.ml" 207 6578 6601
+type(
+  predicate
+)
+"src/karel_impl.ml" 207 6578 6582 "src/karel_impl.ml" 207 6578 6602
+type(
+  predicate
+)
+"src/karel_impl.ml" 209 6606 6606 "src/karel_impl.ml" 209 6606 6610
+type(
+  instruction
+)
+"src/karel_impl.ml" 210 6612 6612 "src/karel_impl.ml" 210 6612 6620
+type(
+  instruction
+)
+"src/karel_impl.ml" 210 6612 6622 "src/karel_impl.ml" 210 6612 6630
+type(
+  instruction
+)
+"src/karel_impl.ml" 210 6612 6632 "src/karel_impl.ml" 210 6612 6640
+type(
+  instruction
+)
+"src/karel_impl.ml" 212 6643 6664 "src/karel_impl.ml" 212 6643 6668
+type(
+  cell
+)
+"src/karel_impl.ml" 212 6643 6655 "src/karel_impl.ml" 212 6643 6669
+type(
+  predicate
+)
+"src/karel_impl.ml" 212 6643 6650 "src/karel_impl.ml" 212 6643 6670
+type(
+  predicate
+)
+"src/karel_impl.ml" 214 6675 6676 "src/karel_impl.ml" 214 6675 6680
+type(
+  instruction
+)
+"src/karel_impl.ml" 213 6673 6673 "src/karel_impl.ml" 215 6683 6684
+type(
+  instruction list
+)
+"src/karel_impl.ml" 212 6643 6643 "src/karel_impl.ml" 216 6685 6686
+type(
+  instruction
+)
+"src/karel_impl.ml" 218 6689 6689 "src/karel_impl.ml" 218 6689 6697
+type(
+  instruction
+)
+"src/karel_impl.ml" 218 6689 6699 "src/karel_impl.ml" 218 6689 6707
+type(
+  instruction
+)
+"src/karel_impl.ml" 220 6710 6731 "src/karel_impl.ml" 220 6710 6735
+type(
+  cell
+)
+"src/karel_impl.ml" 220 6710 6722 "src/karel_impl.ml" 220 6710 6736
+type(
+  predicate
+)
+"src/karel_impl.ml" 220 6710 6717 "src/karel_impl.ml" 220 6710 6737
+type(
+  predicate
+)
+"src/karel_impl.ml" 222 6742 6743 "src/karel_impl.ml" 222 6742 6747
+type(
+  instruction
+)
+"src/karel_impl.ml" 222 6742 6749 "src/karel_impl.ml" 222 6742 6758
+type(
+  instruction
+)
+"src/karel_impl.ml" 222 6742 6760 "src/karel_impl.ml" 222 6742 6764
+type(
+  instruction
+)
+"src/karel_impl.ml" 221 6740 6740 "src/karel_impl.ml" 223 6767 6768
+type(
+  instruction list
+)
+"src/karel_impl.ml" 220 6710 6710 "src/karel_impl.ml" 224 6769 6770
+type(
+  instruction
+)
+"src/karel_impl.ml" 226 6773 6773 "src/karel_impl.ml" 226 6773 6781
+type(
+  instruction
+)
+"src/karel_impl.ml" 226 6773 6783 "src/karel_impl.ml" 226 6773 6791
+type(
+  instruction
+)
+"src/karel_impl.ml" 227 6793 6793 "src/karel_impl.ml" 227 6793 6797
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6803 "src/karel_impl.ml" 228 6799 6821
+type(
+  predicate
+)
+"src/karel_impl.ml" 228 6799 6825 "src/karel_impl.ml" 228 6799 6833
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6835 "src/karel_impl.ml" 228 6799 6843
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6845 "src/karel_impl.ml" 228 6799 6849
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6851 "src/karel_impl.ml" 228 6799 6860
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6823 "src/karel_impl.ml" 228 6799 6861
+type(
+  instruction list
+)
+"src/karel_impl.ml" 228 6799 6864 "src/karel_impl.ml" 228 6799 6872
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6874 "src/karel_impl.ml" 228 6799 6882
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6884 "src/karel_impl.ml" 228 6799 6888
+type(
+  instruction
+)
+"src/karel_impl.ml" 228 6799 6863 "src/karel_impl.ml" 228 6799 6889
+type(
+  instruction list
+)
+"src/karel_impl.ml" 228 6799 6799 "src/karel_impl.ml" 228 6799 6890
+type(
+  instruction
+)
+"src/karel_impl.ml" 229 6892 6892 "src/karel_impl.ml" 229 6892 6900
+type(
+  instruction
+)
+"src/karel_impl.ml" 229 6892 6902 "src/karel_impl.ml" 229 6892 6910
+type(
+  instruction
+)
+"src/karel_impl.ml" 229 6892 6912 "src/karel_impl.ml" 229 6892 6920
+type(
+  instruction
+)
+"src/karel_impl.ml" 231 6923 6941 "src/karel_impl.ml" 231 6923 6945
+type(
+  cell
+)
+"src/karel_impl.ml" 231 6923 6932 "src/karel_impl.ml" 231 6923 6946
+type(
+  predicate
+)
+"src/karel_impl.ml" 231 6923 6927 "src/karel_impl.ml" 231 6923 6947
+type(
+  predicate
+)
+"src/karel_impl.ml" 233 6952 6952 "src/karel_impl.ml" 233 6952 6956
+type(
+  instruction
+)
+"src/karel_impl.ml" 234 6958 6958 "src/karel_impl.ml" 234 6958 6966
+type(
+  instruction
+)
+"src/karel_impl.ml" 234 6958 6968 "src/karel_impl.ml" 234 6958 6976
+type(
+  instruction
+)
+"src/karel_impl.ml" 234 6958 6978 "src/karel_impl.ml" 234 6958 6986
+type(
+  instruction
+)
+"src/karel_impl.ml" 236 6989 7010 "src/karel_impl.ml" 236 6989 7014
+type(
+  cell
+)
+"src/karel_impl.ml" 236 6989 7001 "src/karel_impl.ml" 236 6989 7015
+type(
+  predicate
+)
+"src/karel_impl.ml" 236 6989 6996 "src/karel_impl.ml" 236 6989 7016
+type(
+  predicate
+)
+"src/karel_impl.ml" 238 7021 7022 "src/karel_impl.ml" 238 7021 7026
+type(
+  instruction
+)
+"src/karel_impl.ml" 237 7019 7019 "src/karel_impl.ml" 239 7029 7030
+type(
+  instruction list
+)
+"src/karel_impl.ml" 236 6989 6989 "src/karel_impl.ml" 240 7031 7032
+type(
+  instruction
+)
+"src/karel_impl.ml" 242 7035 7035 "src/karel_impl.ml" 242 7035 7043
+type(
+  instruction
+)
+"src/karel_impl.ml" 242 7035 7045 "src/karel_impl.ml" 242 7035 7053
+type(
+  instruction
+)
+"src/karel_impl.ml" 232 6950 6950 "src/karel_impl.ml" 243 7055 7056
+type(
+  instruction list
+)
+"src/karel_impl.ml" 243 7055 7058 "src/karel_impl.ml" 243 7055 7060
+type(
+  instruction list
+)
+"src/karel_impl.ml" 231 6923 6923 "src/karel_impl.ml" 243 7055 7061
+type(
+  instruction
+)
+"src/karel_impl.ml" 208 6604 6604 "src/karel_impl.ml" 245 7064 7065
+type(
+  instruction list
+)
+"src/karel_impl.ml" 246 7068 7068 "src/karel_impl.ml" 246 7068 7070
+type(
+  instruction list
+)
+"src/karel_impl.ml" 207 6578 6578 "src/karel_impl.ml" 246 7068 7071
+type(
+  instruction
+)
+"src/karel_impl.ml" 195 6333 6363 "src/karel_impl.ml" 248 7074 7075
+type(
+  instruction list
+)
+"src/karel_impl.ml" 195 6333 6333 "src/karel_impl.ml" 248 7074 7076
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7091 "src/karel_impl.ml" 250 7079 7095
+type(
+  dir
+)
+"src/karel_impl.ml" 250 7079 7083 "src/karel_impl.ml" 250 7079 7096
+type(
+  predicate
+)
+"src/karel_impl.ml" 250 7079 7099 "src/karel_impl.ml" 250 7079 7107
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7109 "src/karel_impl.ml" 250 7079 7117
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7098 "src/karel_impl.ml" 250 7079 7118
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7134 "src/karel_impl.ml" 250 7079 7139
+type(
+  dir
+)
+"src/karel_impl.ml" 250 7079 7126 "src/karel_impl.ml" 250 7079 7140
+type(
+  predicate
+)
+"src/karel_impl.ml" 250 7079 7143 "src/karel_impl.ml" 250 7079 7151
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7142 "src/karel_impl.ml" 250 7079 7152
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7168 "src/karel_impl.ml" 250 7079 7173
+type(
+  dir
+)
+"src/karel_impl.ml" 250 7079 7160 "src/karel_impl.ml" 250 7079 7174
+type(
+  predicate
+)
+"src/karel_impl.ml" 250 7079 7177 "src/karel_impl.ml" 250 7079 7185
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7187 "src/karel_impl.ml" 250 7079 7195
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7197 "src/karel_impl.ml" 250 7079 7205
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7176 "src/karel_impl.ml" 250 7079 7206
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7208 "src/karel_impl.ml" 250 7079 7210
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7156 "src/karel_impl.ml" 250 7079 7211
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7154 "src/karel_impl.ml" 250 7079 7212
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7122 "src/karel_impl.ml" 250 7079 7213
+type(
+  instruction
+)
+"src/karel_impl.ml" 250 7079 7121 "src/karel_impl.ml" 250 7079 7215
+type(
+  instruction list
+)
+"src/karel_impl.ml" 250 7079 7079 "src/karel_impl.ml" 250 7079 7216
+type(
+  instruction
+)
+"src/karel_impl.ml" 251 7218 7239 "src/karel_impl.ml" 251 7218 7243
+type(
+  cell
+)
+"src/karel_impl.ml" 251 7218 7230 "src/karel_impl.ml" 251 7218 7244
+type(
+  predicate
+)
+"src/karel_impl.ml" 251 7218 7225 "src/karel_impl.ml" 251 7218 7245
+type(
+  predicate
+)
+"src/karel_impl.ml" 253 7250 7251 "src/karel_impl.ml" 253 7250 7255
+type(
+  instruction
+)
+"src/karel_impl.ml" 252 7248 7248 "src/karel_impl.ml" 254 7258 7259
+type(
+  instruction list
+)
+"src/karel_impl.ml" 251 7218 7218 "src/karel_impl.ml" 255 7260 7261
+type(
+  instruction
+)
+"src/karel_impl.ml" 194 6292 6331 "src/karel_impl.ml" 256 7263 7264
+type(
+  instruction list
+)
+type(
+  instruction list
+)

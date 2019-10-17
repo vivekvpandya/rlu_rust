@@ -1,0 +1,889 @@
+"src/ngram.ml" 4 27 31 "src/ngram.ml" 4 27 35
+type(
+  unit -> unit
+)
+ident(
+  def main "src/ngram.ml" 42 1295 1295 "src/ngram.ml" 1 0 -1
+)
+"src/ngram.ml" 4 27 36 "src/ngram.ml" 4 27 38
+type(
+  unit
+)
+"src/ngram.ml" 7 95 101 "src/ngram.ml" 7 95 104
+type(
+  string -> int -> int -> unit
+)
+ident(
+  def run "src/ngram.ml" 30 859 861 "src/ngram.ml" 40 1277 1293
+)
+"src/ngram.ml" 7 95 106 "src/ngram.ml" 7 95 114
+type(
+  string
+)
+ident(
+  def filepath "src/ngram.ml" 7 95 125 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 7 95 126 "src/ngram.ml" 7 95 131
+type(
+  int
+)
+ident(
+  def ngram "src/ngram.ml" 7 95 139 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 7 95 140 "src/ngram.ml" 7 95 146
+type(
+  int
+)
+ident(
+  def nwords "src/ngram.ml" 9 182 186 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 9 182 190 "src/ngram.ml" 9 182 198
+type(
+  string
+)
+ident(
+  def contents "src/ngram.ml" 12 267 271 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 9 182 201 "src/ngram.ml" 9 182 220
+type(
+  string -> string
+)
+ident(
+  int_ref Core.In_channel.read_all "src/in_channel.mli" 111 4170 4170 "src/in_channel.mli" 111 4170 4203
+)
+"src/ngram.ml" 9 182 221 "src/ngram.ml" 9 182 229
+type(
+  string
+)
+ident(
+  int_ref filepath "src/ngram.ml" 7 95 106 "src/ngram.ml" 7 95 114
+)
+"src/ngram.ml" 9 182 201 "src/ngram.ml" 9 182 229
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram.ml" 12 267 275 "src/ngram.ml" 12 267 276
+type(
+  string list
+)
+ident(
+  def l "src/ngram.ml" 13 308 312 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 12 267 279 "src/ngram.ml" 12 267 291
+type(
+  string -> on:char -> string list
+)
+ident(
+  int_ref Core.String.split "src/string.mli" 205 8392 8392 "src/string.mli" 205 8392 8426
+)
+"src/ngram.ml" 12 267 292 "src/ngram.ml" 12 267 300
+type(
+  string
+)
+ident(
+  int_ref contents "src/ngram.ml" 9 182 190 "src/ngram.ml" 9 182 198
+)
+"src/ngram.ml" 12 267 301 "src/ngram.ml" 12 267 304
+type(
+  char
+)
+"src/ngram.ml" 12 267 279 "src/ngram.ml" 12 267 304
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram.ml" 13 308 316 "src/ngram.ml" 13 308 317
+type(
+  string list
+)
+ident(
+  def l "src/ngram.ml" 19 473 477 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 13 308 320 "src/ngram.ml" 13 308 335
+type(
+  string list -> f:(string -> string option) -> string list
+)
+ident(
+  int_ref Core.List.filter_map "src/list.mli" 390 17115 17115 "src/list.mli" 390 17115 17167
+)
+"src/ngram.ml" 13 308 336 "src/ngram.ml" 13 308 337
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram.ml" 12 267 275 "src/ngram.ml" 12 267 276
+)
+"src/ngram.ml" 13 308 346 "src/ngram.ml" 13 308 347
+type(
+  string
+)
+ident(
+  def s "src/ngram.ml" 14 351 357 "src/ngram.ml" 15 384 436
+)
+"src/ngram.ml" 14 351 361 "src/ngram.ml" 14 351 363
+type(
+  string
+)
+ident(
+  def s' "src/ngram.ml" 15 384 390 "src/ngram.ml" 15 384 436
+)
+"src/ngram.ml" 14 351 366 "src/ngram.ml" 14 351 378
+type(
+  ?drop:(char -> bool) -> string -> string
+)
+ident(
+  int_ref Core.String.strip "src/string.mli" 239 10094 10094 "src/string.mli" 239 10094 10136
+)
+"src/ngram.ml" 14 351 379 "src/ngram.ml" 14 351 380
+type(
+  string
+)
+ident(
+  int_ref s "src/ngram.ml" 13 308 346 "src/ngram.ml" 13 308 347
+)
+"src/ngram.ml" 14 351 366 "src/ngram.ml" 14 351 380
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram.ml" 15 384 393 "src/ngram.ml" 15 384 406
+type(
+  string -> int
+)
+ident(
+  int_ref Core.String.length "src/string.mli" 57 2003 2003 "src/string.mli" 57 2003 2048
+)
+"src/ngram.ml" 15 384 407 "src/ngram.ml" 15 384 409
+type(
+  string
+)
+ident(
+  int_ref s' "src/ngram.ml" 14 351 361 "src/ngram.ml" 14 351 363
+)
+"src/ngram.ml" 15 384 393 "src/ngram.ml" 15 384 409
+type(
+  int
+)
+"src/ngram.ml" 15 384 410 "src/ngram.ml" 15 384 411
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram.ml" 15 384 412 "src/ngram.ml" 15 384 413
+type(
+  int
+)
+"src/ngram.ml" 15 384 393 "src/ngram.ml" 15 384 413
+type(
+  bool
+)
+"src/ngram.ml" 15 384 419 "src/ngram.ml" 15 384 423
+type(
+  string option
+)
+"src/ngram.ml" 15 384 434 "src/ngram.ml" 15 384 436
+type(
+  string
+)
+ident(
+  int_ref s' "src/ngram.ml" 14 351 361 "src/ngram.ml" 14 351 363
+)
+"src/ngram.ml" 15 384 429 "src/ngram.ml" 15 384 436
+type(
+  string option
+)
+"src/ngram.ml" 15 384 390 "src/ngram.ml" 15 384 436
+type(
+  string option
+)
+"src/ngram.ml" 14 351 357 "src/ngram.ml" 15 384 436
+type(
+  string option
+)
+"src/ngram.ml" 13 308 341 "src/ngram.ml" 15 384 437
+type(
+  string -> string option
+)
+"src/ngram.ml" 13 308 320 "src/ngram.ml" 15 384 437
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram.ml" 19 473 481 "src/ngram.ml" 19 473 487
+type(
+  string list list
+)
+ident(
+  def ngrams "src/ngram.ml" 20 516 520 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 19 473 490 "src/ngram.ml" 19 473 504
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref Ngram_impl.compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram.ml" 19 473 505 "src/ngram.ml" 19 473 506
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram.ml" 13 308 316 "src/ngram.ml" 13 308 317
+)
+"src/ngram.ml" 19 473 507 "src/ngram.ml" 19 473 512
+type(
+  int
+)
+ident(
+  int_ref ngram "src/ngram.ml" 7 95 126 "src/ngram.ml" 7 95 131
+)
+"src/ngram.ml" 19 473 490 "src/ngram.ml" 19 473 512
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram.ml" 20 516 524 "src/ngram.ml" 20 516 527
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram.ml" 21 592 596 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 20 516 530 "src/ngram.ml" 20 516 539
+type(
+  ngram list ->
+  init:ngram_map -> f:(ngram_map -> ngram -> ngram_map) -> ngram_map
+)
+ident(
+  int_ref Core.List.fold "src/container_intf.ml" 180 6928 6930 "src/container_intf.ml" 180 6928 7004
+)
+"src/ngram.ml" 20 516 540 "src/ngram.ml" 20 516 546
+type(
+  ngram list
+)
+ident(
+  int_ref ngrams "src/ngram.ml" 19 473 481 "src/ngram.ml" 19 473 487
+)
+"src/ngram.ml" 20 516 554 "src/ngram.ml" 20 516 567
+type(
+  unit -> ngram_map
+)
+ident(
+  int_ref Ngram_impl.ngram_map_new "src/ngram_impl.ml" 74 2173 2177 "src/ngram_impl.ml" 74 2173 2190
+)
+"src/ngram.ml" 20 516 568 "src/ngram.ml" 20 516 570
+type(
+  unit
+)
+"src/ngram.ml" 20 516 553 "src/ngram.ml" 20 516 571
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram.ml" 20 516 575 "src/ngram.ml" 20 516 588
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref Ngram_impl.ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram.ml" 20 516 530 "src/ngram.ml" 20 516 588
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram.ml" 21 592 600 "src/ngram.ml" 21 592 604
+type(
+  ngram list
+)
+ident(
+  def keys "src/ngram.ml" 24 657 661 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 21 592 607 "src/ngram.ml" 21 592 620
+type(
+  (ngram, string list) Map.Poly.t -> ngram list
+)
+ident(
+  int_ref Core.Map.Poly.keys "src/map_intf.ml" 673 21034 21036 "src/map_intf.ml" 673 21034 21077
+)
+"src/ngram.ml" 21 592 621 "src/ngram.ml" 21 592 624
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram.ml" 20 516 524 "src/ngram.ml" 20 516 527
+)
+"src/ngram.ml" 21 592 607 "src/ngram.ml" 21 592 624
+call(
+  stack
+)
+type(
+  ngram list
+)
+"src/ngram.ml" 24 657 661 "src/ngram.ml" 24 657 677
+type(
+  ?allow_in_tests:bool -> unit -> unit
+)
+ident(
+  int_ref Core.Random.self_init "src/random.mli" 39 1860 1860 "src/random.mli" 39 1860 1912
+)
+"src/ngram.ml" 24 657 677 "src/ngram.ml" 24 657 679
+type(
+  unit
+)
+"src/ngram.ml" 24 657 661 "src/ngram.ml" 24 657 679
+call(
+  stack
+)
+type(
+  unit
+)
+"src/ngram.ml" 25 681 689 "src/ngram.ml" 25 681 698
+type(
+  ngram
+)
+ident(
+  def rand_init "src/ngram.ml" 26 754 758 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 25 681 701 "src/ngram.ml" 25 681 713
+type(
+  ngram list -> int -> ngram
+)
+ident(
+  int_ref Core.List.nth_exn "src/list.mli" 55 1845 1845 "src/list.mli" 55 1845 1876
+)
+"src/ngram.ml" 25 681 714 "src/ngram.ml" 25 681 718
+type(
+  ngram list
+)
+ident(
+  int_ref keys "src/ngram.ml" 21 592 600 "src/ngram.ml" 21 592 604
+)
+"src/ngram.ml" 25 681 720 "src/ngram.ml" 25 681 730
+type(
+  int -> int
+)
+ident(
+  int_ref Core.Random.int "src/random.mli" 47 2213 2213 "src/random.mli" 47 2213 2233
+)
+"src/ngram.ml" 25 681 732 "src/ngram.ml" 25 681 743
+type(
+  ngram list -> int
+)
+ident(
+  int_ref Core.List.length "src/container_intf.ml" 172 6695 6697 "src/container_intf.ml" 172 6695 6723
+)
+"src/ngram.ml" 25 681 744 "src/ngram.ml" 25 681 748
+type(
+  ngram list
+)
+ident(
+  int_ref keys "src/ngram.ml" 21 592 600 "src/ngram.ml" 21 592 604
+)
+"src/ngram.ml" 25 681 731 "src/ngram.ml" 25 681 749
+call(
+  stack
+)
+type(
+  int
+)
+"src/ngram.ml" 25 681 719 "src/ngram.ml" 25 681 750
+call(
+  stack
+)
+type(
+  int
+)
+"src/ngram.ml" 25 681 701 "src/ngram.ml" 25 681 750
+call(
+  stack
+)
+type(
+  ngram
+)
+"src/ngram.ml" 26 754 762 "src/ngram.ml" 26 754 765
+type(
+  string list
+)
+ident(
+  def str "src/ngram.ml" 27 801 805 "src/ngram.ml" 27 801 852
+)
+"src/ngram.ml" 26 754 768 "src/ngram.ml" 26 754 776
+type(
+  ngram_map -> ngram -> int -> string list
+)
+ident(
+  int_ref Ngram_impl.sample_n "src/ngram_impl.ml" 149 4340 4348 "src/ngram_impl.ml" 149 4340 4356
+)
+"src/ngram.ml" 26 754 777 "src/ngram.ml" 26 754 780
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram.ml" 20 516 524 "src/ngram.ml" 20 516 527
+)
+"src/ngram.ml" 26 754 781 "src/ngram.ml" 26 754 790
+type(
+  ngram
+)
+ident(
+  int_ref rand_init "src/ngram.ml" 25 681 689 "src/ngram.ml" 25 681 698
+)
+"src/ngram.ml" 26 754 791 "src/ngram.ml" 26 754 797
+type(
+  int
+)
+ident(
+  int_ref nwords "src/ngram.ml" 7 95 140 "src/ngram.ml" 7 95 146
+)
+"src/ngram.ml" 26 754 768 "src/ngram.ml" 26 754 797
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram.ml" 27 801 805 "src/ngram.ml" 27 801 818
+type(
+  (string -> unit, Out_channel.t, unit) Base.format -> string -> unit
+)
+ident(
+  int_ref Core.Printf.printf "src/printf.ml" 10 231 235 "src/printf.ml" 10 231 241
+)
+"src/ngram.ml" 27 801 819 "src/ngram.ml" 27 801 823
+type(
+  (string -> unit, Out_channel.t, unit) Base.format
+)
+"src/ngram.ml" 27 801 825 "src/ngram.ml" 27 801 838
+type(
+  ?sep:string -> string list -> string
+)
+ident(
+  int_ref Core.String.concat "src/string.mli" 85 3219 3219 "src/string.mli" 85 3219 3253
+)
+"src/ngram.ml" 27 801 844 "src/ngram.ml" 27 801 847
+type(
+  string
+)
+"src/ngram.ml" 27 801 848 "src/ngram.ml" 27 801 851
+type(
+  string list
+)
+ident(
+  int_ref str "src/ngram.ml" 26 754 762 "src/ngram.ml" 26 754 765
+)
+"src/ngram.ml" 27 801 824 "src/ngram.ml" 27 801 852
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram.ml" 27 801 805 "src/ngram.ml" 27 801 852
+call(
+  tail
+)
+type(
+  unit
+)
+"src/ngram.ml" 26 754 758 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 25 681 685 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 24 657 661 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 21 592 596 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 20 516 520 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 19 473 477 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 13 308 312 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 12 267 271 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 9 182 186 "src/ngram.ml" 27 801 852
+type(
+  unit
+)
+"src/ngram.ml" 32 920 922 "src/ngram.ml" 32 920 935
+type(
+  unit Command.basic_command
+)
+ident(
+  int_ref Core.Command.basic "src/command.mli" 624 23114 23114 "src/command.mli" 624 23114 23144
+)
+"src/ngram.ml" 33 936 949 "src/ngram.ml" 33 936 967
+type(
+  string
+)
+"src/ngram.ml" 35 983 993 "src/ngram.ml" 35 983 1001
+type(
+  string * (int * int)
+)
+type(
+  string
+)
+ident(
+  def filepath "src/ngram.ml" 38 1229 1235 "src/ngram.ml" 38 1229 1270
+)
+type(
+  string t
+)
+ident(
+  def __let_syntax__001_ "src/ngram.ml" 35 983 989 "src/ngram.ml" 38 1229 1270
+)
+"src/ngram.ml" 35 983 1004 "src/ngram.ml" 35 983 1008
+type(
+  string Command.Spec.anons -> string t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.anon "src/command.mli" 341 12688 12692 "src/command.mli" 341 12688 12721
+)
+"src/ngram.ml" 35 983 1010 "src/ngram.ml" 35 983 1020
+type(
+  string
+)
+"src/ngram.ml" 35 983 1021 "src/ngram.ml" 35 983 1023
+type(
+  string -> string Arg_type.t -> string Command.Spec.anons
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.( %: ) "src/command.mli" 181 7076 7078 "src/command.mli" 181 7076 7122
+)
+"src/ngram.ml" 35 983 1024 "src/ngram.ml" 35 983 1030
+type(
+  string Arg_type.t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.string "src/command.mli" 86 3291 3295 "src/command.mli" 86 3291 3340
+)
+"src/ngram.ml" 35 983 1009 "src/ngram.ml" 35 983 1031
+call(
+  stack
+)
+type(
+  string Command.Spec.anons
+)
+"src/ngram.ml" 35 983 1004 "src/ngram.ml" 35 983 1031
+call(
+  stack
+)
+call(
+  stack
+)
+type(
+  (string * (int * int)) t
+)
+type(
+  string t
+)
+ident(
+  int_ref __let_syntax__001_ "src/ngram.ml" 35 983 993 "src/ngram.ml" 35 983 1001
+)
+type(
+  string t -> (int * int) t -> (string * (int * int)) t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.both "src/command.mli" 374 13707 13711 "src/command.mli" 374 13707 13751
+)
+type(
+  string t
+)
+"src/ngram.ml" 36 1032 1042 "src/ngram.ml" 36 1032 1047
+type(
+  int * int
+)
+type(
+  int
+)
+ident(
+  def ngram "src/ngram.ml" 38 1229 1235 "src/ngram.ml" 38 1229 1270
+)
+type(
+  int t
+)
+ident(
+  def __let_syntax__002_ "src/ngram.ml" 35 983 989 "src/ngram.ml" 38 1229 1270
+)
+"src/ngram.ml" 36 1032 1050 "src/ngram.ml" 36 1032 1054
+type(
+  ?aliases:string list ->
+  ?full_flag_required:unit ->
+  string -> int Command.Spec.flag -> doc:string -> int t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.flag "src/command.mli" 316 11860 11864 "src/command.mli" 322 12009 12022
+)
+"src/ngram.ml" 36 1032 1055 "src/ngram.ml" 36 1032 1062
+type(
+  string
+)
+"src/ngram.ml" 36 1032 1064 "src/ngram.ml" 36 1032 1085
+type(
+  int -> int Arg_type.t -> int Command.Spec.flag
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.optional_with_default "src/command.mli" 134 5108 5110 "src/command.mli" 134 5108 5165
+)
+"src/ngram.ml" 36 1032 1086 "src/ngram.ml" 36 1032 1087
+type(
+  int
+)
+"src/ngram.ml" 36 1032 1088 "src/ngram.ml" 36 1032 1091
+type(
+  int Arg_type.t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.int "src/command.mli" 94 3806 3810 "src/command.mli" 94 3806 3855
+)
+"src/ngram.ml" 36 1032 1063 "src/ngram.ml" 36 1032 1092
+call(
+  stack
+)
+type(
+  int Command.Spec.flag
+)
+"src/ngram.ml" 36 1032 1098 "src/ngram.ml" 36 1032 1126
+type(
+  string
+)
+"src/ngram.ml" 36 1032 1050 "src/ngram.ml" 36 1032 1126
+call(
+  stack
+)
+call(
+  stack
+)
+type(
+  (int * int) t
+)
+type(
+  int t
+)
+ident(
+  int_ref __let_syntax__002_ "src/ngram.ml" 36 1032 1042 "src/ngram.ml" 36 1032 1047
+)
+type(
+  int t -> int t -> (int * int) t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.both "src/command.mli" 374 13707 13711 "src/command.mli" 374 13707 13751
+)
+type(
+  int t
+)
+"src/ngram.ml" 37 1127 1137 "src/ngram.ml" 37 1127 1143
+type(
+  int
+)
+ident(
+  def nwords "src/ngram.ml" 38 1229 1235 "src/ngram.ml" 38 1229 1270
+)
+type(
+  int t
+)
+ident(
+  def __let_syntax__003_ "src/ngram.ml" 35 983 989 "src/ngram.ml" 38 1229 1270
+)
+"src/ngram.ml" 37 1127 1146 "src/ngram.ml" 37 1127 1150
+type(
+  ?aliases:string list ->
+  ?full_flag_required:unit ->
+  string -> int Command.Spec.flag -> doc:string -> int t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.flag "src/command.mli" 316 11860 11864 "src/command.mli" 322 12009 12022
+)
+"src/ngram.ml" 37 1127 1151 "src/ngram.ml" 37 1127 1159
+type(
+  string
+)
+"src/ngram.ml" 37 1127 1161 "src/ngram.ml" 37 1127 1182
+type(
+  int -> int Arg_type.t -> int Command.Spec.flag
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.optional_with_default "src/command.mli" 134 5108 5110 "src/command.mli" 134 5108 5165
+)
+"src/ngram.ml" 37 1127 1183 "src/ngram.ml" 37 1127 1185
+type(
+  int
+)
+"src/ngram.ml" 37 1127 1186 "src/ngram.ml" 37 1127 1189
+type(
+  int Arg_type.t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.Open_on_rhs.int "src/command.mli" 94 3806 3810 "src/command.mli" 94 3806 3855
+)
+"src/ngram.ml" 37 1127 1160 "src/ngram.ml" 37 1127 1190
+call(
+  stack
+)
+type(
+  int Command.Spec.flag
+)
+"src/ngram.ml" 37 1127 1196 "src/ngram.ml" 37 1127 1225
+type(
+  string
+)
+"src/ngram.ml" 37 1127 1146 "src/ngram.ml" 37 1127 1225
+call(
+  stack
+)
+type(
+  int t
+)
+ident(
+  int_ref __let_syntax__003_ "src/ngram.ml" 37 1127 1137 "src/ngram.ml" 37 1127 1143
+)
+type(
+  int t
+)
+"src/ngram.ml" 38 1229 1239 "src/ngram.ml" 38 1229 1241
+type(
+  unit
+)
+"src/ngram.ml" 38 1229 1245 "src/ngram.ml" 38 1229 1248
+type(
+  string -> int -> int -> unit
+)
+ident(
+  int_ref run "src/ngram.ml" 7 95 101 "src/ngram.ml" 7 95 104
+)
+"src/ngram.ml" 38 1229 1249 "src/ngram.ml" 38 1229 1257
+type(
+  string
+)
+ident(
+  int_ref filepath "src/ngram.ml" 35 983 993 "src/ngram.ml" 35 983 1001
+)
+"src/ngram.ml" 38 1229 1258 "src/ngram.ml" 38 1229 1263
+type(
+  int
+)
+ident(
+  int_ref ngram "src/ngram.ml" 36 1032 1042 "src/ngram.ml" 36 1032 1047
+)
+"src/ngram.ml" 38 1229 1264 "src/ngram.ml" 38 1229 1270
+type(
+  int
+)
+ident(
+  int_ref nwords "src/ngram.ml" 37 1127 1137 "src/ngram.ml" 37 1127 1143
+)
+"src/ngram.ml" 38 1229 1245 "src/ngram.ml" 38 1229 1270
+call(
+  tail
+)
+type(
+  unit
+)
+"src/ngram.ml" 38 1229 1235 "src/ngram.ml" 38 1229 1270
+type(
+  unit -> unit
+)
+"src/ngram.ml" 35 983 989 "src/ngram.ml" 38 1229 1270
+call(
+  stack
+)
+type(
+  (unit -> unit) t
+)
+type(
+  (unit -> unit) t
+)
+type(
+  string * (int * int) -> unit -> unit
+)
+type(
+  (string * (int * int)) t ->
+  f:(string * (int * int) -> unit -> unit) -> (unit -> unit) t
+)
+ident(
+  int_ref Core.Command.Let_syntax.Let_syntax.map "src/command.mli" 373 13661 13665 "src/command.mli" 373 13661 13706
+)
+"src/ngram.ml" 32 920 922 "src/ngram.ml" 39 1271 1276
+call(
+  stack
+)
+type(
+  Command.t
+)
+"src/ngram.ml" 40 1277 1282 "src/ngram.ml" 40 1277 1293
+type(
+  ?version:string ->
+  ?build_info:string ->
+  ?argv:string list ->
+  ?extend:(string list -> string list) -> Command.t -> unit
+)
+ident(
+  int_ref Core.Command.run "src/command.mli" 801 29165 29165 "src/command.mli" 807 29311 29320
+)
+"src/ngram.ml" 32 920 922 "src/ngram.ml" 40 1277 1293
+call(
+  tail
+)
+type(
+  unit
+)
+"src/ngram.ml" 7 95 97 "src/ngram.ml" 40 1277 1293
+type(
+  unit
+)
+"src/ngram.ml" 42 1295 1299 "src/ngram.ml" 42 1295 1301
+type(
+  unit
+)
+"src/ngram.ml" 42 1295 1304 "src/ngram.ml" 42 1295 1308
+type(
+  unit -> unit
+)
+ident(
+  int_ref main "src/ngram.ml" 4 27 31 "src/ngram.ml" 4 27 35
+)
+"src/ngram.ml" 42 1295 1309 "src/ngram.ml" 42 1295 1311
+type(
+  unit
+)
+"src/ngram.ml" 42 1295 1304 "src/ngram.ml" 42 1295 1311
+call(
+  stack
+)
+type(
+  unit
+)

@@ -1,0 +1,3297 @@
+"src/ngram_impl.ml" 10 179 187 "src/ngram_impl.ml" 10 179 204
+type(
+  string list -> unit
+)
+ident(
+  def print_list_string "src/ngram_impl.ml" 10 179 179 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 10 179 205 "src/ngram_impl.ml" 10 179 211
+type(
+  string list
+)
+ident(
+  def myList "src/ngram_impl.ml" 10 179 214 "src/ngram_impl.ml" 16 358 361
+)
+"src/ngram_impl.ml" 10 179 220 "src/ngram_impl.ml" 10 179 226
+type(
+  string list
+)
+ident(
+  int_ref myList "src/ngram_impl.ml" 10 179 205 "src/ngram_impl.ml" 10 179 211
+)
+"src/ngram_impl.ml" 11 232 234 "src/ngram_impl.ml" 11 232 236
+type(
+  string list
+)
+"src/ngram_impl.ml" 11 232 240 "src/ngram_impl.ml" 11 232 253
+type(
+  string -> unit
+)
+ident(
+  int_ref Core.print_endline "src/core_pervasives.mli" 663 24676 24676 "src/core_pervasives.mli" 663 24676 24710
+)
+"src/ngram_impl.ml" 11 232 254 "src/ngram_impl.ml" 11 232 291
+type(
+  string
+)
+"src/ngram_impl.ml" 11 232 240 "src/ngram_impl.ml" 11 232 291
+call(
+  tail
+)
+type(
+  unit
+)
+"src/ngram_impl.ml" 12 292 294 "src/ngram_impl.ml" 12 292 298
+type(
+  string
+)
+ident(
+  def head "src/ngram_impl.ml" 13 309 309 "src/ngram_impl.ml" 16 358 361
+)
+"src/ngram_impl.ml" 12 292 300 "src/ngram_impl.ml" 12 292 304
+type(
+  string list
+)
+ident(
+  def body "src/ngram_impl.ml" 13 309 309 "src/ngram_impl.ml" 16 358 361
+)
+"src/ngram_impl.ml" 12 292 294 "src/ngram_impl.ml" 12 292 304
+type(
+  string list
+)
+"src/ngram_impl.ml" 14 315 315 "src/ngram_impl.ml" 14 315 328
+type(
+  string -> unit
+)
+ident(
+  int_ref Core.print_endline "src/core_pervasives.mli" 663 24676 24676 "src/core_pervasives.mli" 663 24676 24710
+)
+"src/ngram_impl.ml" 14 315 329 "src/ngram_impl.ml" 14 315 333
+type(
+  string
+)
+ident(
+  int_ref head "src/ngram_impl.ml" 12 292 294 "src/ngram_impl.ml" 12 292 298
+)
+"src/ngram_impl.ml" 14 315 315 "src/ngram_impl.ml" 14 315 333
+call(
+  stack
+)
+type(
+  unit
+)
+"src/ngram_impl.ml" 15 335 335 "src/ngram_impl.ml" 15 335 352
+type(
+  string list -> unit
+)
+ident(
+  int_ref print_list_string "src/ngram_impl.ml" 10 179 187 "src/ngram_impl.ml" 10 179 204
+)
+"src/ngram_impl.ml" 15 335 353 "src/ngram_impl.ml" 15 335 357
+type(
+  string list
+)
+ident(
+  int_ref body "src/ngram_impl.ml" 12 292 300 "src/ngram_impl.ml" 12 292 304
+)
+"src/ngram_impl.ml" 15 335 335 "src/ngram_impl.ml" 15 335 357
+call(
+  tail
+)
+type(
+  unit
+)
+"src/ngram_impl.ml" 13 309 309 "src/ngram_impl.ml" 16 358 361
+type(
+  unit
+)
+"src/ngram_impl.ml" 10 179 214 "src/ngram_impl.ml" 16 358 361
+type(
+  unit
+)
+"src/ngram_impl.ml" 19 366 374 "src/ngram_impl.ml" 19 366 391
+type(
+  string list -> string list
+)
+ident(
+  def remove_last_impl1 "src/ngram_impl.ml" 19 366 366 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 19 366 393 "src/ngram_impl.ml" 19 366 394
+type(
+  string list
+)
+ident(
+  def l "src/ngram_impl.ml" 19 366 410 "src/ngram_impl.ml" 24 492 526
+)
+"src/ngram_impl.ml" 20 426 434 "src/ngram_impl.ml" 20 426 435
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram_impl.ml" 19 366 393 "src/ngram_impl.ml" 19 366 394
+)
+"src/ngram_impl.ml" 21 441 445 "src/ngram_impl.ml" 21 441 447
+type(
+  string list
+)
+"src/ngram_impl.ml" 21 441 451 "src/ngram_impl.ml" 21 441 453
+type(
+  string list
+)
+"src/ngram_impl.ml" 22 454 458 "src/ngram_impl.ml" 22 454 459
+type(
+  string
+)
+ident(
+  def x "src/ngram_impl.ml" 23 469 473 "src/ngram_impl.ml" 24 492 526
+)
+"src/ngram_impl.ml" 22 454 463 "src/ngram_impl.ml" 22 454 465
+type(
+  string list
+)
+ident(
+  def xs "src/ngram_impl.ml" 23 469 473 "src/ngram_impl.ml" 24 492 526
+)
+"src/ngram_impl.ml" 22 454 458 "src/ngram_impl.ml" 22 454 465
+type(
+  string list
+)
+"src/ngram_impl.ml" 23 469 476 "src/ngram_impl.ml" 23 469 478
+type(
+  string list
+)
+ident(
+  int_ref xs "src/ngram_impl.ml" 22 454 463 "src/ngram_impl.ml" 22 454 465
+)
+"src/ngram_impl.ml" 23 469 479 "src/ngram_impl.ml" 23 469 480
+type(
+  string list -> string list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 23 469 481 "src/ngram_impl.ml" 23 469 483
+type(
+  string list
+)
+"src/ngram_impl.ml" 23 469 476 "src/ngram_impl.ml" 23 469 483
+type(
+  bool
+)
+"src/ngram_impl.ml" 23 469 489 "src/ngram_impl.ml" 23 469 491
+type(
+  string list
+)
+"src/ngram_impl.ml" 24 492 501 "src/ngram_impl.ml" 24 492 502
+type(
+  string
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 22 454 458 "src/ngram_impl.ml" 22 454 459
+)
+"src/ngram_impl.ml" 24 492 505 "src/ngram_impl.ml" 24 492 522
+type(
+  string list -> string list
+)
+ident(
+  int_ref remove_last_impl1 "src/ngram_impl.ml" 19 366 374 "src/ngram_impl.ml" 19 366 391
+)
+"src/ngram_impl.ml" 24 492 523 "src/ngram_impl.ml" 24 492 525
+type(
+  string list
+)
+ident(
+  int_ref xs "src/ngram_impl.ml" 22 454 463 "src/ngram_impl.ml" 22 454 465
+)
+"src/ngram_impl.ml" 24 492 504 "src/ngram_impl.ml" 24 492 526
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 24 492 501 "src/ngram_impl.ml" 24 492 526
+type(
+  string list
+)
+"src/ngram_impl.ml" 23 469 473 "src/ngram_impl.ml" 24 492 526
+type(
+  string list
+)
+"src/ngram_impl.ml" 20 426 428 "src/ngram_impl.ml" 24 492 526
+type(
+  string list
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 30 682 690 "src/ngram_impl.ml" 30 682 707
+type(
+  string list -> string list
+)
+ident(
+  int_ref remove_last_impl1 "src/ngram_impl.ml" 19 366 374 "src/ngram_impl.ml" 19 366 391
+)
+"src/ngram_impl.ml" 30 682 709 "src/ngram_impl.ml" 30 682 712
+type(
+  string
+)
+"src/ngram_impl.ml" 30 682 714 "src/ngram_impl.ml" 30 682 717
+type(
+  string
+)
+"src/ngram_impl.ml" 30 682 708 "src/ngram_impl.ml" 30 682 718
+type(
+  string list
+)
+"src/ngram_impl.ml" 30 682 690 "src/ngram_impl.ml" 30 682 718
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 30 682 719 "src/ngram_impl.ml" 30 682 720
+type(
+  string list -> string list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 30 682 722 "src/ngram_impl.ml" 30 682 725
+type(
+  string
+)
+"src/ngram_impl.ml" 30 682 721 "src/ngram_impl.ml" 30 682 726
+type(
+  string list
+)
+"src/ngram_impl.ml" 30 682 689 "src/ngram_impl.ml" 30 682 727
+type(
+  bool
+)
+"src/ngram_impl.ml" 30 682 682 "src/ngram_impl.ml" 30 682 727
+type(
+  unit
+)
+"src/ngram_impl.ml" 34 778 782 "src/ngram_impl.ml" 34 778 799
+type(
+  string list -> string list
+)
+ident(
+  def remove_last_impl2 "src/ngram_impl.ml" 39 945 945 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 34 778 801 "src/ngram_impl.ml" 34 778 802
+type(
+  string list
+)
+ident(
+  def l "src/ngram_impl.ml" 34 778 818 "src/ngram_impl.ml" 36 869 940
+)
+"src/ngram_impl.ml" 35 834 840 "src/ngram_impl.ml" 35 834 843
+type(
+  int
+)
+ident(
+  def len "src/ngram_impl.ml" 36 869 871 "src/ngram_impl.ml" 36 869 940
+)
+"src/ngram_impl.ml" 35 834 852 "src/ngram_impl.ml" 35 834 863
+type(
+  string list -> int
+)
+ident(
+  int_ref Core.List.length "src/container_intf.ml" 172 6695 6697 "src/container_intf.ml" 172 6695 6723
+)
+"src/ngram_impl.ml" 35 834 864 "src/ngram_impl.ml" 35 834 865
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram_impl.ml" 34 778 801 "src/ngram_impl.ml" 34 778 802
+)
+"src/ngram_impl.ml" 35 834 852 "src/ngram_impl.ml" 35 834 865
+call(
+  stack
+)
+type(
+  int
+)
+type(
+  int
+)
+"src/ngram_impl.ml" 36 869 871 "src/ngram_impl.ml" 36 869 883
+type(
+  string list -> f:(int -> string -> bool) -> string list
+)
+ident(
+  int_ref Core.List.filteri "src/list.mli" 116 4870 4870 "src/list.mli" 116 4870 4922
+)
+"src/ngram_impl.ml" 36 869 884 "src/ngram_impl.ml" 36 869 885
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram_impl.ml" 34 778 801 "src/ngram_impl.ml" 34 778 802
+)
+"src/ngram_impl.ml" 36 869 895 "src/ngram_impl.ml" 36 869 896
+type(
+  int
+)
+ident(
+  def i "src/ngram_impl.ml" 36 869 904 "src/ngram_impl.ml" 36 869 939
+)
+"src/ngram_impl.ml" 36 869 905 "src/ngram_impl.ml" 36 869 906
+type(
+  string
+)
+ident(
+  def s "src/ngram_impl.ml" 36 869 917 "src/ngram_impl.ml" 36 869 939
+)
+"src/ngram_impl.ml" 36 869 927 "src/ngram_impl.ml" 36 869 928
+type(
+  int
+)
+ident(
+  int_ref i "src/ngram_impl.ml" 36 869 895 "src/ngram_impl.ml" 36 869 896
+)
+"src/ngram_impl.ml" 36 869 929 "src/ngram_impl.ml" 36 869 931
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( <> ) "src/core_pervasives.mli" 45 1606 1606 "src/core_pervasives.mli" 45 1606 1654
+)
+"src/ngram_impl.ml" 36 869 933 "src/ngram_impl.ml" 36 869 936
+type(
+  int
+)
+ident(
+  int_ref len "src/ngram_impl.ml" 35 834 840 "src/ngram_impl.ml" 35 834 843
+)
+"src/ngram_impl.ml" 36 869 936 "src/ngram_impl.ml" 36 869 937
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/ngram_impl.ml" 36 869 937 "src/ngram_impl.ml" 36 869 938
+type(
+  int
+)
+"src/ngram_impl.ml" 36 869 932 "src/ngram_impl.ml" 36 869 939
+type(
+  int
+)
+"src/ngram_impl.ml" 36 869 927 "src/ngram_impl.ml" 36 869 939
+type(
+  bool
+)
+type(
+  bool
+)
+"src/ngram_impl.ml" 36 869 889 "src/ngram_impl.ml" 36 869 940
+type(
+  int -> string -> bool
+)
+"src/ngram_impl.ml" 36 869 871 "src/ngram_impl.ml" 36 869 940
+call(
+  tail
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 35 834 836 "src/ngram_impl.ml" 36 869 940
+type(
+  string list
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 39 945 953 "src/ngram_impl.ml" 39 945 970
+type(
+  string list -> string list
+)
+ident(
+  int_ref remove_last_impl2 "src/ngram_impl.ml" 34 778 782 "src/ngram_impl.ml" 34 778 799
+)
+"src/ngram_impl.ml" 39 945 972 "src/ngram_impl.ml" 39 945 975
+type(
+  string
+)
+"src/ngram_impl.ml" 39 945 977 "src/ngram_impl.ml" 39 945 980
+type(
+  string
+)
+"src/ngram_impl.ml" 39 945 971 "src/ngram_impl.ml" 39 945 981
+type(
+  string list
+)
+"src/ngram_impl.ml" 39 945 953 "src/ngram_impl.ml" 39 945 981
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 39 945 982 "src/ngram_impl.ml" 39 945 983
+type(
+  string list -> string list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 39 945 985 "src/ngram_impl.ml" 39 945 988
+type(
+  string
+)
+"src/ngram_impl.ml" 39 945 984 "src/ngram_impl.ml" 39 945 989
+type(
+  string list
+)
+"src/ngram_impl.ml" 39 945 952 "src/ngram_impl.ml" 39 945 990
+type(
+  bool
+)
+"src/ngram_impl.ml" 39 945 945 "src/ngram_impl.ml" 39 945 990
+type(
+  unit
+)
+"src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+type(
+  string list -> int -> string list list
+)
+ident(
+  def compute_ngrams "src/ngram_impl.ml" 62 1590 1590 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 51 1192 1212 "src/ngram_impl.ml" 51 1192 1213
+type(
+  string list
+)
+ident(
+  def l "src/ngram_impl.ml" 51 1192 1229 "src/ngram_impl.ml" 58 1552 1584
+)
+"src/ngram_impl.ml" 51 1192 1230 "src/ngram_impl.ml" 51 1192 1231
+type(
+  int
+)
+ident(
+  def n "src/ngram_impl.ml" 51 1192 1239 "src/ngram_impl.ml" 58 1552 1584
+)
+"src/ngram_impl.ml" 52 1260 1266 "src/ngram_impl.ml" 52 1260 1267
+type(
+  int
+)
+"src/ngram_impl.ml" 52 1260 1270 "src/ngram_impl.ml" 52 1260 1271
+type(
+  string list
+)
+ident(
+  def r "src/ngram_impl.ml" 58 1552 1553 "src/ngram_impl.ml" 58 1552 1584
+)
+"src/ngram_impl.ml" 52 1260 1289 "src/ngram_impl.ml" 52 1260 1291
+type(
+  string list list
+)
+ident(
+  def rs "src/ngram_impl.ml" 58 1552 1553 "src/ngram_impl.ml" 58 1552 1584
+)
+"src/ngram_impl.ml" 52 1260 1265 "src/ngram_impl.ml" 52 1260 1312
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 53 1316 1318 "src/ngram_impl.ml" 53 1316 1332
+type(
+  string list ->
+  init:int * string list * string list list ->
+  f:(int * string list * string list list ->
+     string -> int * string list * string list list) ->
+  int * string list * string list list
+)
+ident(
+  int_ref Core.List.fold_left "src/list.mli" 76 2763 2763 "src/list.mli" 76 2763 2822
+)
+"src/ngram_impl.ml" 53 1316 1334 "src/ngram_impl.ml" 53 1316 1335
+type(
+  string list
+)
+ident(
+  int_ref l "src/ngram_impl.ml" 51 1192 1212 "src/ngram_impl.ml" 51 1192 1213
+)
+"src/ngram_impl.ml" 53 1316 1343 "src/ngram_impl.ml" 53 1316 1344
+type(
+  int
+)
+ident(
+  int_ref n "src/ngram_impl.ml" 51 1192 1230 "src/ngram_impl.ml" 51 1192 1231
+)
+"src/ngram_impl.ml" 53 1316 1346 "src/ngram_impl.ml" 53 1316 1348
+type(
+  string list
+)
+"src/ngram_impl.ml" 53 1316 1350 "src/ngram_impl.ml" 53 1316 1352
+type(
+  string list list
+)
+"src/ngram_impl.ml" 53 1316 1342 "src/ngram_impl.ml" 53 1316 1353
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 53 1316 1364 "src/ngram_impl.ml" 53 1316 1369
+type(
+  int
+)
+ident(
+  def csize "src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 55 1509 1542
+)
+"src/ngram_impl.ml" 53 1316 1379 "src/ngram_impl.ml" 53 1316 1381
+type(
+  string list
+)
+ident(
+  def ys "src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 55 1509 1542
+)
+"src/ngram_impl.ml" 53 1316 1399 "src/ngram_impl.ml" 53 1316 1402
+type(
+  string list list
+)
+ident(
+  def zss "src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 55 1509 1542
+)
+"src/ngram_impl.ml" 53 1316 1362 "src/ngram_impl.ml" 53 1316 1423
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 53 1316 1427
+type(
+  string
+)
+ident(
+  def elt "src/ngram_impl.ml" 54 1431 1434 "src/ngram_impl.ml" 55 1509 1542
+)
+"src/ngram_impl.ml" 54 1431 1437 "src/ngram_impl.ml" 54 1431 1442
+type(
+  int
+)
+ident(
+  int_ref csize "src/ngram_impl.ml" 53 1316 1364 "src/ngram_impl.ml" 53 1316 1369
+)
+"src/ngram_impl.ml" 54 1431 1443 "src/ngram_impl.ml" 54 1431 1444
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 54 1431 1445 "src/ngram_impl.ml" 54 1431 1446
+type(
+  int
+)
+"src/ngram_impl.ml" 54 1431 1437 "src/ngram_impl.ml" 54 1431 1446
+type(
+  bool
+)
+"src/ngram_impl.ml" 54 1431 1453 "src/ngram_impl.ml" 54 1431 1454
+type(
+  int
+)
+"src/ngram_impl.ml" 54 1431 1456 "src/ngram_impl.ml" 54 1431 1459
+type(
+  string
+)
+ident(
+  int_ref elt "src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 53 1316 1427
+)
+"src/ngram_impl.ml" 54 1431 1464 "src/ngram_impl.ml" 54 1431 1481
+type(
+  string list -> string list
+)
+ident(
+  int_ref remove_last_impl2 "src/ngram_impl.ml" 34 778 782 "src/ngram_impl.ml" 34 778 799
+)
+"src/ngram_impl.ml" 54 1431 1482 "src/ngram_impl.ml" 54 1431 1484
+type(
+  string list
+)
+ident(
+  int_ref ys "src/ngram_impl.ml" 53 1316 1379 "src/ngram_impl.ml" 53 1316 1381
+)
+"src/ngram_impl.ml" 54 1431 1463 "src/ngram_impl.ml" 54 1431 1485
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 54 1431 1456 "src/ngram_impl.ml" 54 1431 1485
+type(
+  string list
+)
+"src/ngram_impl.ml" 54 1431 1488 "src/ngram_impl.ml" 54 1431 1496
+type(
+  string list -> string list
+)
+ident(
+  int_ref Core.List.rev "src/list.mli" 58 1900 1900 "src/list.mli" 58 1900 1922
+)
+"src/ngram_impl.ml" 54 1431 1497 "src/ngram_impl.ml" 54 1431 1499
+type(
+  string list
+)
+ident(
+  int_ref ys "src/ngram_impl.ml" 53 1316 1379 "src/ngram_impl.ml" 53 1316 1381
+)
+"src/ngram_impl.ml" 54 1431 1487 "src/ngram_impl.ml" 54 1431 1500
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 54 1431 1504 "src/ngram_impl.ml" 54 1431 1507
+type(
+  string list list
+)
+ident(
+  int_ref zss "src/ngram_impl.ml" 53 1316 1399 "src/ngram_impl.ml" 53 1316 1402
+)
+"src/ngram_impl.ml" 54 1431 1487 "src/ngram_impl.ml" 54 1431 1507
+type(
+  string list list
+)
+"src/ngram_impl.ml" 54 1431 1452 "src/ngram_impl.ml" 54 1431 1508
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 55 1509 1518 "src/ngram_impl.ml" 55 1509 1523
+type(
+  int
+)
+ident(
+  int_ref csize "src/ngram_impl.ml" 53 1316 1364 "src/ngram_impl.ml" 53 1316 1369
+)
+"src/ngram_impl.ml" 55 1509 1524 "src/ngram_impl.ml" 55 1509 1525
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/ngram_impl.ml" 55 1509 1526 "src/ngram_impl.ml" 55 1509 1527
+type(
+  int
+)
+"src/ngram_impl.ml" 55 1509 1518 "src/ngram_impl.ml" 55 1509 1527
+type(
+  int
+)
+"src/ngram_impl.ml" 55 1509 1529 "src/ngram_impl.ml" 55 1509 1532
+type(
+  string
+)
+ident(
+  int_ref elt "src/ngram_impl.ml" 53 1316 1424 "src/ngram_impl.ml" 53 1316 1427
+)
+"src/ngram_impl.ml" 55 1509 1534 "src/ngram_impl.ml" 55 1509 1536
+type(
+  string list
+)
+ident(
+  int_ref ys "src/ngram_impl.ml" 53 1316 1379 "src/ngram_impl.ml" 53 1316 1381
+)
+"src/ngram_impl.ml" 55 1509 1529 "src/ngram_impl.ml" 55 1509 1536
+type(
+  string list
+)
+"src/ngram_impl.ml" 55 1509 1538 "src/ngram_impl.ml" 55 1509 1541
+type(
+  string list list
+)
+ident(
+  int_ref zss "src/ngram_impl.ml" 53 1316 1399 "src/ngram_impl.ml" 53 1316 1402
+)
+"src/ngram_impl.ml" 55 1509 1517 "src/ngram_impl.ml" 55 1509 1542
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 54 1431 1434 "src/ngram_impl.ml" 55 1509 1542
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 53 1316 1357 "src/ngram_impl.ml" 55 1509 1543
+type(
+  int * string list * string list list ->
+  string -> int * string list * string list list
+)
+"src/ngram_impl.ml" 53 1316 1318 "src/ngram_impl.ml" 55 1509 1543
+call(
+  stack
+)
+type(
+  int * string list * string list list
+)
+"src/ngram_impl.ml" 58 1552 1554 "src/ngram_impl.ml" 58 1552 1562
+type(
+  string list list -> string list list
+)
+ident(
+  int_ref Core.List.rev "src/list.mli" 58 1900 1900 "src/list.mli" 58 1900 1922
+)
+"src/ngram_impl.ml" 58 1552 1565 "src/ngram_impl.ml" 58 1552 1573
+type(
+  string list -> string list
+)
+ident(
+  int_ref Core.List.rev "src/list.mli" 58 1900 1900 "src/list.mli" 58 1900 1922
+)
+"src/ngram_impl.ml" 58 1552 1574 "src/ngram_impl.ml" 58 1552 1575
+type(
+  string list
+)
+ident(
+  int_ref r "src/ngram_impl.ml" 52 1260 1270 "src/ngram_impl.ml" 52 1260 1271
+)
+"src/ngram_impl.ml" 58 1552 1564 "src/ngram_impl.ml" 58 1552 1576
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 58 1552 1580 "src/ngram_impl.ml" 58 1552 1582
+type(
+  string list list
+)
+ident(
+  int_ref rs "src/ngram_impl.ml" 52 1260 1289 "src/ngram_impl.ml" 52 1260 1291
+)
+"src/ngram_impl.ml" 58 1552 1563 "src/ngram_impl.ml" 58 1552 1583
+type(
+  string list list
+)
+"src/ngram_impl.ml" 58 1552 1553 "src/ngram_impl.ml" 58 1552 1584
+call(
+  tail
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 52 1260 1261 "src/ngram_impl.ml" 58 1552 1584
+type(
+  string list list
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 62 1590 1598 "src/ngram_impl.ml" 62 1590 1612
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 62 1590 1614 "src/ngram_impl.ml" 62 1590 1617
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1619 "src/ngram_impl.ml" 62 1590 1622
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1624 "src/ngram_impl.ml" 62 1590 1627
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1613 "src/ngram_impl.ml" 62 1590 1628
+type(
+  string list
+)
+"src/ngram_impl.ml" 62 1590 1629 "src/ngram_impl.ml" 62 1590 1630
+type(
+  int
+)
+"src/ngram_impl.ml" 62 1590 1598 "src/ngram_impl.ml" 62 1590 1630
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 62 1590 1631 "src/ngram_impl.ml" 62 1590 1632
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 62 1590 1635 "src/ngram_impl.ml" 62 1590 1638
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1640 "src/ngram_impl.ml" 62 1590 1643
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1634 "src/ngram_impl.ml" 62 1590 1644
+type(
+  string list
+)
+"src/ngram_impl.ml" 62 1590 1647 "src/ngram_impl.ml" 62 1590 1650
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1652 "src/ngram_impl.ml" 62 1590 1655
+type(
+  string
+)
+"src/ngram_impl.ml" 62 1590 1646 "src/ngram_impl.ml" 62 1590 1656
+type(
+  string list
+)
+"src/ngram_impl.ml" 62 1590 1633 "src/ngram_impl.ml" 62 1590 1657
+type(
+  string list list
+)
+"src/ngram_impl.ml" 62 1590 1597 "src/ngram_impl.ml" 62 1590 1658
+type(
+  bool
+)
+"src/ngram_impl.ml" 62 1590 1590 "src/ngram_impl.ml" 62 1590 1658
+type(
+  unit
+)
+"src/ngram_impl.ml" 63 1660 1668 "src/ngram_impl.ml" 63 1660 1682
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 63 1660 1684 "src/ngram_impl.ml" 63 1660 1687
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1689 "src/ngram_impl.ml" 63 1660 1692
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1694 "src/ngram_impl.ml" 63 1660 1697
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1683 "src/ngram_impl.ml" 63 1660 1698
+type(
+  string list
+)
+"src/ngram_impl.ml" 63 1660 1699 "src/ngram_impl.ml" 63 1660 1700
+type(
+  int
+)
+"src/ngram_impl.ml" 63 1660 1668 "src/ngram_impl.ml" 63 1660 1700
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 63 1660 1701 "src/ngram_impl.ml" 63 1660 1702
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 63 1660 1705 "src/ngram_impl.ml" 63 1660 1708
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1704 "src/ngram_impl.ml" 63 1660 1709
+type(
+  string list
+)
+"src/ngram_impl.ml" 63 1660 1712 "src/ngram_impl.ml" 63 1660 1715
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1711 "src/ngram_impl.ml" 63 1660 1716
+type(
+  string list
+)
+"src/ngram_impl.ml" 63 1660 1719 "src/ngram_impl.ml" 63 1660 1722
+type(
+  string
+)
+"src/ngram_impl.ml" 63 1660 1718 "src/ngram_impl.ml" 63 1660 1723
+type(
+  string list
+)
+"src/ngram_impl.ml" 63 1660 1703 "src/ngram_impl.ml" 63 1660 1724
+type(
+  string list list
+)
+"src/ngram_impl.ml" 63 1660 1667 "src/ngram_impl.ml" 63 1660 1725
+type(
+  bool
+)
+"src/ngram_impl.ml" 63 1660 1660 "src/ngram_impl.ml" 63 1660 1725
+type(
+  unit
+)
+"src/ngram_impl.ml" 64 1727 1735 "src/ngram_impl.ml" 64 1727 1749
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 64 1727 1751 "src/ngram_impl.ml" 64 1727 1754
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1756 "src/ngram_impl.ml" 64 1727 1759
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1761 "src/ngram_impl.ml" 64 1727 1764
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1766 "src/ngram_impl.ml" 64 1727 1769
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1750 "src/ngram_impl.ml" 64 1727 1770
+type(
+  string list
+)
+"src/ngram_impl.ml" 64 1727 1771 "src/ngram_impl.ml" 64 1727 1772
+type(
+  int
+)
+"src/ngram_impl.ml" 64 1727 1735 "src/ngram_impl.ml" 64 1727 1772
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 64 1727 1773 "src/ngram_impl.ml" 64 1727 1774
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 64 1727 1777 "src/ngram_impl.ml" 64 1727 1780
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1782 "src/ngram_impl.ml" 64 1727 1785
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1787 "src/ngram_impl.ml" 64 1727 1790
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1776 "src/ngram_impl.ml" 64 1727 1791
+type(
+  string list
+)
+"src/ngram_impl.ml" 64 1727 1794 "src/ngram_impl.ml" 64 1727 1797
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1799 "src/ngram_impl.ml" 64 1727 1802
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1804 "src/ngram_impl.ml" 64 1727 1807
+type(
+  string
+)
+"src/ngram_impl.ml" 64 1727 1793 "src/ngram_impl.ml" 64 1727 1808
+type(
+  string list
+)
+"src/ngram_impl.ml" 64 1727 1775 "src/ngram_impl.ml" 64 1727 1809
+type(
+  string list list
+)
+"src/ngram_impl.ml" 64 1727 1734 "src/ngram_impl.ml" 64 1727 1810
+type(
+  bool
+)
+"src/ngram_impl.ml" 64 1727 1727 "src/ngram_impl.ml" 64 1727 1810
+type(
+  unit
+)
+"src/ngram_impl.ml" 65 1812 1820 "src/ngram_impl.ml" 65 1812 1834
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 65 1812 1836 "src/ngram_impl.ml" 65 1812 1839
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1841 "src/ngram_impl.ml" 65 1812 1844
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1846 "src/ngram_impl.ml" 65 1812 1849
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1851 "src/ngram_impl.ml" 65 1812 1854
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1835 "src/ngram_impl.ml" 65 1812 1855
+type(
+  string list
+)
+"src/ngram_impl.ml" 65 1812 1856 "src/ngram_impl.ml" 65 1812 1857
+type(
+  int
+)
+"src/ngram_impl.ml" 65 1812 1820 "src/ngram_impl.ml" 65 1812 1857
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 65 1812 1858 "src/ngram_impl.ml" 65 1812 1859
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 65 1812 1862 "src/ngram_impl.ml" 65 1812 1865
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1867 "src/ngram_impl.ml" 65 1812 1870
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1861 "src/ngram_impl.ml" 65 1812 1871
+type(
+  string list
+)
+"src/ngram_impl.ml" 65 1812 1874 "src/ngram_impl.ml" 65 1812 1877
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1879 "src/ngram_impl.ml" 65 1812 1882
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1873 "src/ngram_impl.ml" 65 1812 1883
+type(
+  string list
+)
+"src/ngram_impl.ml" 65 1812 1886 "src/ngram_impl.ml" 65 1812 1889
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1891 "src/ngram_impl.ml" 65 1812 1894
+type(
+  string
+)
+"src/ngram_impl.ml" 65 1812 1885 "src/ngram_impl.ml" 65 1812 1895
+type(
+  string list
+)
+"src/ngram_impl.ml" 65 1812 1860 "src/ngram_impl.ml" 65 1812 1896
+type(
+  string list list
+)
+"src/ngram_impl.ml" 65 1812 1819 "src/ngram_impl.ml" 65 1812 1897
+type(
+  bool
+)
+"src/ngram_impl.ml" 65 1812 1812 "src/ngram_impl.ml" 65 1812 1897
+type(
+  unit
+)
+"src/ngram_impl.ml" 66 1899 1907 "src/ngram_impl.ml" 66 1899 1921
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 66 1899 1923 "src/ngram_impl.ml" 66 1899 1926
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1928 "src/ngram_impl.ml" 66 1899 1931
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1933 "src/ngram_impl.ml" 66 1899 1936
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1938 "src/ngram_impl.ml" 66 1899 1941
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1943 "src/ngram_impl.ml" 66 1899 1946
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1922 "src/ngram_impl.ml" 66 1899 1947
+type(
+  string list
+)
+"src/ngram_impl.ml" 66 1899 1948 "src/ngram_impl.ml" 66 1899 1949
+type(
+  int
+)
+"src/ngram_impl.ml" 66 1899 1907 "src/ngram_impl.ml" 66 1899 1949
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 66 1899 1950 "src/ngram_impl.ml" 66 1899 1951
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 66 1899 1955 "src/ngram_impl.ml" 66 1899 1958
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1960 "src/ngram_impl.ml" 66 1899 1963
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1965 "src/ngram_impl.ml" 66 1899 1968
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1970 "src/ngram_impl.ml" 66 1899 1973
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1954 "src/ngram_impl.ml" 66 1899 1974
+type(
+  string list
+)
+"src/ngram_impl.ml" 66 1899 1977 "src/ngram_impl.ml" 66 1899 1980
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1982 "src/ngram_impl.ml" 66 1899 1985
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1987 "src/ngram_impl.ml" 66 1899 1990
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1992 "src/ngram_impl.ml" 66 1899 1995
+type(
+  string
+)
+"src/ngram_impl.ml" 66 1899 1976 "src/ngram_impl.ml" 66 1899 1996
+type(
+  string list
+)
+"src/ngram_impl.ml" 66 1899 1953 "src/ngram_impl.ml" 66 1899 1997
+type(
+  string list list
+)
+"src/ngram_impl.ml" 66 1899 1906 "src/ngram_impl.ml" 66 1899 1998
+type(
+  bool
+)
+"src/ngram_impl.ml" 66 1899 1899 "src/ngram_impl.ml" 66 1899 1998
+type(
+  unit
+)
+"src/ngram_impl.ml" 67 2000 2008 "src/ngram_impl.ml" 67 2000 2022
+type(
+  string list -> int -> string list list
+)
+ident(
+  int_ref compute_ngrams "src/ngram_impl.ml" 51 1192 1196 "src/ngram_impl.ml" 51 1192 1210
+)
+"src/ngram_impl.ml" 67 2000 2024 "src/ngram_impl.ml" 67 2000 2027
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2029 "src/ngram_impl.ml" 67 2000 2032
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2034 "src/ngram_impl.ml" 67 2000 2037
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2039 "src/ngram_impl.ml" 67 2000 2042
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2023 "src/ngram_impl.ml" 67 2000 2043
+type(
+  string list
+)
+"src/ngram_impl.ml" 67 2000 2044 "src/ngram_impl.ml" 67 2000 2045
+type(
+  int
+)
+"src/ngram_impl.ml" 67 2000 2008 "src/ngram_impl.ml" 67 2000 2045
+call(
+  stack
+)
+type(
+  string list list
+)
+"src/ngram_impl.ml" 67 2000 2046 "src/ngram_impl.ml" 67 2000 2047
+type(
+  string list list -> string list list -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 67 2000 2050 "src/ngram_impl.ml" 67 2000 2053
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2055 "src/ngram_impl.ml" 67 2000 2058
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2049 "src/ngram_impl.ml" 67 2000 2059
+type(
+  string list
+)
+"src/ngram_impl.ml" 67 2000 2062 "src/ngram_impl.ml" 67 2000 2065
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2067 "src/ngram_impl.ml" 67 2000 2070
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2061 "src/ngram_impl.ml" 67 2000 2071
+type(
+  string list
+)
+"src/ngram_impl.ml" 67 2000 2074 "src/ngram_impl.ml" 67 2000 2077
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2079 "src/ngram_impl.ml" 67 2000 2082
+type(
+  string
+)
+"src/ngram_impl.ml" 67 2000 2073 "src/ngram_impl.ml" 67 2000 2083
+type(
+  string list
+)
+"src/ngram_impl.ml" 67 2000 2048 "src/ngram_impl.ml" 67 2000 2084
+type(
+  string list list
+)
+"src/ngram_impl.ml" 67 2000 2007 "src/ngram_impl.ml" 67 2000 2085
+type(
+  bool
+)
+"src/ngram_impl.ml" 67 2000 2000 "src/ngram_impl.ml" 67 2000 2085
+type(
+  unit
+)
+"src/ngram_impl.ml" 66 1899 1899 "src/ngram_impl.ml" 67 2000 2086
+type(
+  unit
+)
+"src/ngram_impl.ml" 65 1812 1812 "src/ngram_impl.ml" 67 2000 2086
+type(
+  unit
+)
+"src/ngram_impl.ml" 64 1727 1727 "src/ngram_impl.ml" 67 2000 2086
+type(
+  unit
+)
+"src/ngram_impl.ml" 63 1660 1660 "src/ngram_impl.ml" 67 2000 2086
+type(
+  unit
+)
+"src/ngram_impl.ml" 62 1590 1590 "src/ngram_impl.ml" 67 2000 2086
+type(
+  unit
+)
+"src/ngram_impl.ml" 70 2091 2095 "src/ngram_impl.ml" 70 2091 2110
+type(
+  string list -> string
+)
+ident(
+  def ngram_to_string "src/ngram_impl.ml" 74 2173 2173 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 70 2091 2111 "src/ngram_impl.ml" 70 2091 2113
+type(
+  string list
+)
+ident(
+  def ng "src/ngram_impl.ml" 71 2116 2118 "src/ngram_impl.ml" 71 2116 2168
+)
+"src/ngram_impl.ml" 71 2116 2118 "src/ngram_impl.ml" 71 2116 2132
+type(
+  (string -> string, unit, string) Base.format -> string -> string
+)
+ident(
+  int_ref Core.Printf.sprintf "src/printf.mli" 7 128 128 "src/printf.mli" 7 128 199
+)
+"src/ngram_impl.ml" 71 2116 2133 "src/ngram_impl.ml" 71 2116 2139
+type(
+  (string -> string, unit, string) Base.format
+)
+"src/ngram_impl.ml" 71 2116 2141 "src/ngram_impl.ml" 71 2116 2154
+type(
+  ?sep:string -> string list -> string
+)
+ident(
+  int_ref Core.String.concat "src/string.mli" 85 3219 3219 "src/string.mli" 85 3219 3253
+)
+"src/ngram_impl.ml" 71 2116 2160 "src/ngram_impl.ml" 71 2116 2164
+type(
+  string
+)
+"src/ngram_impl.ml" 71 2116 2165 "src/ngram_impl.ml" 71 2116 2167
+type(
+  string list
+)
+ident(
+  int_ref ng "src/ngram_impl.ml" 70 2091 2111 "src/ngram_impl.ml" 70 2091 2113
+)
+"src/ngram_impl.ml" 71 2116 2140 "src/ngram_impl.ml" 71 2116 2168
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 71 2116 2118 "src/ngram_impl.ml" 71 2116 2168
+call(
+  tail
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 74 2173 2177 "src/ngram_impl.ml" 74 2173 2190
+type(
+  unit -> ngram_map
+)
+ident(
+  def ngram_map_new "src/ngram_impl.ml" 79 2257 2257 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 74 2173 2191 "src/ngram_impl.ml" 74 2173 2193
+type(
+  unit
+)
+"src/ngram_impl.ml" 75 2208 2210 "src/ngram_impl.ml" 75 2208 2224
+type(
+  ngram_map
+)
+type(
+  (ngram, string list) Map.Poly.t
+)
+ident(
+  int_ref Core.Map.Poly.empty "src/map_intf.ml" 1172 40432 40434 "src/map_intf.ml" 1172 40432 40464
+)
+"src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  def ngram_map_add "src/ngram_impl.ml" 87 2545 2545 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 79 2257 2276 "src/ngram_impl.ml" 79 2257 2279
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 79 2257 2293 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 79 2257 2294 "src/ngram_impl.ml" 79 2257 2299
+type(
+  ngram
+)
+ident(
+  def ngram "src/ngram_impl.ml" 79 2257 2309 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 80 2323 2329 "src/ngram_impl.ml" 80 2323 2332
+type(
+  int
+)
+ident(
+  def len "src/ngram_impl.ml" 81 2362 2364 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 80 2323 2341 "src/ngram_impl.ml" 80 2323 2352
+type(
+  string list -> int
+)
+ident(
+  int_ref Core.List.length "src/container_intf.ml" 172 6695 6697 "src/container_intf.ml" 172 6695 6723
+)
+"src/ngram_impl.ml" 80 2323 2353 "src/ngram_impl.ml" 80 2323 2358
+type(
+  ngram
+)
+ident(
+  int_ref ngram "src/ngram_impl.ml" 79 2257 2294 "src/ngram_impl.ml" 79 2257 2299
+)
+"src/ngram_impl.ml" 80 2323 2341 "src/ngram_impl.ml" 80 2323 2358
+call(
+  stack
+)
+type(
+  int
+)
+type(
+  int
+)
+"src/ngram_impl.ml" 81 2362 2369 "src/ngram_impl.ml" 81 2362 2370
+type(
+  string list
+)
+ident(
+  def k "src/ngram_impl.ml" 82 2408 2410 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 81 2362 2372 "src/ngram_impl.ml" 81 2362 2373
+type(
+  string list
+)
+ident(
+  def d "src/ngram_impl.ml" 82 2408 2410 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 81 2362 2368 "src/ngram_impl.ml" 81 2362 2374
+type(
+  string list * string list
+)
+"src/ngram_impl.ml" 81 2362 2377 "src/ngram_impl.ml" 81 2362 2389
+type(
+  string list -> int -> string list * string list
+)
+ident(
+  int_ref Core.List.split_n "src/list.mli" 137 5813 5813 "src/list.mli" 137 5813 5853
+)
+"src/ngram_impl.ml" 81 2362 2390 "src/ngram_impl.ml" 81 2362 2395
+type(
+  ngram
+)
+ident(
+  int_ref ngram "src/ngram_impl.ml" 79 2257 2294 "src/ngram_impl.ml" 79 2257 2299
+)
+"src/ngram_impl.ml" 81 2362 2397 "src/ngram_impl.ml" 81 2362 2400
+type(
+  int
+)
+ident(
+  int_ref len "src/ngram_impl.ml" 80 2323 2329 "src/ngram_impl.ml" 80 2323 2332
+)
+"src/ngram_impl.ml" 81 2362 2401 "src/ngram_impl.ml" 81 2362 2402
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/ngram_impl.ml" 81 2362 2402 "src/ngram_impl.ml" 81 2362 2403
+type(
+  int
+)
+"src/ngram_impl.ml" 81 2362 2396 "src/ngram_impl.ml" 81 2362 2404
+type(
+  int
+)
+"src/ngram_impl.ml" 81 2362 2377 "src/ngram_impl.ml" 81 2362 2404
+call(
+  stack
+)
+type(
+  string list * string list
+)
+"src/ngram_impl.ml" 82 2408 2416 "src/ngram_impl.ml" 82 2408 2429
+type(
+  (ngram, string list) Map.Poly.t -> ngram -> string list option
+)
+ident(
+  int_ref Core.Map.Poly.find "src/map_intf.ml" 626 19053 19055 "src/map_intf.ml" 626 19053 19105
+)
+"src/ngram_impl.ml" 82 2408 2430 "src/ngram_impl.ml" 82 2408 2433
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 79 2257 2276 "src/ngram_impl.ml" 79 2257 2279
+)
+"src/ngram_impl.ml" 82 2408 2434 "src/ngram_impl.ml" 82 2408 2435
+type(
+  string list
+)
+ident(
+  int_ref k "src/ngram_impl.ml" 81 2362 2369 "src/ngram_impl.ml" 81 2362 2370
+)
+"src/ngram_impl.ml" 82 2408 2416 "src/ngram_impl.ml" 82 2408 2435
+call(
+  stack
+)
+type(
+  string list option
+)
+"src/ngram_impl.ml" 83 2441 2447 "src/ngram_impl.ml" 83 2441 2451
+type(
+  string list option
+)
+"src/ngram_impl.ml" 83 2441 2455 "src/ngram_impl.ml" 83 2441 2467
+type(
+  (ngram, string list) Map.Poly.t ->
+  key:ngram -> data:string list -> (ngram, string list) Map.Poly.t
+)
+ident(
+  int_ref Core.Map.Poly.set "src/map_intf.ml" 620 18624 18626 "src/map_intf.ml" 620 18624 18692
+)
+"src/ngram_impl.ml" 83 2441 2468 "src/ngram_impl.ml" 83 2441 2471
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 79 2257 2276 "src/ngram_impl.ml" 79 2257 2279
+)
+"src/ngram_impl.ml" 83 2441 2477 "src/ngram_impl.ml" 83 2441 2478
+type(
+  string list
+)
+ident(
+  int_ref k "src/ngram_impl.ml" 81 2362 2369 "src/ngram_impl.ml" 81 2362 2370
+)
+"src/ngram_impl.ml" 83 2441 2485 "src/ngram_impl.ml" 83 2441 2486
+type(
+  string list
+)
+ident(
+  int_ref d "src/ngram_impl.ml" 81 2362 2372 "src/ngram_impl.ml" 81 2362 2373
+)
+"src/ngram_impl.ml" 83 2441 2455 "src/ngram_impl.ml" 83 2441 2486
+call(
+  tail
+)
+type(
+  (ngram, string list) Map.Poly.t
+)
+"src/ngram_impl.ml" 84 2487 2498 "src/ngram_impl.ml" 84 2487 2499
+type(
+  string list
+)
+ident(
+  def x "src/ngram_impl.ml" 84 2487 2503 "src/ngram_impl.ml" 84 2487 2540
+)
+"src/ngram_impl.ml" 84 2487 2493 "src/ngram_impl.ml" 84 2487 2499
+type(
+  string list option
+)
+"src/ngram_impl.ml" 84 2487 2503 "src/ngram_impl.ml" 84 2487 2515
+type(
+  (ngram, string list) Map.Poly.t ->
+  key:ngram -> data:string list -> (ngram, string list) Map.Poly.t
+)
+ident(
+  int_ref Core.Map.Poly.set "src/map_intf.ml" 620 18624 18626 "src/map_intf.ml" 620 18624 18692
+)
+"src/ngram_impl.ml" 84 2487 2516 "src/ngram_impl.ml" 84 2487 2519
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 79 2257 2276 "src/ngram_impl.ml" 79 2257 2279
+)
+"src/ngram_impl.ml" 84 2487 2525 "src/ngram_impl.ml" 84 2487 2526
+type(
+  string list
+)
+ident(
+  int_ref k "src/ngram_impl.ml" 81 2362 2369 "src/ngram_impl.ml" 81 2362 2370
+)
+"src/ngram_impl.ml" 84 2487 2534 "src/ngram_impl.ml" 84 2487 2535
+type(
+  string list
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 84 2487 2498 "src/ngram_impl.ml" 84 2487 2499
+)
+"src/ngram_impl.ml" 84 2487 2536 "src/ngram_impl.ml" 84 2487 2537
+type(
+  string list -> string list -> string list
+)
+ident(
+  int_ref Core.( @ ) "src/list.mli" 497 21588 21590 "src/list.mli" 497 21588 21622
+)
+"src/ngram_impl.ml" 84 2487 2538 "src/ngram_impl.ml" 84 2487 2539
+type(
+  string list
+)
+ident(
+  int_ref d "src/ngram_impl.ml" 81 2362 2372 "src/ngram_impl.ml" 81 2362 2373
+)
+"src/ngram_impl.ml" 84 2487 2533 "src/ngram_impl.ml" 84 2487 2540
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 84 2487 2503 "src/ngram_impl.ml" 84 2487 2540
+call(
+  tail
+)
+type(
+  (ngram, string list) Map.Poly.t
+)
+"src/ngram_impl.ml" 82 2408 2410 "src/ngram_impl.ml" 84 2487 2540
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 81 2362 2364 "src/ngram_impl.ml" 84 2487 2540
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 80 2323 2325 "src/ngram_impl.ml" 84 2487 2540
+type(
+  ngram_map
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 87 2545 2549 "src/ngram_impl.ml" 87 2545 2551
+type(
+  unit
+)
+"src/ngram_impl.ml" 88 2554 2560 "src/ngram_impl.ml" 88 2554 2563
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 89 2586 2588 "src/ngram_impl.ml" 97 2868 2871
+)
+"src/ngram_impl.ml" 88 2554 2566 "src/ngram_impl.ml" 88 2554 2579
+type(
+  unit -> ngram_map
+)
+ident(
+  int_ref ngram_map_new "src/ngram_impl.ml" 74 2173 2177 "src/ngram_impl.ml" 74 2173 2190
+)
+"src/ngram_impl.ml" 88 2554 2580 "src/ngram_impl.ml" 88 2554 2582
+type(
+  unit
+)
+"src/ngram_impl.ml" 88 2554 2566 "src/ngram_impl.ml" 88 2554 2582
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 89 2586 2592 "src/ngram_impl.ml" 89 2586 2595
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 90 2630 2632 "src/ngram_impl.ml" 97 2868 2871
+)
+"src/ngram_impl.ml" 89 2586 2598 "src/ngram_impl.ml" 89 2586 2611
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 89 2586 2612 "src/ngram_impl.ml" 89 2586 2615
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 88 2554 2560 "src/ngram_impl.ml" 88 2554 2563
+)
+"src/ngram_impl.ml" 89 2586 2617 "src/ngram_impl.ml" 89 2586 2620
+type(
+  string
+)
+"src/ngram_impl.ml" 89 2586 2622 "src/ngram_impl.ml" 89 2586 2625
+type(
+  string
+)
+"src/ngram_impl.ml" 89 2586 2616 "src/ngram_impl.ml" 89 2586 2626
+type(
+  ngram
+)
+"src/ngram_impl.ml" 89 2586 2598 "src/ngram_impl.ml" 89 2586 2626
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 90 2630 2636 "src/ngram_impl.ml" 90 2630 2639
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 91 2679 2681 "src/ngram_impl.ml" 97 2868 2871
+)
+"src/ngram_impl.ml" 90 2630 2642 "src/ngram_impl.ml" 90 2630 2655
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 90 2630 2656 "src/ngram_impl.ml" 90 2630 2659
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 89 2586 2592 "src/ngram_impl.ml" 89 2586 2595
+)
+"src/ngram_impl.ml" 90 2630 2661 "src/ngram_impl.ml" 90 2630 2664
+type(
+  string
+)
+"src/ngram_impl.ml" 90 2630 2666 "src/ngram_impl.ml" 90 2630 2669
+type(
+  string
+)
+"src/ngram_impl.ml" 90 2630 2671 "src/ngram_impl.ml" 90 2630 2674
+type(
+  string
+)
+"src/ngram_impl.ml" 90 2630 2660 "src/ngram_impl.ml" 90 2630 2675
+type(
+  ngram
+)
+"src/ngram_impl.ml" 90 2630 2642 "src/ngram_impl.ml" 90 2630 2675
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 91 2679 2685 "src/ngram_impl.ml" 91 2679 2688
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 92 2732 2736 "src/ngram_impl.ml" 97 2868 2871
+)
+"src/ngram_impl.ml" 91 2679 2691 "src/ngram_impl.ml" 91 2679 2704
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 91 2679 2705 "src/ngram_impl.ml" 91 2679 2708
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 90 2630 2636 "src/ngram_impl.ml" 90 2630 2639
+)
+"src/ngram_impl.ml" 91 2679 2710 "src/ngram_impl.ml" 91 2679 2713
+type(
+  string
+)
+"src/ngram_impl.ml" 91 2679 2715 "src/ngram_impl.ml" 91 2679 2718
+type(
+  string
+)
+"src/ngram_impl.ml" 91 2679 2720 "src/ngram_impl.ml" 91 2679 2727
+type(
+  string
+)
+"src/ngram_impl.ml" 91 2679 2709 "src/ngram_impl.ml" 91 2679 2728
+type(
+  ngram
+)
+"src/ngram_impl.ml" 91 2679 2691 "src/ngram_impl.ml" 91 2679 2728
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 92 2732 2740 "src/ngram_impl.ml" 92 2732 2741
+type(
+  string list
+)
+ident(
+  def v "src/ngram_impl.ml" 97 2868 2869 "src/ngram_impl.ml" 97 2868 2871
+)
+"src/ngram_impl.ml" 92 2732 2750 "src/ngram_impl.ml" 92 2732 2763
+type(
+  (ngram, string list) Map.Poly.t -> ngram -> string list option
+)
+ident(
+  int_ref Core.Map.Poly.find "src/map_intf.ml" 626 19053 19055 "src/map_intf.ml" 626 19053 19105
+)
+"src/ngram_impl.ml" 92 2732 2764 "src/ngram_impl.ml" 92 2732 2767
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 91 2679 2685 "src/ngram_impl.ml" 91 2679 2688
+)
+"src/ngram_impl.ml" 92 2732 2769 "src/ngram_impl.ml" 92 2732 2772
+type(
+  string
+)
+"src/ngram_impl.ml" 92 2732 2774 "src/ngram_impl.ml" 92 2732 2777
+type(
+  string
+)
+"src/ngram_impl.ml" 92 2732 2768 "src/ngram_impl.ml" 92 2732 2778
+type(
+  ngram
+)
+"src/ngram_impl.ml" 92 2732 2750 "src/ngram_impl.ml" 92 2732 2778
+call(
+  stack
+)
+type(
+  string list option
+)
+"src/ngram_impl.ml" 93 2784 2790 "src/ngram_impl.ml" 93 2784 2794
+type(
+  string list option
+)
+"src/ngram_impl.ml" 93 2784 2798 "src/ngram_impl.ml" 93 2784 2800
+type(
+  string list
+)
+"src/ngram_impl.ml" 94 2801 2812 "src/ngram_impl.ml" 94 2801 2813
+type(
+  string list
+)
+ident(
+  def x "src/ngram_impl.ml" 94 2801 2817 "src/ngram_impl.ml" 94 2801 2818
+)
+"src/ngram_impl.ml" 94 2801 2807 "src/ngram_impl.ml" 94 2801 2813
+type(
+  string list option
+)
+"src/ngram_impl.ml" 94 2801 2817 "src/ngram_impl.ml" 94 2801 2818
+type(
+  string list
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 94 2801 2812 "src/ngram_impl.ml" 94 2801 2813
+)
+"src/ngram_impl.ml" 92 2732 2744 "src/ngram_impl.ml" 94 2801 2818
+type(
+  string list
+)
+"src/ngram_impl.ml" 97 2868 2869 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 92 2732 2736 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 91 2679 2681 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 90 2630 2632 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 89 2586 2588 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 88 2554 2556 "src/ngram_impl.ml" 97 2868 2871
+type(
+  unit
+)
+"src/ngram_impl.ml" 100 2876 2880 "src/ngram_impl.ml" 100 2876 2902
+type(
+  ngram_map -> ngram -> word_distribution option
+)
+ident(
+  def ngram_map_distribution "src/ngram_impl.ml" 112 3249 3249 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 100 2876 2904 "src/ngram_impl.ml" 100 2876 2907
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 100 2876 2921 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 100 2876 2922 "src/ngram_impl.ml" 100 2876 2927
+type(
+  ngram
+)
+ident(
+  def ngram "src/ngram_impl.ml" 101 2937 2939 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 102 2968 2974 "src/ngram_impl.ml" 102 2968 2975
+type(
+  string list
+)
+ident(
+  def v "src/ngram_impl.ml" 106 3053 3053 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 102 2968 2984 "src/ngram_impl.ml" 102 2968 2997
+type(
+  (ngram, string list) Map.Poly.t -> ngram -> string list option
+)
+ident(
+  int_ref Core.Map.Poly.find "src/map_intf.ml" 626 19053 19055 "src/map_intf.ml" 626 19053 19105
+)
+"src/ngram_impl.ml" 102 2968 2998 "src/ngram_impl.ml" 102 2968 3001
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 100 2876 2904 "src/ngram_impl.ml" 100 2876 2907
+)
+"src/ngram_impl.ml" 102 2968 3002 "src/ngram_impl.ml" 102 2968 3007
+type(
+  ngram
+)
+ident(
+  int_ref ngram "src/ngram_impl.ml" 100 2876 2922 "src/ngram_impl.ml" 100 2876 2927
+)
+"src/ngram_impl.ml" 102 2968 2984 "src/ngram_impl.ml" 102 2968 3007
+call(
+  stack
+)
+type(
+  string list option
+)
+"src/ngram_impl.ml" 103 3013 3019 "src/ngram_impl.ml" 103 3013 3023
+type(
+  string list option
+)
+"src/ngram_impl.ml" 103 3013 3027 "src/ngram_impl.ml" 103 3013 3029
+type(
+  string list
+)
+"src/ngram_impl.ml" 104 3030 3041 "src/ngram_impl.ml" 104 3030 3042
+type(
+  string list
+)
+ident(
+  def x "src/ngram_impl.ml" 104 3030 3046 "src/ngram_impl.ml" 104 3030 3047
+)
+"src/ngram_impl.ml" 104 3030 3036 "src/ngram_impl.ml" 104 3030 3042
+type(
+  string list option
+)
+"src/ngram_impl.ml" 104 3030 3046 "src/ngram_impl.ml" 104 3030 3047
+type(
+  string list
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 104 3030 3041 "src/ngram_impl.ml" 104 3030 3042
+)
+"src/ngram_impl.ml" 102 2968 2978 "src/ngram_impl.ml" 104 3030 3047
+type(
+  string list
+)
+"src/ngram_impl.ml" 106 3053 3057 "src/ngram_impl.ml" 106 3053 3060
+type(
+  int
+)
+ident(
+  def len "src/ngram_impl.ml" 107 3086 3086 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 106 3053 3069 "src/ngram_impl.ml" 106 3053 3080
+type(
+  string list -> int
+)
+ident(
+  int_ref Core.List.length "src/container_intf.ml" 172 6695 6697 "src/container_intf.ml" 172 6695 6723
+)
+"src/ngram_impl.ml" 106 3053 3081 "src/ngram_impl.ml" 106 3053 3082
+type(
+  string list
+)
+ident(
+  int_ref v "src/ngram_impl.ml" 102 2968 2974 "src/ngram_impl.ml" 102 2968 2975
+)
+"src/ngram_impl.ml" 106 3053 3069 "src/ngram_impl.ml" 106 3053 3082
+call(
+  stack
+)
+type(
+  int
+)
+type(
+  int
+)
+"src/ngram_impl.ml" 107 3086 3090 "src/ngram_impl.ml" 107 3086 3095
+type(
+  (string * float) list
+)
+ident(
+  def nlist "src/ngram_impl.ml" 108 3182 3182 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 107 3086 3098 "src/ngram_impl.ml" 107 3086 3106
+type(
+  string list -> f:(string -> string * float) -> (string * float) list
+)
+ident(
+  int_ref Core.List.map "src/list.mli" 191 8217 8217 "src/list.mli" 191 8217 8255
+)
+"src/ngram_impl.ml" 107 3086 3116 "src/ngram_impl.ml" 107 3086 3117
+type(
+  string
+)
+ident(
+  def s "src/ngram_impl.ml" 107 3086 3130 "src/ngram_impl.ml" 107 3086 3175
+)
+"src/ngram_impl.ml" 107 3086 3131 "src/ngram_impl.ml" 107 3086 3132
+type(
+  string
+)
+ident(
+  int_ref s "src/ngram_impl.ml" 107 3086 3116 "src/ngram_impl.ml" 107 3086 3117
+)
+"src/ngram_impl.ml" 107 3086 3136 "src/ngram_impl.ml" 107 3086 3148
+type(
+  int -> float
+)
+ident(
+  int_ref Core.float_of_int "src/core_pervasives.mli" 476 18161 18161 "src/core_pervasives.mli" 476 18161 18213
+)
+"src/ngram_impl.ml" 107 3086 3149 "src/ngram_impl.ml" 107 3086 3150
+type(
+  int
+)
+"src/ngram_impl.ml" 107 3086 3135 "src/ngram_impl.ml" 107 3086 3151
+type(
+  float
+)
+"src/ngram_impl.ml" 107 3086 3152 "src/ngram_impl.ml" 107 3086 3154
+type(
+  float -> float -> float
+)
+ident(
+  int_ref Core.( /. ) "src/core_pervasives.mli" 314 11988 11988 "src/core_pervasives.mli" 314 11988 12043
+)
+"src/ngram_impl.ml" 107 3086 3156 "src/ngram_impl.ml" 107 3086 3168
+type(
+  int -> float
+)
+ident(
+  int_ref Core.float_of_int "src/core_pervasives.mli" 476 18161 18161 "src/core_pervasives.mli" 476 18161 18213
+)
+"src/ngram_impl.ml" 107 3086 3169 "src/ngram_impl.ml" 107 3086 3172
+type(
+  int
+)
+ident(
+  int_ref len "src/ngram_impl.ml" 106 3053 3057 "src/ngram_impl.ml" 106 3053 3060
+)
+"src/ngram_impl.ml" 107 3086 3155 "src/ngram_impl.ml" 107 3086 3173
+type(
+  float
+)
+"src/ngram_impl.ml" 107 3086 3134 "src/ngram_impl.ml" 107 3086 3174
+type(
+  float
+)
+"src/ngram_impl.ml" 107 3086 3130 "src/ngram_impl.ml" 107 3086 3175
+type(
+  string * float
+)
+"src/ngram_impl.ml" 107 3086 3110 "src/ngram_impl.ml" 107 3086 3176
+type(
+  string -> string * float
+)
+"src/ngram_impl.ml" 107 3086 3177 "src/ngram_impl.ml" 107 3086 3178
+type(
+  string list
+)
+ident(
+  int_ref v "src/ngram_impl.ml" 102 2968 2974 "src/ngram_impl.ml" 102 2968 2975
+)
+"src/ngram_impl.ml" 107 3086 3098 "src/ngram_impl.ml" 107 3086 3178
+call(
+  stack
+)
+type(
+  (string * float) list
+)
+"src/ngram_impl.ml" 108 3182 3186 "src/ngram_impl.ml" 108 3182 3190
+type(
+  float String.Map.t
+)
+ident(
+  def prob "src/ngram_impl.ml" 109 3234 3234 "src/ngram_impl.ml" 109 3234 3244
+)
+"src/ngram_impl.ml" 108 3182 3193 "src/ngram_impl.ml" 108 3182 3219
+type(
+  (string * float) list -> f:(float -> float -> float) -> float String.Map.t
+)
+ident(
+  int_ref Core.String.Map.of_alist_reduce "src/map_intf.ml" 1159 39861 39863 "src/map_intf.ml" 1159 39861 39930
+)
+"src/ngram_impl.ml" 108 3182 3220 "src/ngram_impl.ml" 108 3182 3225
+type(
+  (string * float) list
+)
+ident(
+  int_ref nlist "src/ngram_impl.ml" 107 3086 3090 "src/ngram_impl.ml" 107 3086 3095
+)
+"src/ngram_impl.ml" 108 3182 3226 "src/ngram_impl.ml" 108 3182 3230
+type(
+  float -> float -> float
+)
+ident(
+  int_ref Core.( +. ) "src/core_pervasives.mli" 305 11715 11715 "src/core_pervasives.mli" 305 11715 11770
+)
+"src/ngram_impl.ml" 108 3182 3193 "src/ngram_impl.ml" 108 3182 3230
+call(
+  stack
+)
+type(
+  float String.Map.t
+)
+"src/ngram_impl.ml" 109 3234 3238 "src/ngram_impl.ml" 109 3234 3244
+type(
+  float String.Map.t
+)
+ident(
+  int_ref prob "src/ngram_impl.ml" 108 3182 3186 "src/ngram_impl.ml" 108 3182 3190
+)
+"src/ngram_impl.ml" 109 3234 3234 "src/ngram_impl.ml" 109 3234 3244
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 108 3182 3182 "src/ngram_impl.ml" 109 3234 3244
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 107 3086 3086 "src/ngram_impl.ml" 109 3234 3244
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 106 3053 3053 "src/ngram_impl.ml" 109 3234 3244
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 102 2968 2970 "src/ngram_impl.ml" 109 3234 3244
+type(
+  word_distribution option
+)
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 112 3249 3253 "src/ngram_impl.ml" 112 3249 3275
+type(
+  word_distribution -> string
+)
+ident(
+  def distribution_to_string "src/ngram_impl.ml" 116 3383 3383 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 112 3249 3277 "src/ngram_impl.ml" 112 3249 3281
+type(
+  word_distribution
+)
+ident(
+  def dist "src/ngram_impl.ml" 112 3249 3303 "src/ngram_impl.ml" 113 3314 3378
+)
+"src/ngram_impl.ml" 113 3314 3316 "src/ngram_impl.ml" 113 3314 3334
+type(
+  ?indent:int -> Sexp.t -> string
+)
+ident(
+  int_ref Core.Sexp.to_string_hum "src/sexp_intf.ml" 528 20573 20575 "src/sexp_intf.ml" 528 20573 20623
+)
+"src/ngram_impl.ml" 113 3314 3336 "src/ngram_impl.ml" 113 3314 3356
+type(
+  (float -> Sexp.t) -> float String.Map.t -> Sexp.t
+)
+ident(
+  int_ref Core.String.Map.sexp_of_t "src/sexpable.mli" 21 671 675 "src/sexpable.mli" 22 691 765
+)
+"src/ngram_impl.ml" 113 3314 3357 "src/ngram_impl.ml" 113 3314 3372
+type(
+  float -> Sexp.t
+)
+ident(
+  int_ref Core.Float.sexp_of_t "src/identifiable.mli" 22 756 760 "src/identifiable.mli" 22 756 805
+)
+"src/ngram_impl.ml" 113 3314 3373 "src/ngram_impl.ml" 113 3314 3377
+type(
+  word_distribution
+)
+ident(
+  int_ref dist "src/ngram_impl.ml" 112 3249 3277 "src/ngram_impl.ml" 112 3249 3281
+)
+"src/ngram_impl.ml" 113 3314 3335 "src/ngram_impl.ml" 113 3314 3378
+call(
+  stack
+)
+type(
+  Sexp.t
+)
+"src/ngram_impl.ml" 113 3314 3316 "src/ngram_impl.ml" 113 3314 3378
+call(
+  tail
+)
+type(
+  string
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 116 3383 3387 "src/ngram_impl.ml" 116 3383 3406
+type(
+  word_distribution -> string
+)
+ident(
+  def sample_distribution "src/ngram_impl.ml" 127 3693 3693 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 116 3383 3408 "src/ngram_impl.ml" 116 3383 3412
+type(
+  word_distribution
+)
+ident(
+  def dist "src/ngram_impl.ml" 116 3383 3434 "src/ngram_impl.ml" 124 3684 3688
+)
+"src/ngram_impl.ml" 117 3445 3451 "src/ngram_impl.ml" 117 3445 3454
+type(
+  float
+)
+ident(
+  def ran "src/ngram_impl.ml" 119 3514 3516 "src/ngram_impl.ml" 124 3684 3688
+)
+"src/ngram_impl.ml" 117 3445 3465 "src/ngram_impl.ml" 117 3445 3477
+type(
+  float -> float
+)
+ident(
+  int_ref Core.Random.float "src/random.mli" 64 2960 2960 "src/random.mli" 64 2960 2986
+)
+"src/ngram_impl.ml" 117 3445 3478 "src/ngram_impl.ml" 117 3445 3480
+type(
+  float
+)
+"src/ngram_impl.ml" 117 3445 3465 "src/ngram_impl.ml" 117 3445 3480
+call(
+  stack
+)
+type(
+  float
+)
+type(
+  float
+)
+"src/ngram_impl.ml" 119 3514 3520 "src/ngram_impl.ml" 119 3514 3521
+type(
+  string
+)
+ident(
+  def s "src/ngram_impl.ml" 120 3539 3541 "src/ngram_impl.ml" 124 3684 3688
+)
+"src/ngram_impl.ml" 119 3514 3533 "src/ngram_impl.ml" 119 3514 3535
+type(
+  string
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 120 3539 3546 "src/ngram_impl.ml" 120 3539 3547
+type(
+  float
+)
+ident(
+  def r "src/ngram_impl.ml" 124 3684 3686 "src/ngram_impl.ml" 124 3684 3688
+)
+"src/ngram_impl.ml" 120 3539 3549 "src/ngram_impl.ml" 120 3539 3551
+type(
+  string
+)
+ident(
+  def rs "src/ngram_impl.ml" 124 3684 3686 "src/ngram_impl.ml" 124 3684 3688
+)
+"src/ngram_impl.ml" 120 3539 3545 "src/ngram_impl.ml" 120 3539 3552
+type(
+  float * string
+)
+"src/ngram_impl.ml" 120 3539 3555 "src/ngram_impl.ml" 120 3539 3570
+type(
+  float String.Map.t ->
+  init:float * string ->
+  f:(key:string -> data:float -> float * string -> float * string) ->
+  float * string
+)
+ident(
+  int_ref Core.String.Map.fold "src/map_intf.ml" 519 14997 14999 "src/map_intf.ml" 519 14997 15079
+)
+"src/ngram_impl.ml" 120 3539 3571 "src/ngram_impl.ml" 120 3539 3575
+type(
+  word_distribution
+)
+ident(
+  int_ref dist "src/ngram_impl.ml" 116 3383 3408 "src/ngram_impl.ml" 116 3383 3412
+)
+"src/ngram_impl.ml" 120 3539 3583 "src/ngram_impl.ml" 120 3539 3586
+type(
+  float
+)
+ident(
+  int_ref ran "src/ngram_impl.ml" 117 3445 3451 "src/ngram_impl.ml" 117 3445 3454
+)
+"src/ngram_impl.ml" 120 3539 3588 "src/ngram_impl.ml" 120 3539 3589
+type(
+  string
+)
+ident(
+  int_ref s "src/ngram_impl.ml" 119 3514 3520 "src/ngram_impl.ml" 119 3514 3521
+)
+"src/ngram_impl.ml" 120 3539 3582 "src/ngram_impl.ml" 120 3539 3590
+type(
+  float * string
+)
+"src/ngram_impl.ml" 120 3539 3600 "src/ngram_impl.ml" 120 3539 3603
+type(
+  string
+)
+ident(
+  def key "src/ngram_impl.ml" 120 3539 3604 "src/ngram_impl.ml" 122 3654 3677
+)
+"src/ngram_impl.ml" 120 3539 3605 "src/ngram_impl.ml" 120 3539 3609
+type(
+  float
+)
+ident(
+  def data "src/ngram_impl.ml" 120 3539 3610 "src/ngram_impl.ml" 122 3654 3677
+)
+"src/ngram_impl.ml" 120 3539 3611 "src/ngram_impl.ml" 120 3539 3612
+type(
+  float
+)
+ident(
+  def r "src/ngram_impl.ml" 121 3623 3624 "src/ngram_impl.ml" 122 3654 3677
+)
+"src/ngram_impl.ml" 120 3539 3614 "src/ngram_impl.ml" 120 3539 3618
+type(
+  string
+)
+ident(
+  def outs "src/ngram_impl.ml" 121 3623 3624 "src/ngram_impl.ml" 122 3654 3677
+)
+"src/ngram_impl.ml" 120 3539 3610 "src/ngram_impl.ml" 120 3539 3619
+type(
+  float * string
+)
+"src/ngram_impl.ml" 121 3623 3628 "src/ngram_impl.ml" 121 3623 3629
+type(
+  float
+)
+ident(
+  int_ref r "src/ngram_impl.ml" 120 3539 3611 "src/ngram_impl.ml" 120 3539 3612
+)
+"src/ngram_impl.ml" 121 3623 3630 "src/ngram_impl.ml" 121 3623 3631
+type(
+  float -> float -> bool
+)
+ident(
+  int_ref Core.( < ) "src/core_pervasives.mli" 48 1696 1696 "src/core_pervasives.mli" 48 1696 1743
+)
+"src/ngram_impl.ml" 121 3623 3632 "src/ngram_impl.ml" 121 3623 3636
+type(
+  float
+)
+ident(
+  int_ref data "src/ngram_impl.ml" 120 3539 3605 "src/ngram_impl.ml" 120 3539 3609
+)
+"src/ngram_impl.ml" 121 3623 3627 "src/ngram_impl.ml" 121 3623 3637
+type(
+  bool
+)
+"src/ngram_impl.ml" 121 3623 3644 "src/ngram_impl.ml" 121 3623 3646
+type(
+  float
+)
+"src/ngram_impl.ml" 121 3623 3649 "src/ngram_impl.ml" 121 3623 3652
+type(
+  string
+)
+ident(
+  int_ref key "src/ngram_impl.ml" 120 3539 3600 "src/ngram_impl.ml" 120 3539 3603
+)
+"src/ngram_impl.ml" 121 3623 3643 "src/ngram_impl.ml" 121 3623 3653
+type(
+  float * string
+)
+"src/ngram_impl.ml" 122 3654 3661 "src/ngram_impl.ml" 122 3654 3662
+type(
+  float
+)
+ident(
+  int_ref r "src/ngram_impl.ml" 120 3539 3611 "src/ngram_impl.ml" 120 3539 3612
+)
+"src/ngram_impl.ml" 122 3654 3663 "src/ngram_impl.ml" 122 3654 3665
+type(
+  float -> float -> float
+)
+ident(
+  int_ref Core.( -. ) "src/core_pervasives.mli" 308 11803 11803 "src/core_pervasives.mli" 308 11803 11858
+)
+"src/ngram_impl.ml" 122 3654 3666 "src/ngram_impl.ml" 122 3654 3670
+type(
+  float
+)
+ident(
+  int_ref data "src/ngram_impl.ml" 120 3539 3605 "src/ngram_impl.ml" 120 3539 3609
+)
+"src/ngram_impl.ml" 122 3654 3661 "src/ngram_impl.ml" 122 3654 3670
+type(
+  float
+)
+"src/ngram_impl.ml" 122 3654 3672 "src/ngram_impl.ml" 122 3654 3676
+type(
+  string
+)
+ident(
+  int_ref outs "src/ngram_impl.ml" 120 3539 3614 "src/ngram_impl.ml" 120 3539 3618
+)
+"src/ngram_impl.ml" 122 3654 3660 "src/ngram_impl.ml" 122 3654 3677
+type(
+  float * string
+)
+"src/ngram_impl.ml" 121 3623 3624 "src/ngram_impl.ml" 122 3654 3677
+type(
+  float * string
+)
+"src/ngram_impl.ml" 120 3539 3594 "src/ngram_impl.ml" 122 3654 3678
+type(
+  key:string -> data:float -> float * string -> float * string
+)
+"src/ngram_impl.ml" 120 3539 3555 "src/ngram_impl.ml" 122 3654 3678
+call(
+  stack
+)
+type(
+  float * string
+)
+"src/ngram_impl.ml" 124 3684 3686 "src/ngram_impl.ml" 124 3684 3688
+type(
+  string
+)
+ident(
+  int_ref rs "src/ngram_impl.ml" 120 3539 3549 "src/ngram_impl.ml" 120 3539 3551
+)
+"src/ngram_impl.ml" 120 3539 3541 "src/ngram_impl.ml" 124 3684 3688
+type(
+  string
+)
+"src/ngram_impl.ml" 119 3514 3516 "src/ngram_impl.ml" 124 3684 3688
+type(
+  string
+)
+"src/ngram_impl.ml" 117 3445 3447 "src/ngram_impl.ml" 124 3684 3688
+type(
+  string
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 127 3693 3697 "src/ngram_impl.ml" 127 3693 3699
+type(
+  unit
+)
+"src/ngram_impl.ml" 128 3702 3708 "src/ngram_impl.ml" 128 3702 3711
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 129 3734 3736 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 128 3702 3714 "src/ngram_impl.ml" 128 3702 3727
+type(
+  unit -> ngram_map
+)
+ident(
+  int_ref ngram_map_new "src/ngram_impl.ml" 74 2173 2177 "src/ngram_impl.ml" 74 2173 2190
+)
+"src/ngram_impl.ml" 128 3702 3728 "src/ngram_impl.ml" 128 3702 3730
+type(
+  unit
+)
+"src/ngram_impl.ml" 128 3702 3714 "src/ngram_impl.ml" 128 3702 3730
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 129 3734 3740 "src/ngram_impl.ml" 129 3734 3743
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 130 3778 3780 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 129 3734 3746 "src/ngram_impl.ml" 129 3734 3759
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 129 3734 3760 "src/ngram_impl.ml" 129 3734 3763
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 128 3702 3708 "src/ngram_impl.ml" 128 3702 3711
+)
+"src/ngram_impl.ml" 129 3734 3765 "src/ngram_impl.ml" 129 3734 3768
+type(
+  string
+)
+"src/ngram_impl.ml" 129 3734 3770 "src/ngram_impl.ml" 129 3734 3773
+type(
+  string
+)
+"src/ngram_impl.ml" 129 3734 3764 "src/ngram_impl.ml" 129 3734 3774
+type(
+  ngram
+)
+"src/ngram_impl.ml" 129 3734 3746 "src/ngram_impl.ml" 129 3734 3774
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 130 3778 3784 "src/ngram_impl.ml" 130 3778 3787
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 131 3827 3829 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 130 3778 3790 "src/ngram_impl.ml" 130 3778 3803
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 130 3778 3804 "src/ngram_impl.ml" 130 3778 3807
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 129 3734 3740 "src/ngram_impl.ml" 129 3734 3743
+)
+"src/ngram_impl.ml" 130 3778 3809 "src/ngram_impl.ml" 130 3778 3812
+type(
+  string
+)
+"src/ngram_impl.ml" 130 3778 3814 "src/ngram_impl.ml" 130 3778 3817
+type(
+  string
+)
+"src/ngram_impl.ml" 130 3778 3819 "src/ngram_impl.ml" 130 3778 3822
+type(
+  string
+)
+"src/ngram_impl.ml" 130 3778 3808 "src/ngram_impl.ml" 130 3778 3823
+type(
+  ngram
+)
+"src/ngram_impl.ml" 130 3778 3790 "src/ngram_impl.ml" 130 3778 3823
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 131 3827 3833 "src/ngram_impl.ml" 131 3827 3836
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 132 3876 3878 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 131 3827 3839 "src/ngram_impl.ml" 131 3827 3852
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 131 3827 3853 "src/ngram_impl.ml" 131 3827 3856
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 130 3778 3784 "src/ngram_impl.ml" 130 3778 3787
+)
+"src/ngram_impl.ml" 131 3827 3858 "src/ngram_impl.ml" 131 3827 3861
+type(
+  string
+)
+"src/ngram_impl.ml" 131 3827 3863 "src/ngram_impl.ml" 131 3827 3866
+type(
+  string
+)
+"src/ngram_impl.ml" 131 3827 3868 "src/ngram_impl.ml" 131 3827 3871
+type(
+  string
+)
+"src/ngram_impl.ml" 131 3827 3857 "src/ngram_impl.ml" 131 3827 3872
+type(
+  ngram
+)
+"src/ngram_impl.ml" 131 3827 3839 "src/ngram_impl.ml" 131 3827 3872
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 132 3876 3882 "src/ngram_impl.ml" 132 3876 3885
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 133 3925 3927 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 132 3876 3888 "src/ngram_impl.ml" 132 3876 3901
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 132 3876 3902 "src/ngram_impl.ml" 132 3876 3905
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 131 3827 3833 "src/ngram_impl.ml" 131 3827 3836
+)
+"src/ngram_impl.ml" 132 3876 3907 "src/ngram_impl.ml" 132 3876 3910
+type(
+  string
+)
+"src/ngram_impl.ml" 132 3876 3912 "src/ngram_impl.ml" 132 3876 3915
+type(
+  string
+)
+"src/ngram_impl.ml" 132 3876 3917 "src/ngram_impl.ml" 132 3876 3920
+type(
+  string
+)
+"src/ngram_impl.ml" 132 3876 3906 "src/ngram_impl.ml" 132 3876 3921
+type(
+  ngram
+)
+"src/ngram_impl.ml" 132 3876 3888 "src/ngram_impl.ml" 132 3876 3921
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 133 3925 3931 "src/ngram_impl.ml" 133 3925 3934
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 134 3978 3982 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 133 3925 3937 "src/ngram_impl.ml" 133 3925 3950
+type(
+  ngram_map -> ngram -> ngram_map
+)
+ident(
+  int_ref ngram_map_add "src/ngram_impl.ml" 79 2257 2261 "src/ngram_impl.ml" 79 2257 2274
+)
+"src/ngram_impl.ml" 133 3925 3951 "src/ngram_impl.ml" 133 3925 3954
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 132 3876 3882 "src/ngram_impl.ml" 132 3876 3885
+)
+"src/ngram_impl.ml" 133 3925 3956 "src/ngram_impl.ml" 133 3925 3959
+type(
+  string
+)
+"src/ngram_impl.ml" 133 3925 3961 "src/ngram_impl.ml" 133 3925 3964
+type(
+  string
+)
+"src/ngram_impl.ml" 133 3925 3966 "src/ngram_impl.ml" 133 3925 3973
+type(
+  string
+)
+"src/ngram_impl.ml" 133 3925 3955 "src/ngram_impl.ml" 133 3925 3974
+type(
+  ngram
+)
+"src/ngram_impl.ml" 133 3925 3937 "src/ngram_impl.ml" 133 3925 3974
+call(
+  stack
+)
+type(
+  ngram_map
+)
+"src/ngram_impl.ml" 134 3978 3986 "src/ngram_impl.ml" 134 3978 3987
+type(
+  string list
+)
+ident(
+  def v "src/ngram_impl.ml" 138 4069 4071 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 134 3978 3996 "src/ngram_impl.ml" 134 3978 4009
+type(
+  (ngram, string list) Map.Poly.t -> ngram -> string list option
+)
+ident(
+  int_ref Core.Map.Poly.find "src/map_intf.ml" 626 19053 19055 "src/map_intf.ml" 626 19053 19105
+)
+"src/ngram_impl.ml" 134 3978 4010 "src/ngram_impl.ml" 134 3978 4013
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 133 3925 3931 "src/ngram_impl.ml" 133 3925 3934
+)
+"src/ngram_impl.ml" 134 3978 4015 "src/ngram_impl.ml" 134 3978 4018
+type(
+  string
+)
+"src/ngram_impl.ml" 134 3978 4020 "src/ngram_impl.ml" 134 3978 4023
+type(
+  string
+)
+"src/ngram_impl.ml" 134 3978 4014 "src/ngram_impl.ml" 134 3978 4024
+type(
+  ngram
+)
+"src/ngram_impl.ml" 134 3978 3996 "src/ngram_impl.ml" 134 3978 4024
+call(
+  stack
+)
+type(
+  string list option
+)
+"src/ngram_impl.ml" 135 4030 4036 "src/ngram_impl.ml" 135 4030 4040
+type(
+  string list option
+)
+"src/ngram_impl.ml" 135 4030 4044 "src/ngram_impl.ml" 135 4030 4046
+type(
+  string list
+)
+"src/ngram_impl.ml" 136 4047 4058 "src/ngram_impl.ml" 136 4047 4059
+type(
+  string list
+)
+ident(
+  def x "src/ngram_impl.ml" 136 4047 4063 "src/ngram_impl.ml" 136 4047 4064
+)
+"src/ngram_impl.ml" 136 4047 4053 "src/ngram_impl.ml" 136 4047 4059
+type(
+  string list option
+)
+"src/ngram_impl.ml" 136 4047 4063 "src/ngram_impl.ml" 136 4047 4064
+type(
+  string list
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 136 4047 4058 "src/ngram_impl.ml" 136 4047 4059
+)
+"src/ngram_impl.ml" 134 3978 3990 "src/ngram_impl.ml" 136 4047 4064
+type(
+  string list
+)
+"src/ngram_impl.ml" 138 4069 4075 "src/ngram_impl.ml" 138 4069 4079
+type(
+  word_distribution option
+)
+ident(
+  def dist "src/ngram_impl.ml" 139 4123 4125 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 138 4069 4082 "src/ngram_impl.ml" 138 4069 4104
+type(
+  ngram_map -> ngram -> word_distribution option
+)
+ident(
+  int_ref ngram_map_distribution "src/ngram_impl.ml" 100 2876 2880 "src/ngram_impl.ml" 100 2876 2902
+)
+"src/ngram_impl.ml" 138 4069 4105 "src/ngram_impl.ml" 138 4069 4108
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 133 3925 3931 "src/ngram_impl.ml" 133 3925 3934
+)
+"src/ngram_impl.ml" 138 4069 4110 "src/ngram_impl.ml" 138 4069 4113
+type(
+  string
+)
+"src/ngram_impl.ml" 138 4069 4115 "src/ngram_impl.ml" 138 4069 4118
+type(
+  string
+)
+"src/ngram_impl.ml" 138 4069 4109 "src/ngram_impl.ml" 138 4069 4119
+type(
+  ngram
+)
+"src/ngram_impl.ml" 138 4069 4082 "src/ngram_impl.ml" 138 4069 4119
+call(
+  stack
+)
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 139 4123 4131 "src/ngram_impl.ml" 139 4123 4135
+type(
+  word_distribution option
+)
+ident(
+  int_ref dist "src/ngram_impl.ml" 138 4069 4075 "src/ngram_impl.ml" 138 4069 4079
+)
+"src/ngram_impl.ml" 140 4141 4145 "src/ngram_impl.ml" 140 4141 4149
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 140 4141 4153 "src/ngram_impl.ml" 140 4141 4155
+type(
+  unit
+)
+"src/ngram_impl.ml" 141 4156 4165 "src/ngram_impl.ml" 141 4156 4166
+type(
+  word_distribution
+)
+ident(
+  def x "src/ngram_impl.ml" 142 4171 4173 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 141 4156 4160 "src/ngram_impl.ml" 141 4156 4166
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 142 4171 4177 "src/ngram_impl.ml" 142 4171 4182
+type(
+  string
+)
+ident(
+  def sdist "src/ngram_impl.ml" 146 4332 4333 "src/ngram_impl.ml" 146 4332 4335
+)
+"src/ngram_impl.ml" 142 4171 4185 "src/ngram_impl.ml" 142 4171 4204
+type(
+  word_distribution -> string
+)
+ident(
+  int_ref sample_distribution "src/ngram_impl.ml" 116 3383 3387 "src/ngram_impl.ml" 116 3383 3406
+)
+"src/ngram_impl.ml" 142 4171 4205 "src/ngram_impl.ml" 142 4171 4206
+type(
+  word_distribution
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 141 4156 4165 "src/ngram_impl.ml" 141 4156 4166
+)
+"src/ngram_impl.ml" 142 4171 4185 "src/ngram_impl.ml" 142 4171 4206
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 146 4332 4333 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 142 4171 4173 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 139 4123 4125 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 138 4069 4071 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 134 3978 3982 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 133 3925 3927 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 132 3876 3878 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 131 3827 3829 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 130 3778 3780 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 129 3734 3736 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 128 3702 3704 "src/ngram_impl.ml" 146 4332 4335
+type(
+  unit
+)
+"src/ngram_impl.ml" 149 4340 4348 "src/ngram_impl.ml" 149 4340 4356
+type(
+  ngram_map -> ngram -> int -> string list
+)
+ident(
+  def sample_n "src/ngram_impl.ml" 149 4340 4340 "src/ngram_impl.ml" 1 0 -1
+)
+"src/ngram_impl.ml" 149 4340 4358 "src/ngram_impl.ml" 149 4340 4361
+type(
+  ngram_map
+)
+ident(
+  def map "src/ngram_impl.ml" 149 4340 4375 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 149 4340 4376 "src/ngram_impl.ml" 149 4340 4378
+type(
+  ngram
+)
+ident(
+  def ng "src/ngram_impl.ml" 149 4340 4388 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 149 4340 4389 "src/ngram_impl.ml" 149 4340 4390
+type(
+  int
+)
+ident(
+  def n "src/ngram_impl.ml" 149 4340 4398 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 150 4414 4419 "src/ngram_impl.ml" 150 4414 4420
+type(
+  int
+)
+ident(
+  int_ref n "src/ngram_impl.ml" 149 4340 4389 "src/ngram_impl.ml" 149 4340 4390
+)
+"src/ngram_impl.ml" 150 4414 4421 "src/ngram_impl.ml" 150 4414 4422
+type(
+  int -> int -> bool
+)
+ident(
+  int_ref Core.( = ) "src/core_pervasives.mli" 37 1168 1168 "src/core_pervasives.mli" 37 1168 1212
+)
+"src/ngram_impl.ml" 150 4414 4423 "src/ngram_impl.ml" 150 4414 4424
+type(
+  int
+)
+"src/ngram_impl.ml" 150 4414 4419 "src/ngram_impl.ml" 150 4414 4424
+type(
+  bool
+)
+"src/ngram_impl.ml" 150 4414 4430 "src/ngram_impl.ml" 150 4414 4432
+type(
+  string list
+)
+"src/ngram_impl.ml" 151 4433 4446 "src/ngram_impl.ml" 151 4433 4459
+type(
+  (ngram, string list) Map.Poly.t -> ngram -> string list option
+)
+ident(
+  int_ref Core.Map.Poly.find "src/map_intf.ml" 626 19053 19055 "src/map_intf.ml" 626 19053 19105
+)
+"src/ngram_impl.ml" 151 4433 4460 "src/ngram_impl.ml" 151 4433 4463
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 149 4340 4358 "src/ngram_impl.ml" 149 4340 4361
+)
+"src/ngram_impl.ml" 151 4433 4464 "src/ngram_impl.ml" 151 4433 4466
+type(
+  ngram
+)
+ident(
+  int_ref ng "src/ngram_impl.ml" 149 4340 4376 "src/ngram_impl.ml" 149 4340 4378
+)
+"src/ngram_impl.ml" 151 4433 4446 "src/ngram_impl.ml" 151 4433 4466
+call(
+  stack
+)
+type(
+  string list option
+)
+"src/ngram_impl.ml" 152 4473 4477 "src/ngram_impl.ml" 152 4473 4481
+type(
+  string list option
+)
+"src/ngram_impl.ml" 152 4473 4485 "src/ngram_impl.ml" 152 4473 4487
+type(
+  string list
+)
+"src/ngram_impl.ml" 153 4488 4497 "src/ngram_impl.ml" 153 4488 4498
+type(
+  string list
+)
+ident(
+  def x "src/ngram_impl.ml" 154 4503 4505 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 153 4488 4492 "src/ngram_impl.ml" 153 4488 4498
+type(
+  string list option
+)
+"src/ngram_impl.ml" 154 4503 4509 "src/ngram_impl.ml" 154 4503 4513
+type(
+  word_distribution option
+)
+ident(
+  def dist "src/ngram_impl.ml" 155 4551 4553 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 154 4503 4517 "src/ngram_impl.ml" 154 4503 4539
+type(
+  ngram_map -> ngram -> word_distribution option
+)
+ident(
+  int_ref ngram_map_distribution "src/ngram_impl.ml" 100 2876 2880 "src/ngram_impl.ml" 100 2876 2902
+)
+"src/ngram_impl.ml" 154 4503 4540 "src/ngram_impl.ml" 154 4503 4543
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 149 4340 4358 "src/ngram_impl.ml" 149 4340 4361
+)
+"src/ngram_impl.ml" 154 4503 4544 "src/ngram_impl.ml" 154 4503 4546
+type(
+  ngram
+)
+ident(
+  int_ref ng "src/ngram_impl.ml" 149 4340 4376 "src/ngram_impl.ml" 149 4340 4378
+)
+"src/ngram_impl.ml" 154 4503 4516 "src/ngram_impl.ml" 154 4503 4547
+call(
+  stack
+)
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 155 4551 4559 "src/ngram_impl.ml" 155 4551 4563
+type(
+  word_distribution option
+)
+ident(
+  int_ref dist "src/ngram_impl.ml" 154 4503 4509 "src/ngram_impl.ml" 154 4503 4513
+)
+"src/ngram_impl.ml" 156 4570 4574 "src/ngram_impl.ml" 156 4570 4578
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 156 4570 4582 "src/ngram_impl.ml" 156 4570 4584
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4594 "src/ngram_impl.ml" 157 4585 4595
+type(
+  word_distribution
+)
+ident(
+  def x "src/ngram_impl.ml" 157 4585 4599 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 157 4585 4589 "src/ngram_impl.ml" 157 4585 4595
+type(
+  word_distribution option
+)
+"src/ngram_impl.ml" 157 4585 4603 "src/ngram_impl.ml" 157 4585 4604
+type(
+  string
+)
+ident(
+  def s "src/ngram_impl.ml" 157 4585 4632 "src/ngram_impl.ml" 157 4585 4697
+)
+"src/ngram_impl.ml" 157 4585 4607 "src/ngram_impl.ml" 157 4585 4626
+type(
+  word_distribution -> string
+)
+ident(
+  int_ref sample_distribution "src/ngram_impl.ml" 116 3383 3387 "src/ngram_impl.ml" 116 3383 3406
+)
+"src/ngram_impl.ml" 157 4585 4627 "src/ngram_impl.ml" 157 4585 4628
+type(
+  word_distribution
+)
+ident(
+  int_ref x "src/ngram_impl.ml" 157 4585 4594 "src/ngram_impl.ml" 157 4585 4595
+)
+"src/ngram_impl.ml" 157 4585 4607 "src/ngram_impl.ml" 157 4585 4628
+call(
+  stack
+)
+type(
+  string
+)
+"src/ngram_impl.ml" 157 4585 4632 "src/ngram_impl.ml" 157 4585 4633
+type(
+  string
+)
+ident(
+  int_ref s "src/ngram_impl.ml" 157 4585 4603 "src/ngram_impl.ml" 157 4585 4604
+)
+"src/ngram_impl.ml" 157 4585 4637 "src/ngram_impl.ml" 157 4585 4645
+type(
+  ngram_map -> ngram -> int -> string list
+)
+ident(
+  int_ref sample_n "src/ngram_impl.ml" 149 4340 4348 "src/ngram_impl.ml" 149 4340 4356
+)
+"src/ngram_impl.ml" 157 4585 4646 "src/ngram_impl.ml" 157 4585 4649
+type(
+  ngram_map
+)
+ident(
+  int_ref map "src/ngram_impl.ml" 149 4340 4358 "src/ngram_impl.ml" 149 4340 4361
+)
+"src/ngram_impl.ml" 157 4585 4652 "src/ngram_impl.ml" 157 4585 4669
+type(
+  string list -> string list
+)
+ident(
+  int_ref remove_last_impl2 "src/ngram_impl.ml" 34 778 782 "src/ngram_impl.ml" 34 778 799
+)
+"src/ngram_impl.ml" 157 4585 4671 "src/ngram_impl.ml" 157 4585 4679
+type(
+  string list -> string list
+)
+ident(
+  int_ref Core.List.rev "src/list.mli" 58 1900 1900 "src/list.mli" 58 1900 1922
+)
+"src/ngram_impl.ml" 157 4585 4680 "src/ngram_impl.ml" 157 4585 4682
+type(
+  ngram
+)
+ident(
+  int_ref ng "src/ngram_impl.ml" 149 4340 4376 "src/ngram_impl.ml" 149 4340 4378
+)
+"src/ngram_impl.ml" 157 4585 4670 "src/ngram_impl.ml" 157 4585 4683
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4651 "src/ngram_impl.ml" 157 4585 4684
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4685 "src/ngram_impl.ml" 157 4585 4686
+type(
+  string list -> string list -> string list
+)
+ident(
+  int_ref Core.( @ ) "src/list.mli" 497 21588 21590 "src/list.mli" 497 21588 21622
+)
+"src/ngram_impl.ml" 157 4585 4688 "src/ngram_impl.ml" 157 4585 4689
+type(
+  string
+)
+ident(
+  int_ref s "src/ngram_impl.ml" 157 4585 4603 "src/ngram_impl.ml" 157 4585 4604
+)
+"src/ngram_impl.ml" 157 4585 4687 "src/ngram_impl.ml" 157 4585 4690
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4650 "src/ngram_impl.ml" 157 4585 4691
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4693 "src/ngram_impl.ml" 157 4585 4694
+type(
+  int
+)
+ident(
+  int_ref n "src/ngram_impl.ml" 149 4340 4389 "src/ngram_impl.ml" 149 4340 4390
+)
+"src/ngram_impl.ml" 157 4585 4694 "src/ngram_impl.ml" 157 4585 4695
+type(
+  int -> int -> int
+)
+ident(
+  int_ref Core.( - ) "src/core_pervasives.mli" 215 8438 8438 "src/core_pervasives.mli" 215 8438 8484
+)
+"src/ngram_impl.ml" 157 4585 4695 "src/ngram_impl.ml" 157 4585 4696
+type(
+  int
+)
+"src/ngram_impl.ml" 157 4585 4692 "src/ngram_impl.ml" 157 4585 4697
+type(
+  int
+)
+"src/ngram_impl.ml" 157 4585 4637 "src/ngram_impl.ml" 157 4585 4697
+call(
+  stack
+)
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4632 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+"src/ngram_impl.ml" 157 4585 4599 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+"src/ngram_impl.ml" 155 4551 4553 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+"src/ngram_impl.ml" 154 4503 4505 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+"src/ngram_impl.ml" 151 4433 4440 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+"src/ngram_impl.ml" 150 4414 4416 "src/ngram_impl.ml" 157 4585 4697
+type(
+  string list
+)
+type(
+  string list
+)
