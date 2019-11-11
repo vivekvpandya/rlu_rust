@@ -9,27 +9,120 @@ pub enum BinaryTree<T> {
 
 impl<T: Debug + Display + PartialOrd> BinaryTree<T> {
   pub fn len(&self) -> usize {
-    unimplemented!()
+    match self {
+        BinaryTree::Leaf => { 0 },
+        BinaryTree::Node(t, l, r) => { 1 + l.len() + r.len()}
+    }
   }
 
   pub fn to_vec(&self) -> Vec<&T> {
-    unimplemented!()
+    let mut vec = Vec::new();
+    match self {
+        BinaryTree::Leaf => {vec},
+        BinaryTree::Node(t, l, r) => { vec.append(&mut l.to_vec()); vec.push(t); vec.append(&mut r.to_vec()); vec } 
+    }
   }
 
   pub fn sorted(&self) -> bool {
-    unimplemented!()
+  let vec =  self.to_vec();
+  let mut b : bool = true;
+  for i in 0..vec.len() {
+    if i > 0 && i < (vec.len() - 1) {
+      b &= (vec[i] > vec[i-1] && vec[i] <= vec[i+1])  
+    };
+  };
+  b
   }
 
   pub fn insert(&mut self, t: T) {
-    unimplemented!()
+    match self {
+        BinaryTree::Leaf => {*self = BinaryTree::Node(t, Box::new(BinaryTree::Leaf), Box::new(BinaryTree::Leaf))},
+        BinaryTree::Node(tt, l, r) => { if *tt > t {l.insert(t)}
+                                        else {r.insert(t)} }
+    }
+  }
+
+  pub fn insert_tree<'a>(&'a mut self, tree : &'a mut BinaryTree<T>) {
+    match self {
+        BinaryTree::Leaf => {mem::swap(self, tree)},
+        BinaryTree::Node(tt, l, r) => {
+            match tree {
+                BinaryTree::Leaf => {},
+                BinaryTree::Node(t , _, _) => { if *tt > *t { l.insert_tree(tree)} else {r.insert_tree(tree)}} 
+            }
+        }
+    }
   }
 
   pub fn search(&self, query: &T) -> Option<&T> {
-    unimplemented!()
+    match self {
+        BinaryTree::Leaf => {None},
+        BinaryTree::Node(tt, l, r) => { if *tt < *query {r.search(query)}
+                                        else {Some(tt)} }
+    }
+  }
+
+
+  pub fn largest(&mut self) -> BinaryTree<T> {
+    match self {
+        BinaryTree::Leaf => {BinaryTree::Leaf},
+        BinaryTree::Node(_, _, r) => { if r.len() == 0 {mem::replace(self, BinaryTree::Leaf)}  
+                                       else {r.largest()} }
+    }
+  }
+
+
+  pub fn smallest(&mut self) -> BinaryTree<T> {
+    match self {
+        BinaryTree::Leaf => {BinaryTree::Leaf},
+        BinaryTree::Node(_, l, _) => { if l.len() == 0 {mem::replace(self, BinaryTree::Leaf)}
+                                       else {l.smallest()}}
+    }
   }
 
   pub fn rebalance(&mut self) {
-    unimplemented!()
+        match self {
+            BinaryTree::Leaf => {},
+            BinaryTree::Node(t, l, r) => {
+                    let ll = l.len();
+                    let rl = r.len();
+                    if (ll > rl) && (ll - rl) > 1 {
+                        let lar_l =&mut l.largest();
+                        match lar_l {
+                            BinaryTree::Node(tt, lt, rt) => {let mut left1 = mem::replace(lt, Box::new(BinaryTree::Leaf)); 
+                                                             let mut right1 = mem::replace(rt, Box::new(BinaryTree::Leaf));
+                                                             l.insert_tree(&mut*left1);
+                                                             mem::swap(lt, l);
+                                                             let old_root : BinaryTree<T> = mem::replace(self, BinaryTree::Leaf);
+                                                             mem::swap(rt , &mut Box::new(old_root));
+                                                             mem::swap(self, lar_l);
+
+                                                             //println!("Vec {:?}", self.to_vec());
+                                                            // println!("Vec {:?}", lar_l.to_vec());
+                                                             }
+                            BinaryTree::Leaf => {}
+                        }
+                    }
+                    else if (rl > ll) && (rl - ll) > 1 {
+                        let sma_r = &mut r.smallest();
+                        match sma_r {
+                            BinaryTree::Node(tt, lt, rt) => {
+                                    let mut left1 = mem::replace(lt, Box::new(BinaryTree::Leaf));
+                                    let mut right1 = mem::replace(rt, Box::new(BinaryTree::Leaf));
+                                    r.insert_tree(&mut*right1);
+                                    mem::swap(rt, r);
+                                    let old_root : BinaryTree<T> = mem::replace(self, BinaryTree::Leaf);
+                                    mem::swap(lt, &mut Box::new(old_root));
+                                    mem::swap(self, sma_r);
+
+                                    //println!("Vec {:?}", self.to_vec());
+                                    //println!("Vec {:?}", sma_r.to_vec());
+                                }
+                            BinaryTree::Leaf => {}
+                        }
+                    }
+                }
+        }
   }
 
 
@@ -115,6 +208,8 @@ mod test {
   fn insertion_test() {
     let mut t = TEST_TREE.clone();
     t.insert("E");
+    //let vect = t.to_vec();
+    //println!("{:?}", vect);
     assert!(t.sorted());
   }
 

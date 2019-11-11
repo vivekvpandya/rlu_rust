@@ -17,33 +17,26 @@
 
 \hwtitle
   {Assignment 6}
-  {Will Crichton (wcrichto)} %% REPLACE THIS WITH YOUR NAME/ID
+  {Vivek Pandya (vpandya)} %% REPLACE THIS WITH YOUR NAME/ID
 
 \problem{Problem 1.1}
 
 \begin{enumerate}
 \item % Your answer to 1.1.1 here
-
+Since linear type enforces ``No duplication'' and ``No discarding'' behaviour, all the changes done one the world will be actaully performed on the world by overwriting yhe value. However in PL with out liner type it requires duplication and discrad operations to get desired changes in the world. I.e changes won't be applied on existing world but new copy with desired changes will be created and old will be discarded.
 \item
   \begin{enumerate} % Your answers to 1.1.2 here
-    \item
-    \item
-    \item
-    \item
+    \item $${\ltyfun{\ltyprim{Bool}}{\ltyprim{Bool}}}$$
+    \item $${\ltyfun{\ltyprim{Bool}}{\ltyprim{Bool}}}$$
+    \item Can't have type because in case statement x has type K then it can not be used again as some vlaue v with type V. 
+    \item $${\ltyfun{\ltyfun{\ltyprim{List}}{(\ltyfun{\ltyprim{Val}}{\ltyprim{Val}})}}{\ltyprim{List}}}$$
   \end{enumerate}
 \end{enumerate}
 
 % Here's some examples of Latexing with Wadler's linear types.
 % DELETE THESE BEFORE SUBMITTING
 \begin{align*}
-&\lfun{x}{\ltyprim{Bool}}{\ltyprim{True}} \\
-&\lfun {x}{\ltyprim{Bool}}{(\lcase{x}{
-  \ltyprim{True} \rightarrow \ltyprim{False} \mid \ltyprim{False} \rightarrow \ltyprim{True}})} \\
-&\lfun {x}{\ltyprim{Bool}}{(\lcase{x}{
-  \ltyprim{True} \rightarrow x \mid \ltyprim{False} \rightarrow \ltyprim{True}})} \\
-&\lfun{l}{\ltyprim{List}}{
-  \lfun{f}{\ltyfun{\ltyprim{Val}}{\ltyprim{Val}}}
-  {\lcase{l}{\ltyprim{Nil} \rightarrow \ltyprim{Nil} \mid \ltyprim{Cons}~x~l' \rightarrow \ltyprim{Cons}~(\lapp{f}{x})~l'}}}
+
 \end{align*}
 
 \end{document}
