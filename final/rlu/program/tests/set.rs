@@ -6,6 +6,16 @@ use std::thread;
 use rand::{random, thread_rng, Rng};
 
 #[test]
+fn set_my_test() {
+ let set : RluSet<u32> = RluSet::new();
+ set.insert(0);
+ set.insert(1);
+ set.insert(100);
+ set.insert(1);
+ println!("{:?}", set.to_string());
+}
+
+#[test]
 fn set_simple() {
   let set = RluSet::new();
 
