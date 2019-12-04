@@ -1,3 +1,4 @@
+use std::convert::TryInto;
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -43,7 +44,7 @@ struct obj_list_t {
 }
 
 struct wait_entry_t {
-    is_wait : char,
+    is_wait : u8,
     run_counter : u32
 }
 
@@ -103,7 +104,7 @@ static mut g_rlu_data : rlu_data = rlu_data{
 };
 
 static mut g_rlu_max_write_sets : u32 = 0;
-static mut g_rlu_cur_threads : u32 = 0;
+static mut g_rlu_cur_threads : usize = 0;
 static mut g_rlu_threads : [*mut rlu_thread_data_t; 32] = [0 as *mut rlu_thread_data_t; 32] ;
 static mut g_rlu_writer_locks : [u32; 20000] = [0; 20000];
 static mut g_rlu_array : [u32; 4096] = [0; 4096];
@@ -153,7 +154,31 @@ fn rlu_abort(self_ : *mut rlu_thread_data_t) {
 }
 
 fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
-    unimplemented!();
+    //unimplemented!();
+    unsafe {
+	//MEMBARSTLD();
+        // Need to model NULL for thread id
+        let NULL = -1;
+	for th_id in 0..g_rlu_cur_threads {
+
+            (*self_).q_threads[th_id].is_wait = 0;
+
+            if (th_id == (*self_).uniq_id.try_into().unwrap()) {
+            // No need to wait for myself
+                continue;
+            }
+            else if (g_rlu_threads[th_id].is_null()) {
+                // No need to wait for uninitialized threads
+                continue;
+            } else {
+                (*self_).q_threads[th_id].run_counter = (*g_rlu_threads[th_id]).run_counter;
+                if ((*self_).q_threads[th_id].run_counter & 0x1 == 1) {
+                    // The other thread is running -> wait for the thread
+                     (*self_).q_threads[th_id].is_wait = 1;	
+                 }
+	    }
+        }
+    }
 }
 
 fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
