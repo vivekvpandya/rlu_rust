@@ -185,8 +185,37 @@ fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
     unimplemented!();
 }
 
-fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, writer_version : u32) -> u32 {
-    unimplemented!();
+fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, version_limit : u32) -> u32 {
+    unsafe {
+	let mut iters = 0;
+	let cur_threads = g_rlu_cur_threads;
+	for th_id in 0..g_rlu_cur_threads {
+    	    while ((*self_).q_threads[th_id].is_wait != 1) {
+		iters = iters + 1;
+		if ((*self_).q_threads[th_id].run_counter != (*g_rlu_threads[th_id]).run_counter) {
+                    (*self_).q_threads[th_id].is_wait = 0;
+		    break;
+                }
+		if (version_limit != 0) {
+                    if ((*g_rlu_threads[th_id]).local_version >= version_limit) {
+                        (*self_).q_threads[th_id].is_wait = 0;
+		        break;
+		    }
+	        }
+                let Q_ITERS_LIMIT = 100000000;
+		if (iters > Q_ITERS_LIMIT) {
+                    iters = 0;
+		    /*printf("[%ld] waiting for [%d] with: local_version = %ld , run_cnt = %ld\n", self->uniq_id, th_id,
+                    (*g_rlu_threads[th_id]).local_version, (*g_rlu_threads[th_id]).run_counter);*/
+		}
+                //TODO: Check for CPU relax
+ 		//CPU_RELAX();
+
+		}
+	}
+
+	iters
+    }
 }
 
 fn rlu_synchronize(self_ : *mut rlu_thread_data_t) {
