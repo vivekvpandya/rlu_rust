@@ -181,8 +181,86 @@ fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
     }
 }
 
+fn rlu_reset_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
+    unsafe {
+        (*self_).obj_write_set[ws_id].writer_locks.size = 0;
+    }
+}
+
+fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
+    unsafe {
+        // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
+        let ws_id = 0; //Assuming single write set
+
+        (*self_).obj_write_set[ws_id].num_of_objs = 0;
+        // TODO:Assigning har pointer to integer.. need to figure out better way
+        //(*self_).obj_write_set[ws_id].p_cur = { (&(*self_).obj_write_set[ws_id].buffer[0]) as *mut u32};
+
+	rlu_reset_writer_locks(self_, ws_id);
+    }
+}
+
+fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
+
+        unsafe {
+            /*TODO: need to think this routine, it has pointer manipulation
+             *      can encapsulated in the functions 
+            //ws_id = WS_INDEX(ws_counter);
+            // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
+            let ws_id = 0; //Assuming single write set
+            //p_cur = (intptr_t *)&(self->obj_write_set[ws_id].buffer[0]);
+
+            for i in  0..(*self_).obj_write_set[ws_id].num_of_objs {
+                p_ws_obj_h = (rlu_ws_obj_header_t *)p_cur;
+
+                p_obj_actual = (intptr_t *)p_ws_obj_h->p_obj_actual;
+                obj_size = (obj_size_t)p_ws_obj_h->obj_size;
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, WS_OBJ_HEADER_SIZE);
+                p_obj_h = (rlu_obj_header_t *)p_cur;
+
+                RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, OBJ_HEADER_SIZE);
+
+                p_obj_copy = (intptr_t *)p_cur;
+
+                TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
+                        self->writer_version, p_obj_actual, p_obj_copy, obj_size);
+
+                memcpy((unsigned char *)p_obj_actual, (unsigned char *)p_obj_copy, obj_size);
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
+
+                /*RLU_ASSERT_MSG(GET_THREAD_ID(p_obj_actual) == self->uniq_id,
+                        self, "th_id = %ld my_id = %ld\n p_obj_actual = %p num_of_objs = %u\n",
+                        GET_THREAD_ID(p_obj_actual), self->uniq_id, p_obj_actual, self->obj_write_set[ws_id].num_of_objs);*/
+
+                UNLOCK(p_obj_actual);
+                }
+	//RLU_ASSERT(p_cur == self->obj_write_set[ws_id].p_cur);
+        */
+    }
+}
+
 fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
-    unimplemented!();
+    unsafe{
+	for  ws_counter  in (*self_).ws_head_counter..(*self_).ws_wb_counter {
+	     rlu_reset_write_set(self_, ws_counter.try_into().unwrap());
+	}
+
+        (*self_).ws_head_counter = (*self_).ws_wb_counter;
+
+	let mut ws_wb_num = 0;
+	for ws_counter in (*self_).ws_wb_counter..(*self_).ws_tail_counter {
+	    rlu_writeback_write_set(self_, ws_counter.try_into().unwrap());
+	    ws_wb_num = ws_wb_num + 1;
+	}
+
+        (*self_).ws_wb_counter = (*self_).ws_tail_counter;
+
+	ws_wb_num
+    }
 }
 
 fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, version_limit : u32) -> u32 {
