@@ -37,8 +37,8 @@ struct rlu_ws_obj_header {
 }
 
 struct writer_locks_t {
-    size : u32,
-    ids : [u32; 20] //array , size must be known at compile time, according to rust spec this lives on stack
+    size : usize,
+    ids : [usize; 20] //array , size must be known at compile time, according to rust spec this lives on stack
 }
 
 struct obj_list_t {
@@ -72,12 +72,12 @@ struct rlu_thread_data_t {
     writer_version : u32,
     q_threads : [wait_entry_t; RLU_MAX_THREADS],
 
-    ws_head_counter : u32,
-    ws_wb_counter : u32,
-    ws_tail_counter : u32,
-    ws_cur_id : u32,
+    ws_head_counter : usize,
+    ws_wb_counter : usize,
+    ws_tail_counter : usize,
+    ws_cur_id : usize,
     obj_write_set : [obj_list_t; 200],
-    free_nodes_size : u32,
+    free_nodes_size : usize,
     free_nodes : [*mut u32; 200],
 
     n_starts : u32,
@@ -154,11 +154,7 @@ fn rlu_print_stats() {
     }
 }
 
-fn rlu_reset_write_set(self_: *mut rlu_thread_data_t, ws_counter : u32) {
-    unimplemented!();
-}
-
-fn rlu_sync_and_writeback(self_ : *mut rlu_thread_data_t) {
+fn rlu_reset_write_set(self_: *mut rlu_thread_data_t, ws_counter : usize) {
     unimplemented!();
 }
 
@@ -170,28 +166,28 @@ fn rlu_commit_write_set(self_ : *mut rlu_thread_data_t) {
     unimplemented!();
 }
 
-fn rlu_release_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : u32) {
+fn rlu_release_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) {
     unsafe {
-        g_rlu_writer_locks[writer_lock_id as usize] = 0;
+        g_rlu_writer_locks[writer_lock_id] = 0;
     }
 }
 
-fn rlu_release_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : u32) {
+fn rlu_release_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
     let mut i : usize = 0;
     unsafe {
-    for i in 0..(*self_).obj_write_set[ws_id as usize].writer_locks.size {
-        rlu_release_writer_lock(self_, (*self_).obj_write_set[ws_id as usize].writer_locks.ids[i as usize]);
+    for i in 0..(*self_).obj_write_set[ws_id].writer_locks.size {
+        rlu_release_writer_lock(self_, (*self_).obj_write_set[ws_id].writer_locks.ids[i as usize]);
     }
     }
 }
 
-fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : u32) {
+fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
     unimplemented!();
 }
 
-fn rlu_reset_writer_locks(self_: *mut rlu_thread_data_t, ws_id : u32) {
+fn rlu_reset_writer_locks(self_: *mut rlu_thread_data_t, ws_id : usize) {
     unsafe {
-        (*self_).obj_write_set[ws_id as usize].writer_locks.size = 0;
+        (*self_).obj_write_set[ws_id].writer_locks.size = 0;
     }
 }
 
@@ -201,7 +197,7 @@ fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
         (*self_).uniq_id = g_rlu_cur_threads.fetch_add(1, Ordering::SeqCst); // use fetch_and_add here
         (*self_).local_version = 0;
         (*self_).writer_version = u32::max_value();
-        let mut ws_counter : u32 = 0;
+        let mut ws_counter : usize = 0;
         for ws_couter in 0..RLU_MAX_WRITE_SETS {
             rlu_reset_write_set(self_, ws_counter);
         }
@@ -287,7 +283,7 @@ fn rlu_reader_unlock(self_ : *mut rlu_thread_data_t) {
     if (*self_).is_write_detected != 0 as char {
         (*self_).is_write_detected = 0 as char;
         rlu_commit_write_set(self_);
-        rlu_release_writer_locks(self_, ((*self_).ws_tail_counter -1 ) % RLU_MAX_WRITE_SETS as u32);
+        rlu_release_writer_locks(self_, (((*self_).ws_tail_counter -1 ) % RLU_MAX_WRITE_SETS) as usize);
     } else {
         rlu_release_writer_locks(self_, (*self_).ws_cur_id);
         rlu_release_writer_locks(self_, (*self_).ws_cur_id);
@@ -317,13 +313,158 @@ fn rlu_abort(self_ : *mut rlu_thread_data_t) {
     }
 }
 
-fn rlu_try_write_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : u32) -> u32 {
+fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
     unimplemented!();
+}
+
+fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
+    unimplemented!();
+}
+
+fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, writer_version : u32) -> u32 {
+    unimplemented!();
+}
+
+fn rlu_synchronize(self_ : *mut rlu_thread_data_t) {
+    unsafe {
+	if ((*self_).is_no_quiescence == 1) {
+		return;
+	}
+
+	rlu_init_quiescence(self_);
+
+	let q_iters = rlu_wait_for_quiescence(self_, (*self_).writer_version);
+
+        (*self_).n_writeback_q_iters = (*self_).n_writeback_q_iters + q_iters;
+    }
+}
+
+fn rlu_process_free(self_ : *mut rlu_thread_data_t) {
+    unsafe{
+
+	//TRACE_3(self, "start free process free_nodes_size = %ld.\n", self->free_nodes_size);
+
+	for i  in 0..(*self_).free_nodes_size  {
+		let p_obj = (*self_).free_nodes[i];
+
+	/*	RLU_ASSERT_MSG(IS_UNLOCKED(p_obj),
+			self, "object is locked. p_obj = %p th_id = %ld\n",
+			p_obj, GET_THREAD_ID(p_obj));
+
+		TRACE_3(self, "freeing: p_obj = %p, p_actual = %p\n",
+			p_obj, (intptr_t *)OBJ_TO_H(p_obj));*/
+            // TODO: Free in rust ?
+	    //	free((intptr_t *)OBJ_TO_H(p_obj));
+	}
+
+        (*self_).free_nodes_size = 0;
+    }
+}
+
+fn  rlu_sync_and_writeback(self_ : *mut rlu_thread_data_t) {
+    //unimplemented!();
+    unsafe {
+
+        //RLU_ASSERT((self->run_counter & 0x1) == 0);
+
+        if ((*self_).ws_tail_counter == (*self_).ws_head_counter) {
+                return;
+        }
+
+        (*self_).n_sync_and_writeback = (*self_).n_sync_and_writeback + 1;
+
+        let ws_num = (*self_).ws_tail_counter - (*self_).ws_wb_counter;
+
+        (*self_).writer_version = g_rlu_array[128 * 2]  + 1;
+       //TODO: implement fetch and add for g_rlu_array[128 * 2]
+       //FETCH_AND_ADD(&g_rlu_writer_version, 1);
+
+
+        rlu_synchronize(self_);
+
+        let ws_wb_num = rlu_writeback_write_sets_and_unlock(self_);
+
+        //RLU_ASSERT_MSG(ws_num == ws_wb_num, self, "failed: %ld != %ld\n", ws_num, ws_wb_num);
+        // TODO:define max value
+        //(*self_).writer_version = MAX_VERSION;
+
+       //TODO: implement fetch and add for g_rlu_array[128 * 2]
+       // FETCH_AND_ADD(&g_rlu_commit_version, 1);
+
+        if ((*self_).is_sync == 1) {
+            (*self_).is_sync = 0;
+        }
+
+        rlu_process_free(self_);
+    }
+}
+
+fn rlu_add_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) {
+    //unimplemented!();
+	unsafe {
+	  let n_locks : usize = (*self_).obj_write_set[(*self_).ws_cur_id].writer_locks.size;
+	   //for (i = 0; i < n_locks; i++) {
+		//RLU_ASSERT(self->obj_write_set[self->ws_cur_id].writer_locks.ids[i] != writer_lock_id);
+	  // }
+	
+          (*self_).obj_write_set[(*self_).ws_cur_id].writer_locks.ids[n_locks] = writer_lock_id;
+          (*self_).obj_write_set[(*self_).ws_cur_id].writer_locks.size = 1 + (*self_).obj_write_set[(*self_).ws_cur_id].writer_locks.size; 
+        }
+}
+
+fn LOCK_ID(th_id : u32) -> u32 {
+    th_id + 1
+}
+
+fn rlu_try_acquire_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) -> Option<u32> {
+    unsafe {
+        //TODO:  need to borrow mutbly
+        let  cur_lock = g_rlu_writer_locks[writer_lock_id];
+        let other_ptr   = &mut LOCK_ID((*self_).uniq_id);
+        match cur_lock {
+        0 => {
+              // check for Ordering
+                let val = {
+                    unsafe {
+                             //TODO need to implement compare_and_swap
+                            //let pa: *mut u32 = &mut g_rlu_writer_locks[writer_lock_id];
+                            //pa.compare_and_swap(0, other_ptr, Ordering::Relaxed);
+                            0
+                            }
+                };
+                if (val == 0) {
+                   Some(1)
+                } else {
+                  None
+                }
+
+             },
+        _ => None
+    }
+  }	
+}
+
+// Convert Bool into option type
+// NOTE: used usize for writer_lock_id
+fn rlu_try_write_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) -> u32 {
+    //unimplemented!();
+    // Valid only for coarse grain
+    match (rlu_try_acquire_writer_lock(self_, writer_lock_id))
+    {
+        Some(x) => {
+	            // rlu_add_writer_lock(self_, writer_lock_id);
+                     1
+                   }
+        None    => {
+                      0
+                   }
+    }
 }
 
 
 fn rlu_lock(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut u32, obj_size :u32) {
-    unimplemented!();
+    //unimplemented!();
+    rlu_try_lock(self_, p_p_obj, obj_size);
 }
 
 fn rlu_deref_slow_path(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) -> *mut u32 {
