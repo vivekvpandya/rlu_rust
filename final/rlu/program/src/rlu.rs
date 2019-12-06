@@ -1,6 +1,7 @@
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
+use std::convert::TryInto;
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -50,7 +51,7 @@ struct obj_list_t {
 }
 
 struct wait_entry_t {
-    is_wait : char,
+    is_wait : u8,
     run_counter : u32
 }
 
@@ -112,6 +113,7 @@ static mut g_rlu_data : rlu_data = rlu_data{
 
 static mut g_rlu_max_write_sets : u32 = 0;
 static mut g_rlu_cur_threads : AtomicU32 =  AtomicU32::new(0);
+//static mut g_rlu_cur_threads : usize = 0;
 static mut g_rlu_threads : [*mut rlu_thread_data_t; 32] = [0 as *mut rlu_thread_data_t; 32] ;
 static mut g_rlu_writer_locks : [u32; 20000] = [0; 20000];
 static mut g_rlu_array : [u32; 4096] = [0; 4096];
@@ -155,9 +157,6 @@ fn rlu_print_stats() {
     }
 }
 
-fn rlu_reset_write_set(self_: *mut rlu_thread_data_t, ws_counter : usize) {
-    unimplemented!();
-}
 
 fn rlu_reset(self_: *mut rlu_thread_data_t) {
     unimplemented!();
@@ -186,12 +185,6 @@ fn rlu_release_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
 //Vivek
 fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
     unimplemented!();
-}
-
-fn rlu_reset_writer_locks(self_: *mut rlu_thread_data_t, ws_id : usize) {
-    unsafe {
-        (*self_).obj_write_set[ws_id].writer_locks.size = 0;
-    }
 }
 
 fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
@@ -319,16 +312,148 @@ fn rlu_abort(self_ : *mut rlu_thread_data_t) {
 }
 
 fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
-    unimplemented!();
+    //unimplemented!();
+    unsafe {
+	//MEMBARSTLD();
+        // Need to model NULL for thread id
+        let NULL = -1;
+        let cur_rlu_thread = *g_rlu_cur_threads.get_mut();
+	for th_id in 0..cur_rlu_thread {
+
+            (*self_).q_threads[th_id as usize].is_wait = 0;
+
+            if (th_id == (*self_).uniq_id.try_into().unwrap()) {
+            // No need to wait for myself
+                continue;
+            }
+            else if (g_rlu_threads[th_id as usize].is_null()) {
+                // No need to wait for uninitialized threads
+                continue;
+            } else {
+                (*self_).q_threads[th_id as usize].run_counter = *(*g_rlu_threads[th_id as usize]).run_counter.get_mut();
+                if ((*self_).q_threads[th_id as usize].run_counter & 0x1 == 1) {
+                    // The other thread is running -> wait for the thread
+                     (*self_).q_threads[th_id as usize].is_wait = 1;	
+                 }
+	    }
+        }
+    }
+}
+
+fn rlu_reset_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
+    unsafe {
+        (*self_).obj_write_set[ws_id].writer_locks.size = 0;
+    }
+}
+
+fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
+    unsafe {
+        // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
+        let ws_id = 0; //Assuming single write set
+
+        (*self_).obj_write_set[ws_id].num_of_objs = 0;
+        // TODO:Assigning har pointer to integer.. need to figure out better way
+        //(*self_).obj_write_set[ws_id].p_cur = { (&(*self_).obj_write_set[ws_id].buffer[0]) as *mut u32};
+
+	rlu_reset_writer_locks(self_, ws_id);
+    }
+}
+
+fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
+
+        unsafe {
+            /*TODO: need to think this routine, it has pointer manipulation
+             *      can encapsulated in the functions 
+            //ws_id = WS_INDEX(ws_counter);
+            // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
+            let ws_id = 0; //Assuming single write set
+            //p_cur = (intptr_t *)&(self->obj_write_set[ws_id].buffer[0]);
+
+            for i in  0..(*self_).obj_write_set[ws_id].num_of_objs {
+                p_ws_obj_h = (rlu_ws_obj_header_t *)p_cur;
+
+                p_obj_actual = (intptr_t *)p_ws_obj_h->p_obj_actual;
+                obj_size = (obj_size_t)p_ws_obj_h->obj_size;
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, WS_OBJ_HEADER_SIZE);
+                p_obj_h = (rlu_obj_header_t *)p_cur;
+
+                RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, OBJ_HEADER_SIZE);
+
+                p_obj_copy = (intptr_t *)p_cur;
+
+                TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
+                        self->writer_version, p_obj_actual, p_obj_copy, obj_size);
+
+                memcpy((unsigned char *)p_obj_actual, (unsigned char *)p_obj_copy, obj_size);
+
+                p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
+
+                /*RLU_ASSERT_MSG(GET_THREAD_ID(p_obj_actual) == self->uniq_id,
+                        self, "th_id = %ld my_id = %ld\n p_obj_actual = %p num_of_objs = %u\n",
+                        GET_THREAD_ID(p_obj_actual), self->uniq_id, p_obj_actual, self->obj_write_set[ws_id].num_of_objs);*/
+
+                UNLOCK(p_obj_actual);
+                }
+	//RLU_ASSERT(p_cur == self->obj_write_set[ws_id].p_cur);
+        */
+    }
 }
 
 // Advait next push will have these functions
 fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
-    unimplemented!();
+    unsafe{
+	for  ws_counter  in (*self_).ws_head_counter..(*self_).ws_wb_counter {
+	     rlu_reset_write_set(self_, ws_counter.try_into().unwrap());
+	}
+
+        (*self_).ws_head_counter = (*self_).ws_wb_counter;
+
+	let mut ws_wb_num = 0;
+	for ws_counter in (*self_).ws_wb_counter..(*self_).ws_tail_counter {
+	    rlu_writeback_write_set(self_, ws_counter.try_into().unwrap());
+	    ws_wb_num = ws_wb_num + 1;
+	}
+
+        (*self_).ws_wb_counter = (*self_).ws_tail_counter;
+
+	ws_wb_num
+    }
 }
 
-fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, writer_version : u32) -> u32 {
-    unimplemented!();
+fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, version_limit : u32) -> u32 {
+    unsafe {
+	let mut iters = 0;
+	let cur_threads = *g_rlu_cur_threads.get_mut();
+	for th_id in 0..cur_threads {
+    	    while ((*self_).q_threads[th_id as usize].is_wait != 1) {
+		iters = iters + 1;
+		if ((*self_).q_threads[th_id as usize].run_counter != *(*g_rlu_threads[th_id as usize]).run_counter.get_mut()) {
+                    (*self_).q_threads[th_id as usize].is_wait = 0;
+		    break;
+                }
+		if (version_limit != 0) {
+                    if ((*g_rlu_threads[th_id as usize]).local_version >= version_limit) {
+                        (*self_).q_threads[th_id as usize].is_wait = 0;
+		        break;
+		    }
+	        }
+                let Q_ITERS_LIMIT = 100000000;
+		if (iters > Q_ITERS_LIMIT) {
+                    iters = 0;
+		    /*printf("[%ld] waiting for [%d] with: local_version = %ld , run_cnt = %ld\n", self->uniq_id, th_id,
+                    (*g_rlu_threads[th_id]).local_version, (*g_rlu_threads[th_id]).run_counter);*/
+		}
+                //TODO: Check for CPU relax
+ 		//CPU_RELAX();
+
+		}
+	}
+
+	iters
+    }
 }
 
 fn rlu_synchronize(self_ : *mut rlu_thread_data_t) {
