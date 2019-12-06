@@ -1,5 +1,6 @@
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::alloc::{alloc, Layout};
+use std::mem::{size_of};
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -25,8 +26,8 @@ struct rlu_data {
 // https://doc.rust-lang.org/std/primitive.pointer.html#method.offset-1
 // with count = std::mem::size_of::<*mut u32>()
 struct rlu_obj_header_t {
-    p_obj: *mut u32,
-    p_obj_copy : * mut u32
+    p_obj_copy : *mut u32,
+    obj : u32
 }
 
 struct rlu_ws_obj_header {
@@ -162,6 +163,7 @@ fn rlu_reset(self_: *mut rlu_thread_data_t) {
     unimplemented!();
 }
 
+
 fn rlu_commit_write_set(self_ : *mut rlu_thread_data_t) {
     unimplemented!();
 }
@@ -181,6 +183,7 @@ fn rlu_release_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
     }
 }
 
+//Vivek
 fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
     unimplemented!();
 }
@@ -235,8 +238,10 @@ fn rlu_alloc() -> *mut u32 {
     unsafe {
         let layout = Layout::new::<rlu_obj_header_t>();
         let ptr = alloc(layout);
+
+        let p_obj = ptr.add(size_of::<usize>()); // size_of pointer == size_of usize, this should skip *u32 and point to actual obj  
         //TODO: check if alloc fails then handle it properly
-        ptr as *mut u32
+        p_obj as *mut u32
     }
 }
 
@@ -317,6 +322,7 @@ fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
     unimplemented!();
 }
 
+// Advait next push will have these functions
 fn rlu_writeback_write_sets_and_unlock(self_ : *mut rlu_thread_data_t) -> u32 {
     unimplemented!();
 }
@@ -471,18 +477,29 @@ fn rlu_deref_slow_path(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) -> *mut
     unimplemented!();
 }
 
-fn rlu_cmp_ptrs(p_obj_1 : *mut u32, p_obj_2 : *mut u32) -> u32 {
-    unimplemented!();
+// this functions seems never used in original source, so may be okay to skip
+// if in any case we want to return -1, 0, 1 we need to change return type
+fn rlu_cmp_ptrs(p_obj_1 : *mut u32, p_obj_2 : *mut u32) -> bool {
+    if !(p_obj_1.is_null()) {
+        // get actual obj pointer
+    }
+    if !(p_obj_1.is_null()) {
+        // get actual obj pointer
+    }
+
+    return (p_obj_1 as usize) == (p_obj_2 as usize);
 }
 
 fn rlu_assign_pointer(p_ptr: *mut *mut u32, p_obj : *mut u32) {
-    /*unsafe {
+    unsafe {
         if !(p_obj.is_null()) {
-            
+            if (p_obj as usize) == 0x12341234 {
+                // TODO: if p_obj points to copy of the actual object
+                // need to get actual object.
+            }   
         }
         *p_ptr = p_obj;
-    }*/
-    unimplemented!();
+    }
 }
 
 fn rlu_sync_checkpoint(self_ : *mut rlu_thread_data_t) {
