@@ -200,9 +200,38 @@ fn rlu_release_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
     }
 }
 
-//Vivek
+
 fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
-    unimplemented!();
+    unsafe{
+    let mut i : usize = 0;
+    let mut ws_id : usize = WS_INDEX(ws_counter);
+    let mut obj_size : usize = 0;
+    
+    let mut p_cur = &mut((*self_).obj_write_set[ws_id].buffer[0]) as *mut char;
+
+    let mut p_obj_actual : *mut u32 = std::ptr::null_mut();
+    let mut p_ws_obj_h : *mut rlu_ws_obj_header_t = std::ptr::null_mut();
+    let mut p_obj_h : *mut rlu_obj_header_t = std::ptr::null_mut();
+
+    for i in 0..(*self_).obj_write_set[ws_id].num_of_objs {
+        p_ws_obj_h = p_cur as *mut rlu_ws_obj_header_t;
+        p_obj_actual = (*p_ws_obj_h).p_obj_actual;
+        obj_size = (*p_ws_obj_h).obj_size;
+        p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_ws_obj_header_t>());
+        p_obj_h = p_cur as *mut rlu_obj_header_t;
+
+        //RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
+
+        p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
+
+        //RLU_ASSERT(GET_COPY(p_obj_actual) == p_cur);
+
+        p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
+
+        UNLOCK(p_obj_actual); 
+    }
+    }
+
 }
 
 fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
@@ -304,21 +333,21 @@ fn rlu_add_ws_obj_header_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *m
         (*p_ws_obj_h).run_counter = *(*self_).run_counter.get_mut();
         (*p_ws_obj_h).thread_id = (*self_).uniq_id;
         let offset = size_of::<rlu_ws_obj_header_t>();
-        p_cur = p_cur.add(offset);
+        p_cur = MOVE_PTR_FORWARD(p_cur, offset);
         let mut p_obj_h = p_cur as *mut rlu_obj_header_t;
         (*p_obj_h).p_obj_copy.store(0x12341234 as *mut u32, Ordering::SeqCst);
-        p_cur = p_cur.add(size_of::<AtomicPtr<u32>>());
+        p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         return p_cur as *mut u32;
     }
 }
 
-fn rlu_add_obj_copy_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *mut u32, obj_size_t: usize) {
+fn rlu_add_obj_copy_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *mut u32, obj_size: usize) {
     // !!!! I hope this works, I really doubt
     unsafe {
         let mut p_cur = (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur;
-        (*p_cur) = (*p_obj); // copy u32 value
-        p_cur = p_cur.add(size_of::<u32>());
+        ptr::copy(p_obj as *const char, p_cur as *mut char, obj_size);
+        p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         // increment num_of_objs
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs = (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs + 1;
@@ -512,6 +541,14 @@ fn GET_COPY<T>(p_obj: *mut T) -> *mut u32{
         return *(*p_obj_header).p_obj_copy.get_mut();
     }
 }
+
+fn UNLOCK<T>(p_obj : *mut T) {
+    unsafe {
+        let mut p_obj_h = OBJ_TO_H(p_obj);
+        (*p_obj_h).p_obj_copy.store(std::ptr::null_mut(), Ordering::SeqCst);
+    }
+}
+
 fn  OBJ_TO_H<T>(p_obj : *mut T) -> *mut rlu_obj_header_t {
     unsafe {
         return MOVE_PTR_BACK(p_obj, size_of::<rlu_obj_header_t>()) as *mut rlu_obj_header_t;
@@ -547,6 +584,20 @@ fn PTR_IS_COPY(p_obj_copy : *mut u32) -> bool {
             return true;
         }
         return false;
+    }
+}
+
+fn IS_COPY<T>(p_obj : *mut T) -> bool {
+    unsafe {
+        return PTR_IS_COPY(GET_COPY(p_obj));
+    }
+}
+
+fn FORCE_ACTUAL<T>(p_obj: *mut T) -> *mut u32 {
+    if IS_COPY(p_obj) {
+        return GET_ACTUAL(p_obj);
+    } else {
+        return p_obj as *mut u32;
     }
 }
 
@@ -817,7 +868,44 @@ fn rlu_lock(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut u32, obj_size :us
 }
 
 fn rlu_deref_slow_path(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) -> *mut u32 {
-    unimplemented!();
+    unsafe {
+    if p_obj.is_null() {
+        return p_obj;
+    }
+
+    let mut th_id : usize = 0;
+    let mut p_obj_copy : *mut u32 = GET_COPY(p_obj);
+
+    if !PTR_IS_LOCKED(p_obj_copy) {
+        return p_obj;
+    }
+
+    if PTR_IS_COPY(p_obj_copy) {
+        // p_obj points to a copy -> it has been already dereferenced.
+        //TRACE_1(self, "got pointer to a copy. p_obj = %p p_obj_copy = %p.\n", p_obj, p_obj_copy);
+        return p_obj;
+    }
+
+    let mut p_ws_obj_h : *mut rlu_ws_obj_header_t = PTR_GET_WS_HEADER(p_obj_copy);
+    th_id = WS_GET_THREAD_ID(p_ws_obj_h);
+    if (th_id == (*self_).uniq_id) {
+    // p_obj is locked by this thread -> return the copy
+    // TRACE_1(self, "got pointer to a copy. p_obj = %p th_id = %ld.\n", p_obj, th_id);
+        return p_obj_copy;
+    }
+    // p_obj is locked by another thread
+    if ((*self_).is_steal != 0) && ((*g_rlu_threads[th_id]).writer_version <= (*self_).local_version) {
+    // This thread started after the other thread updated g_writer_version.
+    // and this thread observed a valid p_obj_copy (!= NULL)
+    // => The other thread is going to wait for this thread to finish before reusing the write-set log
+    //    (to which p_obj_copy points)
+    // TRACE_1(self, "take copy from other writer th_id = %ld p_obj = %p p_obj_copy = %p\n", th_id, p_obj, p_obj_copy);
+        (*self_).n_steals = (*self_).n_steals + 1;
+        return p_obj_copy;
+    }
+
+    return p_obj;
+    }
 }
 
 // this functions seems never used in original source, so may be okay to skip
@@ -827,14 +915,10 @@ fn rlu_cmp_ptrs(p_obj_1 : *mut u32, p_obj_2 : *mut u32) -> bool {
     let mut ptr_obj_1 = p_obj_1;
     let mut ptr_obj_2 = p_obj_2;
     if !(p_obj_1.is_null()) {
-        if (ptr_obj_1 as usize) == 0x12341234 {
-            ptr_obj_1 = ptr_obj_1.add(size_of::<usize>());
-        }
+        ptr_obj_1 = FORCE_ACTUAL(p_obj_1);
     }
     if !(p_obj_1.is_null()) {
-        if  (ptr_obj_2 as usize ) == 0x12341234 {
-            ptr_obj_2 = ptr_obj_2.add(size_of::<usize>());
-        }   
+        ptr_obj_2 = FORCE_ACTUAL(p_obj_2);
     }
 
     return (ptr_obj_1 as usize) == (ptr_obj_2 as usize);
@@ -845,10 +929,7 @@ fn rlu_assign_pointer(p_ptr: *mut *mut u32, p_obj : *mut u32) {
     let mut ptr = p_obj;
     unsafe {
         if !(p_obj.is_null()) {
-            if (p_obj as usize) == 0x12341234 {
-                // pointer add and get to actaul obj as per rlu_obj_header_t struct
-                ptr = p_obj.add(size_of::<usize>());
-            }   
+            ptr = FORCE_ACTUAL(p_obj); 
         }
         *p_ptr = ptr;
     }
