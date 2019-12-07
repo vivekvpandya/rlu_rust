@@ -200,14 +200,17 @@ fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
     }
 }
 
+//#define RLU_MAX_WRITE_SETS (200) // Minimum value is 2
+// #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
+fn WS_INDEX(ws_counter : u32) -> u32 {
+    ws_counter % 20;
+}
 fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
 
         unsafe {
             /*TODO: need to think this routine, it has pointer manipulation
-             *      can encapsulated in the functions 
-            //ws_id = WS_INDEX(ws_counter);
-            // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
-            let ws_id = 0; //Assuming single write set
+             *      can encapsulated in the functions*/ 
+            let ws_id = WS_INDEX(ws_counter);
             //p_cur = (intptr_t *)&(self->obj_write_set[ws_id].buffer[0]);
 
             for i in  0..(*self_).obj_write_set[ws_id].num_of_objs {
@@ -239,7 +242,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                 UNLOCK(p_obj_actual);
                 }
 	//RLU_ASSERT(p_cur == self->obj_write_set[ws_id].p_cur);
-        */
+
     }
 }
 
