@@ -2,6 +2,8 @@ use std::sync::atomic::{AtomicU32, AtomicPtr, AtomicUsize,  Ordering};
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
 use std::convert::TryInto;
+use std::ptr;
+
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -479,41 +481,71 @@ fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
 fn WS_INDEX(ws_counter : usize) -> usize {
     ws_counter % 20
 }
+
+fn MOVE_PTR_FORWARD<T>(ele: *mut T, size: usize) -> *mut T {
+   unsafe {
+      let t_ele = ele as *mut u8;
+      ele.add(size) as *mut T
+    }
+}
+
+fn MOVE_PTR_BACK<T>(ele: *mut T, size: usize) -> *mut T {
+   unsafe {
+      let t_ele = ele as *mut u8;
+      ele.add(size) as *mut T
+    }
+}
+
+fn ALIGN_OBJ_SIZE(obj_size : usize) -> usize {
+    let ALIGN_NUMBER = 8;
+    let ALIGN_MASK = ALIGN_NUMBER - 1;
+//#define PERFORM_ALIGNMENT(obj_size) (obj_size + (ALIGN_NUMBER - (obj_size & ALIGN_MASK)))
+    if (obj_size & ALIGN_MASK != 0) {
+        obj_size + (ALIGN_NUMBER - (obj_size & ALIGN_MASK))
+    } else {
+       obj_size
+    }
+
+}
 fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
 
         unsafe {
             /*TODO: need to think this routine, it has pointer manipulation
              *      can encapsulated in the functions*/ 
             let ws_id = WS_INDEX(ws_counter );
-            let p_cur =   &mut((*self_).obj_write_set[ws_id].buffer[0]);
+            // NOTE: Converting into CHAR instead of u32
+            let mut p_cur =   &mut((*self_).obj_write_set[ws_id].buffer[0]) as *mut char;
+        //let mut p_cur = (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur;
             
-         //   for i in  0..(*self_).obj_write_set[ws_id].num_of_objs {
-                let p_ws_obj_h : *mut rlu_ws_obj_header = p_cur as *mut rlu_ws_obj_header;
+            for i in  0..(*self_).obj_write_set[ws_id].num_of_objs {
+                let mut p_ws_obj_h = p_cur as *mut rlu_ws_obj_header_t; 
 
-               /* p_obj_actual = (intptr_t *)p_ws_obj_h->p_obj_actual;
-                obj_size = (obj_size_t)p_ws_obj_h->obj_size;
+                let p_obj_actual : *mut u32 = (*p_ws_obj_h).p_obj_actual;
+                let obj_size : usize  = (*p_ws_obj_h).obj_size;
 
-                p_cur = MOVE_PTR_FORWARD(p_cur, WS_OBJ_HEADER_SIZE);
-                p_obj_h = (rlu_obj_header_t *)p_cur;
+                //p_cur = MOVE_PTR_FORWARD(p_cur as *mut u8, size_of::<rlu_ws_obj_header_t>()) as *mut char;
+                p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_ws_obj_header_t>());
+                let p_obj_h = p_cur as *mut rlu_ws_obj_header_t;
 
-                RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
+                //RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
 
-                p_cur = MOVE_PTR_FORWARD(p_cur, OBJ_HEADER_SIZE);
+                p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
 
-                p_obj_copy = (intptr_t *)p_cur;
+                let p_obj_copy = p_cur;
 
-                TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
-                        self->writer_version, p_obj_actual, p_obj_copy, obj_size);
+               // TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
+               //         self->writer_version, p_obj_actual, p_obj_copy, obj_size);
 
-                memcpy((unsigned char *)p_obj_actual, (unsigned char *)p_obj_copy, obj_size);
+                ptr::copy(p_obj_actual as *const char, p_obj_copy as *mut char, obj_size);
 
                 p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
 
                 /*RLU_ASSERT_MSG(GET_THREAD_ID(p_obj_actual) == self->uniq_id,
                         self, "th_id = %ld my_id = %ld\n p_obj_actual = %p num_of_objs = %u\n",
-                        GET_THREAD_ID(p_obj_actual), self->uniq_id, p_obj_actual, self->obj_write_set[ws_id].num_of_objs);*/
-
-                UNLOCK(p_obj_actual);
+                
+                    GET_THREAD_ID(p_obj_actual), self->uniq_id, p_obj_actual, self->obj_write_set[ws_id].num_of_objs);*/
+                //TODO: Implement unloack
+                //UNLOCK(p_obj_actual);
                 }
 	//RLU_ASSERT(p_cur == self->obj_write_set[ws_id].p_cur);*/
 
