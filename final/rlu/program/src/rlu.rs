@@ -2,6 +2,7 @@ use std::sync::atomic::{AtomicU32, AtomicPtr, AtomicUsize,  Ordering};
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
 use std::convert::TryInto;
+extern crate libc;
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -28,7 +29,6 @@ struct rlu_data {
 // with count = std::mem::size_of::<*mut u32>()
 struct rlu_obj_header_t {
     p_obj_copy : AtomicPtr<u32>,
-    obj : u32
 }
 
 struct rlu_ws_obj_header_t {
@@ -243,16 +243,16 @@ fn is_ptr_copy(ptr :*mut u32) -> bool {
     }
     false
 }
-fn rlu_alloc() -> *mut u32 {
+fn rlu_alloc(obj_size : usize) -> *mut u8 {
     unsafe {
-        let layout = Layout::new::<rlu_obj_header_t>();
-        let ptr = alloc(layout);
-        let mut p_obj_h = ptr as *mut rlu_obj_header_t;
-        (*p_obj_h).p_obj_copy.store(0 as *mut u32, Ordering::SeqCst); // initialize to 0
-        // ptr is *mut u8, should we cast it to *mut u32 before following operation?
-        let p_obj = ptr.add(size_of::<usize>()); // size_of pointer == size_of usize, this should skip *u32 and point to actual obj  
-        //TODO: check if alloc fails then handle it properly
-        p_obj as *mut u32
+        let ptr : *mut u8 = libc::malloc(size_of::<rlu_obj_header_t>() + obj_size) as *mut u8;
+        if ptr.is_null() {
+            panic!("failed to allocate memory");
+        }
+        let mut p_obj_h : *mut rlu_obj_header_t = ptr as *mut rlu_obj_header_t;
+        (*p_obj_h).p_obj_copy = AtomicPtr::new(&mut 0);
+
+        return (p_obj_h as *mut u8).add(size_of::<rlu_obj_header_t>()) as *mut u8;
     }
 }
 
@@ -305,7 +305,7 @@ fn rlu_add_ws_obj_header_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *m
         p_cur = p_cur.add(offset);
         let mut p_obj_h = p_cur as *mut rlu_obj_header_t;
         (*p_obj_h).p_obj_copy.store(0x12341234 as *mut u32, Ordering::SeqCst);
-        p_cur = p_cur.add(size_of::<usize>());
+        p_cur = p_cur.add(size_of::<AtomicPtr<u32>>());
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         return p_cur as *mut u32;
     }
@@ -348,65 +348,73 @@ fn rlu_reader_unlock(self_ : *mut rlu_thread_data_t) {
 
 fn rlu_try_lock(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut u32, obj_size :usize) -> u32 {
     // !!!!! this is incomplete
-    unsafe {
-    let mut p_obj = *p_p_obj;
-        let mut p_obj_copy = p_obj.sub(size_of::<usize>());
-        if (p_obj_copy as usize) == 0x12341234 {
+    /*unsafe {
+    let mut  p_obj_wh_h : *mut rlu_ws_obj_header_t = 0 as *mut rlu_ws_obj_header_t;
+    let mut  p_obj_h : *mut rlu_obj_header_t = *p_p_obj as *mut rlu_obj_header_t; 
+    let mut p_obj_copy = *p_p_obj as *mut u8;
+    //pointer arithmatic may not work (we might need to convered to u8 first)
+        let mut p_obj_ptr = p_obj_copy.sub(size_of::<AtomicPtr<u32>>()) as *mut rlu_obj_header_t;
+        if (*p_obj_ptr).p_obj_copy.load(Ordering::Relaxed) == 0x12341234 as *mut u32 {
             // this is copy
-            // TODO:get actaul obj pointer from write_set
+            // get actaul obj pointer from write_set
             // and get copy pointer on that and set them to p_obj and p_obj_copy
-            p_obj = p_obj.sub(size_of::<rlu_ws_obj_header_t>()); // !!! really doubt if this is correct 
-            p_obj_copy = p_obj.sub(size_of::<usize>()); // !!! 
-        }
+                p_obj_wh_h = p_obj_copy.sub(size_of::<rlu_ws_obj_header_t>() + size_of::<AtomicPtr<u32>>()) as *mut rlu_ws_obj_header_t; // !!! really doubt if this is correct 
+                p_obj_h = ((*p_obj_wh_h).p_obj_actual as *mut u8).sub(size_of::<AtomicPtr<u32>>()) as *mut rlu_obj_header_t; // !!! 
+            } else {
+                
+            }
 
-        //check if p_obj_copy pointer is locked
-        if !p_obj_copy.is_null() {
-            let mut p_ws_obj_h = p_obj_copy.sub(size_of::<rlu_ws_obj_header_t>()) as *mut rlu_ws_obj_header_t; // in C implementation they move back by size of ws_header + obj_header I don't understand why? I may be wrong here.
-            let th_id : usize = (*p_ws_obj_h).thread_id;
-            if th_id == (*self_).uniq_id {
-                if *(*self_).run_counter.get_mut() == (*p_ws_obj_h).run_counter {
-                    // p_obj us already locked by current execution of this thread.
-                    // return copy
-                    *p_p_obj = p_obj_copy;
-                    return 1;
+            //check if p_obj_copy pointer is locked
+            let addr_p_obj_copy = (*p_obj_copy).p_obj_copy.load(Ordering::Relaxed);
+            if addr_p_obj_copy != 0 as *mut u32{
+                let p_obj_copy_ptr = *p_obj_copy.get_mut();
+                let mut p_ws_obj_h = p_obj_copy_ptr.sub(size_of::<rlu_ws_obj_header_t>()) as *mut rlu_ws_obj_header_t; // in C implementation they move back by size of ws_header + obj_header I don't understand why? I may be wrong here.
+                let th_id : usize = (*p_ws_obj_h).thread_id;
+                if th_id == (*self_).uniq_id {
+                    if *(*self_).run_counter.get_mut() == (*p_ws_obj_h).run_counter {
+                        // p_obj us already locked by current execution of this thread.
+                        // return copy
+                        *p_p_obj = *p_obj_copy.get_mut();
+                        return 1;
+                    }
+                    // p_obj is locked by another execution of this thread.
+                    (*self_).is_sync = (*self_).is_sync + 1;
+                    return 0;
                 }
-                // p_obj is locked by another execution of this thread.
+                // p_obj already locked by another thread.
+                // sedn sync request to other thread
+                // in the mean time sync this thread
+                rlu_send_sync_request(th_id);
                 (*self_).is_sync = (*self_).is_sync + 1;
                 return 0;
             }
-            // p_obj already locked by another thread.
-            // sedn sync request to other thread
-            // in the mean time sync this thread
-            rlu_send_sync_request(th_id);
-            (*self_).is_sync = (*self_).is_sync + 1;
-            return 0;
-        }
-        
-        // p_obj is free.
-        // Indicate that write-set is updated
-        if (*self_).is_write_detected == (0 as char) {
-            (*self_).is_write_detected = (1 as char);
-            (*self_).is_check_locks = (1 as char);
-        }
+            
+            // p_obj is free.
+            // Indicate that write-set is updated
+            if (*self_).is_write_detected == (0 as char) {
+                (*self_).is_write_detected = (1 as char);
+                (*self_).is_check_locks = (1 as char);
+            }
 
-        // add write-set header for the object
-        p_obj_copy = rlu_add_ws_obj_header_to_write_set(self_, p_obj, obj_size);
-        let p_copy_ = p_obj.sub(size_of::<usize>());
-        let p_copy_atomic = AtomicUsize::new(p_copy_ as usize); // I don't know if this is correct way to update raw pointer atomically 
-        // how do I know if the address will be 0? in C they set pointer to NULL
-        // we must also use 0x0 instead of null_ptr.
-        match p_copy_atomic.compare_exchange(0, p_obj_copy as usize, Ordering::Acquire, Ordering::Relaxed) {
-            Ok(_) => {},
+            // add write-set header for the object
+            let p_obj_copy_ptr = rlu_add_ws_obj_header_to_write_set(self_, p_obj, obj_size);
+            let p_copy_ = p_obj.sub(size_of::<AtomicPtr<u32>>()) as AtomicPtr<u32>;
+            // I don't know if this is correct way to update raw pointer atomically 
+            // how do I know if the address will be 0? in C they set pointer to NULL
+            // we must also use 0x0 instead of null_ptr.
+            match p_copy_.compare_exchange(0 as *mut u32, p_obj_copy_ptr, Ordering::Acquire, Ordering::Relaxed) {
+                Ok(_) => {},
             Err(_) => {return 0;}
         }
 
         // locked successfully 
         // Copy object to write-set
         rlu_add_obj_copy_to_write_set(self_, p_obj, obj_size);
-        *p_p_obj = p_obj_copy;
+        *p_p_obj = p_obj_copy_ptr;
          return 1;
 
-    }
+    }*/
+    0
 }
 
 fn rlu_abort(self_ : *mut rlu_thread_data_t) {
