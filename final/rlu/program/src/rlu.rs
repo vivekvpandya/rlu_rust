@@ -1051,15 +1051,15 @@ pub fn RLU_DEREF<T>(self_: *mut rlu_thread_data_t, p_obj: *mut T) -> *mut T {
 }
 
 pub fn RLU_DEREF_INTERNAL<T>(self_: *mut rlu_thread_data_t, p_obj: *mut T) -> *mut T { 
-	if ((*self_).is_check_locks == 0) {
-		p_obj
-	} else { 
-            unsafe {
-		if (p_obj.is_null() && PTR_IS_UNLOCKED(p_obj)) {
-	            p_obj
-		} else {
-		   rlu_deref_slow_path(self_, p_obj)
-		}
+        unsafe {
+            if ((*self_).is_check_locks == 0) {
+                    p_obj
+            } else { 
+                if (p_obj.is_null() && PTR_IS_UNLOCKED(p_obj)) {
+                    p_obj
+                } else {
+                    rlu_deref_slow_path(self_, p_obj)
+                }
             }
 	}
 }

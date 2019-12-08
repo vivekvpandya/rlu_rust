@@ -4,7 +4,7 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK};
+use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK};
 
 struct Node<T> {
     pub value : T,
@@ -144,20 +144,35 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
        false
     }
 */
+        let mut temp : *mut *mut Node<T> = self.head;
         unsafe {
-            let n_ptr : *mut Node<T> =  self.rlu_new_node();
-            (*n_ptr).value =  value;
-             
+            if (*temp).is_null() {
+                return  false; //Should be assert
+            }
+            let p_new_node : *mut Node<T> =  self.rlu_new_node();
+	    (*p_new_node).value = value;
+            RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(), temp) != 0 {
+                let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+                RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
+                RLU_ASSIGN_POINTER(temp, p_new_node); 
+                return true;
+            } else {
+                return false; // TODO: need to hnadle abort
+            }
+            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
             //RLU_READER_LOCK(tdata);
+            return false;
 
         }
     }
+    return false;
   }
 
   fn delete(&self, value: T) -> bool {
-    let mut temp = self.head.get();
-    let mut prev = self.head.get();
-    unsafe {
+    //let mut temp = self.head.get();
+    //let mut prev = self.head.get();
+    /*unsafe {
     let mut node = *temp;
         while !(*temp).is_null() {
             node = *temp;
@@ -178,7 +193,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             (*(*prev)).next = UnsafeCell::new(*next);
         }
 
-    }
+    }*/
     true
   }
 
