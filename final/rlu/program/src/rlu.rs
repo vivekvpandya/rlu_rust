@@ -118,13 +118,17 @@ static mut g_rlu_cur_threads : AtomicUsize =  AtomicUsize::new(0);
 //static mut g_rlu_cur_threads : usize = 0;
 static mut g_rlu_threads : [*mut rlu_thread_data_t; 32] = [0 as *mut rlu_thread_data_t; 32] ;
 static mut g_rlu_writer_locks : [u32; 20000] = [0; 20000];
-static mut g_rlu_array : [u32; 4096] = [0; 4096];
+//static mut g_rlu_array : [AtomicUsize; 4096] = [AtomicUsize::new(0); 4096];
+//static mut g_rlu_array : [AtomicUsize; 4096] = [0; 4096];
+static mut g_rlu_writer_version : AtomicUsize = AtomicUsize::new(0);
+static mut g_rlu_commit_version : AtomicUsize = AtomicUsize::new(9);
 
 fn rlu_init( type_ : u32, max_write_sets: usize) {
     unsafe {
-        g_rlu_array[64 * 2] = 0; // this is same as g_rlu_writer_version RLU_CACHE_LINE_SIZE = 64
-        g_rlu_array[64 * 4] = 9; // this is same as g_rlu_commit_version  
-    
+        //g_rlu_array[64 * 2] = AtomicUsize::new(0); // this is same as g_rlu_writer_version RLU_CACHE_LINE_SIZE = 64
+        //g_rlu_array[64 * 4] = AtomicUsize::new(9); // this is same as g_rlu_commit_version  
+          g_rlu_writer_version  = AtomicUsize::new(0);
+          g_rlu_commit_version  = AtomicUsize::new(9);
         // I think we need to implement FINE GRAINED for now.
         g_rlu_max_write_sets = max_write_sets;
     }
@@ -325,8 +329,9 @@ fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
     // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
-        (*self_).local_version = g_rlu_array[64 * 2];
-        (*self_).local_commit_version = g_rlu_array[64 * 4];
+        //(*self_).local_version = *(g_rlu_array[64 * 2].get_mut()) as u32;
+        (*self_).local_version = *(g_rlu_writer_version.get_mut()) as u32;
+        (*self_).local_commit_version = *(g_rlu_commit_version.get_mut()) as u32;
     }
 }
 
@@ -527,12 +532,11 @@ fn rlu_reset_writer_locks(self_ : *mut rlu_thread_data_t, ws_id : usize) {
 
 fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
     unsafe {
-        // TODO: #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
         let ws_id = WS_INDEX(ws_counter);
 
         (*self_).obj_write_set[ws_id].num_of_objs = 0;
-        // TODO:Assigning har pointer to integer.. need to figure out better way
-        //(*self_).obj_write_set[ws_id].p_cur = { (&(*self_).obj_write_set[ws_id].buffer[0]) as *mut u32};
+        let mut p_cur_temp =   &mut((*self_).obj_write_set[ws_id].buffer[0]) as *mut char;
+        (*self_).obj_write_set[ws_id].p_cur = p_cur_temp as *mut u32;
 
 	rlu_reset_writer_locks(self_, ws_id);
     }
@@ -697,8 +701,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                         self, "th_id = %ld my_id = %ld\n p_obj_actual = %p num_of_objs = %u\n",
                 
                     GET_THREAD_ID(p_obj_actual), self->uniq_id, p_obj_actual, self->obj_write_set[ws_id].num_of_objs);*/
-                //TODO: Implement unloack
-                //UNLOCK(p_obj_actual);
+                UNLOCK(p_obj_actual);
                 }
 	//RLU_ASSERT(p_cur == self->obj_write_set[ws_id].p_cur);*/
 
@@ -787,8 +790,7 @@ fn rlu_process_free(self_ : *mut rlu_thread_data_t) {
 
 		TRACE_3(self, "freeing: p_obj = %p, p_actual = %p\n",
 			p_obj, (intptr_t *)OBJ_TO_H(p_obj));*/
-            // TODO: Free in rust ?
-	    //	free((intptr_t *)OBJ_TO_H(p_obj));
+	    libc::free(OBJ_TO_H(p_obj) as *mut libc::c_void);
 	}
 
         (*self_).free_nodes_size = 0;
@@ -809,11 +811,8 @@ fn  rlu_sync_and_writeback(self_ : *mut rlu_thread_data_t) {
 
         let ws_num = (*self_).ws_tail_counter - (*self_).ws_wb_counter;
 
-        (*self_).writer_version = g_rlu_array[128 * 2]  + 1;
-       //TODO: implement fetch and add for g_rlu_array[128 * 2]
-       //FETCH_AND_ADD(&g_rlu_writer_version, 1);
-
-
+        (*self_).writer_version = (*(g_rlu_writer_version.get_mut()) as u32) + 1;
+        g_rlu_writer_version.fetch_add(1, Ordering::SeqCst);
         rlu_synchronize(self_);
 
         let ws_wb_num = rlu_writeback_write_sets_and_unlock(self_);
@@ -821,9 +820,9 @@ fn  rlu_sync_and_writeback(self_ : *mut rlu_thread_data_t) {
         //RLU_ASSERT_MSG(ws_num == ws_wb_num, self, "failed: %ld != %ld\n", ws_num, ws_wb_num);
         // TODO:define max value
         //(*self_).writer_version = MAX_VERSION;
+        (*self_).writer_version = 2147483647 -1;
 
-       //TODO: implement fetch and add for g_rlu_array[128 * 2]
-       // FETCH_AND_ADD(&g_rlu_commit_version, 1);
+        g_rlu_commit_version.fetch_add(1, Ordering::SeqCst);
 
         if ((*self_).is_sync == 1) {
             (*self_).is_sync = 0;
@@ -861,8 +860,9 @@ fn rlu_try_acquire_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : 
                 let val = {
                     unsafe {
                              //TODO need to implement compare_and_swap
-                            //let pa: *mut u32 = &mut g_rlu_writer_locks[writer_lock_id];
+                            // let mut pa:  = &mut g_rlu_writer_locks[writer_lock_id];
                             //pa.compare_and_swap(0, other_ptr, Ordering::Relaxed);
+                            //pa.compare_and_swap(std::ptr::null_mut(), other_ptr, Ordering::SeqCst);
                             0
                             }
                 };
@@ -886,7 +886,7 @@ fn rlu_try_write_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) ->
     match (rlu_try_acquire_writer_lock(self_, writer_lock_id))
     {
         Some(x) => {
-	            // rlu_add_writer_lock(self_, writer_lock_id);
+	            rlu_add_writer_lock(self_, writer_lock_id);
                      1
                    }
         None    => {

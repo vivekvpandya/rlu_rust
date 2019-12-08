@@ -92,7 +92,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
         // code is as following
         let layout = Layout::new::<Node<T>>();
         let ptr =  alloc(layout);
-        //let n_ptr : *mut Node<T> =  ptr as *mut Node<T>;
+        let n_ptr : *mut Node<T> =  ptr as *mut Node<T>;
         
         // With RLU:
         //let n_ptr : *mut Node<T> =  self.rlu_new_node();
