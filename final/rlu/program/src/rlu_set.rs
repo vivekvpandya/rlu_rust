@@ -4,17 +4,17 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::{rlu_alloc, rlu_thread_data_t};
+use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK};
 
 struct Node<T> {
     pub value : T,
-    //pub next : *mut Node<T>
-    pub next : UnsafeCell<*mut Node<T>>
+    pub next : *mut Node<T>
+    //pub next : UnsafeCell<*mut Node<T>>
 }
 
 pub struct RluSet<T> {
   // data goes here
-  head: UnsafeCell<*mut Node<T>>
+  head: *mut *mut Node<T>
   //_marker : PhantomData<T>
 }
 
@@ -24,61 +24,86 @@ unsafe impl<T> Send for RluSet<T> {}
 unsafe impl<T> Sync for RluSet<T> {}
 
 impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin {
+
+  unsafe fn rlu_new_node(&self) -> *mut Node<T> {
+    unsafe {
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+        let p = RLU_ALLOC(size_of::<Node<T>>()) as *mut Node<T>;
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+        p
+    }
+  }
   pub fn new() -> RluSet<T> {
     // Need to init/global data here
     RluSet {
-        head: UnsafeCell::new(std::ptr::null_mut())
+        head: {
+           RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+           let p = RLU_ALLOC(size_of::<*mut Node<T>>()) as *mut *mut Node<T>;
+           RLU_ASSIGN_POINTER(p, std::ptr::null_mut());
+           RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+           p
+        }
     }
   }
 
 
   pub fn to_string(&self) -> String {
     let mut res = String::from("head -> ");
-    let mut temp = self.head.get();
+    let mut temp = self.head;
     unsafe {
-        while !(*temp).is_null() {
-        
-            let node = *temp;
-            res.push_str(format!("{:?} -> ", (*node).value).as_str());
-            temp = (*node).next.get(); 
+        if (*temp).is_null() {
+            res.push_str("Empty list");
+            return res
         }
+         res.push_str("head -> ");
+
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+        while !(node).is_null() {
+            res.push_str(format!("{:?} -> ", (*node).value).as_str());
+            node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
+        }
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
         res.push_str(format!("null").as_str());
     }
     res
-  }
-  unsafe fn rlu_new_node(&self) -> *mut Node<T> {
-    unsafe {
-        let p = rlu_alloc(size_of::<Node<T>>()) as *mut Node<T>;
-        p
-
-    }
   }
 }
 
 impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin {
   fn contains(&self, value: T) -> bool {
-        let mut temp = self.head.get();
+        let mut temp = self.head;
         unsafe {
-            while !(*temp).is_null() {
-                let node = *temp;
+            if (*temp).is_null() {
+                return  false
+            }
+            RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+            let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+            while !(node).is_null() {
                 if (*node).value == value {
                     return true;
                 }
-                temp = (*node).next.get();
+                node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
             }
+            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
         }
         false
   }
 
   fn len(&self) -> usize {
     let mut len : usize = 0;
-    let mut temp = self.head.get();
-        unsafe {
-    while !(*temp).is_null() {
-        len = len + 1;
-            let node = *temp;
-            temp = (*node).next.get();
+    let mut temp : *mut *mut Node<T> = self.head;
+    unsafe {
+        if (*temp).is_null() {
+            return  0; //Should be assert
         }
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+        while !(node).is_null() {
+             len = len + 1;
+            node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
+        }
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
     }
     len
   }

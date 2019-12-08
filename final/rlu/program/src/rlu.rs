@@ -986,6 +986,10 @@ fn rlu_sync_checkpoint(self_ : *mut rlu_thread_data_t) {
 }
 
 // Externally exposed functions
+pub fn RLU_GET_THREAD_DATA() -> *mut rlu_thread_data_t {
+    unimplemented!()
+}
+
 pub fn RLU_THREAD_INIT(self_ : *mut rlu_thread_data_t) {
     rlu_thread_init(self_);
 }
