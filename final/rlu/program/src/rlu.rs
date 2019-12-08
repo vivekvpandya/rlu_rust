@@ -245,7 +245,7 @@ fn is_ptr_copy(ptr :*mut u32) -> bool {
     }
     false
 }
-fn rlu_alloc() -> *mut u32 {
+pub fn rlu_alloc(size : usize) -> *mut u32 {
     unsafe {
         let layout = Layout::new::<rlu_obj_header_t>();
         let ptr = alloc(layout);

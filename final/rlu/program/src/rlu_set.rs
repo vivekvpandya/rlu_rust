@@ -3,8 +3,12 @@ use std::fmt::Debug;
 use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
+use std::mem::{size_of};
+use crate::rlu::rlu_alloc;
+
 struct Node<T> {
     pub value : T,
+    //pub next : *mut Node<T>
     pub next : UnsafeCell<*mut Node<T>>
 }
 
@@ -21,6 +25,7 @@ unsafe impl<T> Sync for RluSet<T> {}
 
 impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin {
   pub fn new() -> RluSet<T> {
+    // Need to init/global data here
     RluSet {
         head: UnsafeCell::new(std::ptr::null_mut())
     }
@@ -40,6 +45,13 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
         res.push_str(format!("null").as_str());
     }
     res
+  }
+  unsafe fn rlu_new_node(&self) -> *mut Node<T> {
+    unsafe {
+        let p = rlu_alloc(size_of::<Node<T>>()) as *mut Node<T>;
+        p
+
+    }
   }
 }
 
@@ -72,25 +84,40 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn insert(&self, value: T) -> bool {
-      unsafe {
-   
-    /*let new_node = Box::new(Node {
-            value : value,
-            next : UnsafeCell::new(*(self.head.get()))
-        });
-    let new_el = Box::into_raw(new_node);*/
-    //*(self.head.get()) = new_el;
-    
-    //if want to allocate memory using alloc() API then
-    // code is as following
-    let layout = Layout::new::<Node<T>>();
-    let ptr =  alloc(layout);
-    let n_ptr : *mut Node<T> =  ptr as *mut Node<T>;
-    (*n_ptr).value =  value;
-    (*n_ptr).next = UnsafeCell::new(*(self.head.get())); 
-    *(self.head.get()) = n_ptr;
+    if !self.contains(value) {
+        unsafe {
+       
+        
+        //if want to allocate memory using alloc() API then
+        // code is as following
+        let layout = Layout::new::<Node<T>>();
+        let ptr =  alloc(layout);
+        //let n_ptr : *mut Node<T> =  ptr as *mut Node<T>;
+        
+        // With RLU:
+        //let n_ptr : *mut Node<T> =  self.rlu_new_node();
+
+        (*n_ptr).value =  value;
+        // ?? Use RLU assignment : rlu_assign_pointer,rlu_deref_slow_path
+        // tdata = get_or_init thread_data
+        // RLU_READER_LOCK(tdata);
+        // let p_new_node : *mut Node<T> =  self.rlu_new_node();
+	// p_new_node->val = val;
+	// p_head = (node_t *)RLU_DEREF(self, (p_list->p_head));
+	//  while  (!RLU_TRY_LOCK(tdata, p_head)) {
+	// RLU_ASSIGN_PTR(tdata, &(p_new_node->p_next), p_head);
+	// TODO: Need to figure out how to handle head pointer
+        // RLU_ASSIGN_PTR(tdata, &(p_prev->p_next), p_new_node);
+        // *(self.head.get()) = n_ptr;
+        //
+	// RLU_READER_UNLOCK(self);
+        (*n_ptr).next = UnsafeCell::new(*(self.head.get())); 
+        *(self.head.get()) = n_ptr;
+        }
+        true
+    } else {
+       false
     }
-    true
   }
 
   fn delete(&self, value: T) -> bool {
