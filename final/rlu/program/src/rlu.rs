@@ -4,7 +4,8 @@ use std::mem::{size_of};
 use std::convert::TryInto;
 extern crate libc;
 use std::ptr;
-
+use std::mem;
+use arr_macro::arr;
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
@@ -117,8 +118,8 @@ static mut g_rlu_max_write_sets : usize = 0;
 static mut g_rlu_cur_threads : AtomicUsize =  AtomicUsize::new(0);
 //static mut g_rlu_cur_threads : usize = 0;
 static mut g_rlu_threads : [*mut rlu_thread_data_t; 32] = [0 as *mut rlu_thread_data_t; 32] ;
-static mut g_rlu_writer_locks : [u32; 20000] = [0; 20000];
-//static mut g_rlu_array : [AtomicUsize; 4096] = [AtomicUsize::new(0); 4096];
+static mut g_rlu_writer_locks : [AtomicUsize; 20000] = arr![AtomicUsize::new(0); 20000];
+//static mut g_rlu_array : [AtomicUsize; 4096] =  arr![AtomicUsize::new(0); 4096];
 //static mut g_rlu_array : [AtomicUsize; 4096] = [0; 4096];
 static mut g_rlu_writer_version : AtomicUsize = AtomicUsize::new(0);
 static mut g_rlu_commit_version : AtomicUsize = AtomicUsize::new(9);
@@ -191,7 +192,7 @@ fn rlu_commit_write_set(self_ : *mut rlu_thread_data_t) {
 
 fn rlu_release_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) {
     unsafe {
-        g_rlu_writer_locks[writer_lock_id] = 0;
+        g_rlu_writer_locks[writer_lock_id].store(0, Ordering::Relaxed);
     }
 }
 
@@ -852,16 +853,16 @@ fn LOCK_ID(th_id : usize) -> usize {
 fn rlu_try_acquire_writer_lock(self_ : *mut rlu_thread_data_t, writer_lock_id : usize) -> Option<u32> {
     unsafe {
         //TODO:  need to borrow mutbly
-        let  cur_lock = g_rlu_writer_locks[writer_lock_id];
-        let other_ptr   = &mut LOCK_ID((*self_).uniq_id);
-        match cur_lock {
+        let  cur_lock = g_rlu_writer_locks[writer_lock_id].get_mut();
+        let lock_id   = LOCK_ID((*self_).uniq_id);
+        match *cur_lock {
         0 => {
               // check for Ordering
                 let val = {
                     unsafe {
                              //TODO need to implement compare_and_swap
                             // let mut pa:  = &mut g_rlu_writer_locks[writer_lock_id];
-                            //pa.compare_and_swap(0, other_ptr, Ordering::Relaxed);
+                            g_rlu_writer_locks[writer_lock_id].compare_and_swap(0, lock_id, Ordering::SeqCst);
                             //pa.compare_and_swap(std::ptr::null_mut(), other_ptr, Ordering::SeqCst);
                             0
                             }
