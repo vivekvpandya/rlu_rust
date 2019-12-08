@@ -59,9 +59,9 @@ struct wait_entry_t {
 }
 
 // NOTE: when ever a new instace of this struct is created it needs to be initialized
-struct rlu_thread_data_t {
+pub struct rlu_thread_data_t {
     //NOTE: we might also want to add padding as it may have impact on the performance
-    uniq_id : usize,
+    pub uniq_id : usize,
     is_check_locks: u8,
     is_write_detected : u8,
     is_steal : u8,
@@ -304,7 +304,7 @@ pub fn rlu_alloc(obj_size : usize) -> *mut u8 {
     }
 }
 
-fn rlu_free(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) {
+pub fn rlu_free(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) {
     unsafe {
     if p_obj.is_null() {
         return;
