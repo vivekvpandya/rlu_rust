@@ -11,6 +11,7 @@ const RLU_MAX_LOG_SIZE: usize = 128;
 const RLU_MAX_THREADS: usize = 32;
 const RLU_MAX_FREE_NODES: usize = 100;
 const RLU_MAX_WRITE_SETS : usize = 200;
+const RLU_MAX_WRITE_SET_BUFFER_SIZE : usize = 100000;
 struct rlu_data {
     n_starts :  AtomicU32,
     n_finish :  AtomicU32,
@@ -50,7 +51,7 @@ struct obj_list_t {
     writer_locks : writer_locks_t,
     num_of_objs : u32,
     p_cur : * mut u32,
-    buffer : [char; 100000]
+    buffer : [char; RLU_MAX_WRITE_SET_BUFFER_SIZE]
 }
 
 struct wait_entry_t {
@@ -124,6 +125,67 @@ static mut g_rlu_writer_locks : [AtomicUsize; 20000] = arr![AtomicUsize::new(0);
 static mut g_rlu_writer_version : AtomicUsize = AtomicUsize::new(0);
 static mut g_rlu_commit_version : AtomicUsize = AtomicUsize::new(9);
 
+macro_rules! RLU_ASSERT {
+    ($input:expr) => {
+        unsafe {
+            assert!($input);
+        }
+    }
+}
+
+pub fn rlu_get_thread_data(uniq_id : usize) -> *mut rlu_thread_data_t {
+    if uniq_id > 31 {
+        panic!("maximum 32 thread allowed, i.e uniq_id must be in range 0..31");
+    }
+    unsafe {
+        return g_rlu_threads[uniq_id];
+    }
+}
+pub fn rlu_new_thread_data() -> *mut rlu_thread_data_t {
+    unsafe {
+        let layout = Layout::new::<rlu_thread_data_t>();
+        let ptr = alloc(layout);
+        let thp = ptr as *mut rlu_thread_data_t;
+        (*thp).uniq_id = 0;
+        (*thp).is_check_locks = 0;
+        (*thp).is_write_detected = 0;
+        (*thp).is_steal = 0;
+        (*thp).type_ = 0;
+       
+        
+        (*thp).max_write_set = 0;
+        (*thp).run_counter = AtomicUsize::new(0);
+        (*thp).local_version = 0;
+        (*thp).local_commit_version = 0;
+        (*thp).is_no_quiescence = 0;
+        (*thp).is_sync =0;
+        // NOTE: do we need to initalize q_threads, obj_write_set, free_nodes array? I expecte they
+        // should have be allocated just have some garbage value, we can just use it without
+        // initializing them to some default value.         
+        (*thp).writer_version = 0;
+        //(*thp).q_threads need loop
+        (*thp).ws_head_counter= 0;
+        (*thp).ws_wb_counter = 0;
+        (*thp).ws_tail_counter = 0;
+        //(*thp).obj_write_set may be need loop
+        (*thp).free_nodes_size = 0;
+        //(*thp).free_nodes need loop
+        
+        (*thp).n_starts = 0;
+        (*thp).n_finish = 0;
+        (*thp).n_writers = 0;
+        (*thp).n_writer_writeback = 0;
+        (*thp).n_pure_readers = 0;
+        (*thp).n_aborts = 0;
+        (*thp).n_steals = 0;
+        (*thp).n_writer_sync_waits = 0;
+        (*thp).n_writeback_q_iters = 0;
+        (*thp).n_sync_requests = 0;
+        (*thp).n_sync_and_writeback = 0;
+        return thp;
+    }
+
+}
 fn rlu_init( type_ : u32, max_write_sets: usize) {
     unsafe {
         //g_rlu_array[64 * 2] = AtomicUsize::new(0); // this is same as g_rlu_writer_version RLU_CACHE_LINE_SIZE = 64
@@ -225,11 +287,11 @@ fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
         p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_ws_obj_header_t>());
         p_obj_h = p_cur as *mut rlu_obj_header_t;
 
-        //RLU_ASSERT(p_obj_h->p_obj_copy == PTR_ID_OBJ_COPY);
+        RLU_ASSERT!(((*p_obj_h).p_obj_copy.load(Ordering::Relaxed) as usize) == 0x12341234 );
 
         p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
 
-        //RLU_ASSERT(GET_COPY(p_obj_actual) == p_cur);
+        RLU_ASSERT!(GET_COPY(p_obj_actual) == p_cur as *mut u32);
 
         p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
 
@@ -239,7 +301,7 @@ fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
 
 }
 
-fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
+pub fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
     unsafe {
         (*self_).max_write_set = g_rlu_max_write_sets;
         (*self_).uniq_id = g_rlu_cur_threads.fetch_add(1, Ordering::SeqCst); // use fetch_and_add here
@@ -322,7 +384,7 @@ pub fn rlu_free(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) {
     (*self_).free_nodes[(*self_).free_nodes_size] = p_obj;
     (*self_).free_nodes_size = (*self_).free_nodes_size +  1;
 
-    //RLU_ASSERT((*self_).free_nodes_size < RLU_MAX_FREE_NODES);
+    RLU_ASSERT!((*self_).free_nodes_size < RLU_MAX_FREE_NODES);
     }
 }
 
@@ -389,8 +451,9 @@ fn rlu_add_obj_copy_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *mut u3
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         // increment num_of_objs
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs = (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs + 1;
-        //let cur_ws_size = (p_cur as usize) - ((*self_).obj_write_set[(*self_).ws_cur_id].buffer) as usize;
-        // RLU_ASSERT(cur_ws_size < RLU_MAX_WRITE_SET_BUFFER_SIZE);
+        let buffer_ptr = &mut((*self_).obj_write_set[(*self_).ws_cur_id].buffer[0]) as *mut char; 
+        let cur_ws_size = (p_cur as usize) -  (buffer_ptr as usize);
+        RLU_ASSERT!(cur_ws_size < RLU_MAX_WRITE_SET_BUFFER_SIZE);
     }
 }
 
@@ -471,6 +534,7 @@ fn rlu_try_lock(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut u32, obj_size
     // Locked successfully
     // Copy object to write-set
     rlu_add_obj_copy_to_write_set(self_, p_obj, obj_size);
+    RLU_ASSERT!(GET_COPY(p_obj) == p_obj_copy); 
     //RLU_ASSERT_MSG(GET_COPY(p_obj) == p_obj_copy, self, "p_obj_copy = %p my_p_obj_copy = %p\n", GET_COPY(p_obj), p_obj_copy);
     //TRACE_2(self, "[%ld] p_obj = %p is locked, p_obj_copy = %p , th_id = %ld\n", self->local_version, p_obj, GET_COPY(p_obj), GET_THREAD_ID(p_obj));
     
