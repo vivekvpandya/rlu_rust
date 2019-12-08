@@ -245,11 +245,22 @@ fn rlu_thread_init(self_ : *mut rlu_thread_data_t) {
             rlu_reset_write_set(self_, ws_counter);
         }
         g_rlu_threads[(*self_).uniq_id as usize] = self_;
-        //NOTE: should we require something equivalent to __sync_synchromize()
+        //NOTE: should we require something equivalent to __sync_synchronize()
+        // If C code has full memory barrier (i.e __sync_synchronize()) for above atomic fetch and
+        // add then we might want to skip this because we are already using atomic operatioin with
+        // Ordering:SeqCst.
+        // But in any case we neeed something similar this link
+        // https://www.reddit.com/r/rust/comments/5yszdc/an_equivalent_for_sync_synchronize_in_rust/
+        // has good information also https://doc.rust-lang.org/nomicon/atomics.html this has nice
+        // information on what Ordering we should use with our atomic operations, for now we have
+        // used Ordering::SeqCst that is strict ordering but if see any perf problem and we are
+        // sure that certain fetch_and_add operations can be done in any order and still produce
+        // correct result we may want to change to Ordering::Relaxed. 
     }
 }
 
 fn rlu_thread_finish(self_ : *mut rlu_thread_data_t) {
+    // In case of perf problem above note applies here too.
     unsafe {
         rlu_sync_and_writeback(self_);
         rlu_sync_and_writeback(self_); // I don't know why there are two calls to rlu_sync_and_writeback()
@@ -288,10 +299,29 @@ fn rlu_alloc(obj_size : usize) -> *mut u8 {
 }
 
 fn rlu_free(self_ : *mut rlu_thread_data_t, p_obj : *mut u32) {
-    unimplemented!();
+    unsafe {
+    if p_obj.is_null() {
+        return;
+    }
+
+    if self_.is_null() {
+        libc::free(OBJ_TO_H(p_obj) as *mut libc::c_void);
+        return;
+    }
+
+    //rlu_assert_in_section(self);
+
+    let mut p_obj = FORCE_ACTUAL(p_obj);
+    
+    (*self_).free_nodes[(*self_).free_nodes_size] = p_obj;
+    (*self_).free_nodes_size = (*self_).free_nodes_size +  1;
+
+    //RLU_ASSERT((*self_).free_nodes_size < RLU_MAX_FREE_NODES);
+    }
 }
 
 fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
+    // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
         (*self_).local_version = g_rlu_array[64 * 2];
@@ -300,6 +330,7 @@ fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
 }
 
 fn rlu_unregister_thread(self_ : *mut rlu_thread_data_t) {
+    // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
     }
@@ -307,20 +338,20 @@ fn rlu_unregister_thread(self_ : *mut rlu_thread_data_t) {
 
 fn rlu_reader_lock(self_ : *mut rlu_thread_data_t) {
     unsafe {
-    (*self_).n_starts = (*self_).n_starts + 1;
-    rlu_sync_checkpoint(self_);
-    rlu_reset(self_);
-    rlu_register_thread(self_);
-    (*self_).is_steal = 1;
-    if ((*self_).local_version - (*self_).local_commit_version) == 0 {
-        (*self_).is_steal = 0 ;
+        (*self_).n_starts = (*self_).n_starts + 1;
+        rlu_sync_checkpoint(self_);
+        rlu_reset(self_);
+        rlu_register_thread(self_);
+        (*self_).is_steal = 1;
+        if ((*self_).local_version - (*self_).local_commit_version) == 0 {
+            (*self_).is_steal = 0 ;
+        }
+        (*self_).is_check_locks = 1;
+        if (((*self_).local_version - (*self_).local_commit_version) == 0) && (((*self_).ws_tail_counter - (*self_).ws_wb_counter)) == 0{
+            (*self_).is_check_locks = 0;
+            (*self_).n_pure_readers = (*self_).n_pure_readers + 1;
+        }
     }
-    (*self_).is_check_locks = 1;
-    if (((*self_).local_version - (*self_).local_commit_version) == 0) && (((*self_).ws_tail_counter - (*self_).ws_wb_counter)) == 0{
-    (*self_).is_check_locks = 0;
-    (*self_).n_pure_readers = (*self_).n_pure_readers + 1;
-}
-}
 }
 
 fn rlu_add_ws_obj_header_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *mut u32, obj_size : usize) -> *mut u32 {
@@ -351,13 +382,15 @@ fn rlu_add_obj_copy_to_write_set(self_ : *mut rlu_thread_data_t, p_obj : *mut u3
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         // increment num_of_objs
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs = (*self_).obj_write_set[(*self_).ws_cur_id as usize].num_of_objs + 1;
+        //let cur_ws_size = (p_cur as usize) - ((*self_).obj_write_set[(*self_).ws_cur_id].buffer) as usize;
+        // RLU_ASSERT(cur_ws_size < RLU_MAX_WRITE_SET_BUFFER_SIZE);
     }
 }
 
 fn rlu_send_sync_request(th_id : usize) {
     unsafe {
         (*(g_rlu_threads[th_id])).is_sync = (*(g_rlu_threads[th_id])).is_sync + 1;
-        //MEMBARSTLD();
+        //MEMBARSTLD(); see NOTE in rlu_thread_init()
     }
 }
 
