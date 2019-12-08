@@ -4,7 +4,7 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK};
+use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT};
 
 struct Node<T> {
     pub value : T,
@@ -14,7 +14,8 @@ struct Node<T> {
 
 pub struct RluSet<T> {
   // data goes here
-  head: *mut *mut Node<T>
+  head: *mut *mut Node<T>,
+  tid  : usize
   //_marker : PhantomData<T>
 }
 
@@ -27,28 +28,30 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
 
   unsafe fn rlu_new_node(&self) -> *mut Node<T> {
     unsafe {
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
         let p = RLU_ALLOC(size_of::<Node<T>>()) as *mut Node<T>;
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
         p
     }
   }
   pub fn new() -> RluSet<T> {
     // Need to init/global data here
-    RluSet {
-        head: {
-           RLU_READER_LOCK(RLU_GET_THREAD_DATA());
-           let p = RLU_ALLOC(size_of::<*mut Node<T>>()) as *mut *mut Node<T>;
-           RLU_ASSIGN_POINTER(p, std::ptr::null_mut());
-           RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
-           p
-        }
-    }
+       RLU_INIT(0, 2);
+       let tid = RLU_THREAD_INIT(rlu_new_thread_data()); 
+       RLU_READER_LOCK(RLU_GET_THREAD_DATA(tid));
+       let p = RLU_ALLOC(size_of::<*mut Node<T>>()) as *mut *mut Node<T>;
+       RLU_ASSIGN_POINTER(p, std::ptr::null_mut());
+       RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(tid));
+
+       RluSet {
+           head: p,
+           tid: tid
+       }
   }
 
 
   pub fn to_string(&self) -> String {
-    let mut res = String::from("head -> ");
+    let mut res = String::from(" ");
     let mut temp = self.head;
     unsafe {
         if (*temp).is_null() {
@@ -57,13 +60,13 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
         }
          res.push_str("head -> ");
 
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
-        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
         while !(node).is_null() {
             res.push_str(format!("{:?} -> ", (*node).value).as_str());
-            node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
+            node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
         }
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
         res.push_str(format!("null").as_str());
     }
     res
@@ -74,18 +77,18 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   fn contains(&self, value: T) -> bool {
         let mut temp = self.head;
         unsafe {
-            if (*temp).is_null() {
-                return  false
+            if (temp).is_null() {
+                return  false // should be assert
             }
-            RLU_READER_LOCK(RLU_GET_THREAD_DATA());
-            let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+            RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+            let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
             while !(node).is_null() {
                 if (*node).value == value {
                     return true;
                 }
-                node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
+                node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
             }
-            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
         }
         false
   }
@@ -95,20 +98,21 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
     let mut temp : *mut *mut Node<T> = self.head;
     unsafe {
         if (*temp).is_null() {
-            return  0; //Should be assert
+            return  0; 
         }
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA());
-        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
         while !(node).is_null() {
              len = len + 1;
-            node = RLU_DEREF(RLU_GET_THREAD_DATA(), (*node).next); 
+            node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
         }
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
     }
     len
   }
 
   fn insert(&self, value: T) -> bool {
+    println!("In set insert");
     if !self.contains(value) {
 /*        unsafe {
        
@@ -146,21 +150,25 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
 */
         let mut temp : *mut *mut Node<T> = self.head;
         unsafe {
-            if (*temp).is_null() {
+            if (temp).is_null() {
+                println!("temp is null in insert");
                 return  false; //Should be assert
             }
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
 	    (*p_new_node).value = value;
-            RLU_READER_LOCK(RLU_GET_THREAD_DATA());
-            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(), temp) != 0 {
-                let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(), temp)); 
+            RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+                println!("reader - lock is aquired");
+            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), temp) != 0 {
+                println!("object lock is aquired");
+                let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
                 RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
                 RLU_ASSIGN_POINTER(temp, p_new_node); 
                 return true;
             } else {
+                println!("Try lock unsuccesful in insert");
                 return false; // TODO: need to hnadle abort
             }
-            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA());
+            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
             //RLU_READER_LOCK(tdata);
             return false;
 

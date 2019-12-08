@@ -9,10 +9,13 @@ use rand::{random, thread_rng, Rng};
 fn set_my_test() {
  let set : RluSet<u32> = RluSet::new();
  set.insert(0);
+// assert!(!set.contains(0));
  set.insert(1);
+// assert!(!set.contains(1));
  set.insert(100);
- set.insert(1);
- set.delete(1);
+// assert!(!set.contains(100));
+// set.insert(1);
+// set.delete(1);
  println!("{:?}", set.to_string());
 }
 
