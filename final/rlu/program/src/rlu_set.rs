@@ -4,7 +4,7 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::rlu_alloc;
+use crate::rlu::{rlu_alloc, rlu_thread_data_t};
 
 struct Node<T> {
     pub value : T,
@@ -85,9 +85,9 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
 
   fn insert(&self, value: T) -> bool {
     if !self.contains(value) {
-        unsafe {
+/*        unsafe {
        
-        
+
         //if want to allocate memory using alloc() API then
         // code is as following
         let layout = Layout::new::<Node<T>>();
@@ -117,6 +117,15 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
         true
     } else {
        false
+    }
+*/
+        unsafe {
+            let n_ptr : *mut Node<T> =  self.rlu_new_node();
+            (*n_ptr).value =  value;
+             
+            //RLU_READER_LOCK(tdata);
+
+        }
     }
   }
 
