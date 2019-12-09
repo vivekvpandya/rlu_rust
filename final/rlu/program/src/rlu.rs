@@ -483,8 +483,8 @@ fn rlu_reader_unlock(self_ : *mut rlu_thread_data_t) {
 
 fn rlu_try_lock<T>(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut T, obj_size :usize) -> u32 {
     unsafe {
-    let mut p_obj : *mut T = *p_p_obj;
-    let mut p_obj_copy : *mut T = GET_COPY(p_obj);
+    let mut p_obj : *mut T  = *p_p_obj as *mut T;
+    let mut p_obj_copy : *mut T = GET_COPY(p_obj) as *mut T;
     let mut th_id : usize = 0;
     if PTR_IS_COPY(p_obj_copy) {
         //TRACE_1(self, "tried to lock a copy of an object. p_obj = %p\n", p_obj);
@@ -493,7 +493,7 @@ fn rlu_try_lock<T>(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut T, obj_siz
         p_obj_copy = GET_COPY(p_obj) as *mut T;
         //TRACE_1(self, " => real: %p , p_obj_copy = %p\n", p_obj, p_obj_copy);
     }
-    if (PTR_IS_LOCKED(p_obj_copy)) {
+    if (PTR_IS_LOCKED(GET_COPY(p_obj))) {
         let p_ws_obj_h = PTR_GET_WS_HEADER(p_obj_copy);
         th_id = WS_GET_THREAD_ID(p_ws_obj_h);
         if (th_id == (*self_).uniq_id) {
@@ -544,7 +544,7 @@ fn rlu_try_lock<T>(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut T, obj_siz
     }
 }
 
-fn rlu_abort(self_ : *mut rlu_thread_data_t) {
+pub fn rlu_abort(self_ : *mut rlu_thread_data_t) {
     unsafe {
         (*self_).n_aborts = (*self_).n_aborts + 1;
         rlu_unregister_thread(self_);
@@ -642,14 +642,15 @@ fn OBJ_COPY_TO_WS_H<T>(p_obj_copy : *mut T) -> *mut rlu_ws_obj_header_t {
 fn GET_COPY<T>(p_obj: *mut T) -> *mut T{
     unsafe {
         let p_obj_header = OBJ_TO_H(p_obj);
-        return *(*p_obj_header).p_obj_copy.get_mut() as *mut T;
+        return (*p_obj_header).p_obj_copy.load(Ordering::SeqCst) as *mut T;
     }
 }
 
 fn UNLOCK<T>(p_obj : *mut T) {
     unsafe {
         let mut p_obj_h = OBJ_TO_H(p_obj);
-        (*p_obj_h).p_obj_copy.store(std::ptr::null_mut(), Ordering::SeqCst);
+        (*p_obj_h).p_obj_copy.store(std::ptr::null_mut() as *mut u32, Ordering::SeqCst);
+        println!("{:?}", (*p_obj_h).p_obj_copy.load(Ordering::SeqCst) as usize);
     }
 }
 
@@ -763,7 +764,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                // TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
                //         self->writer_version, p_obj_actual, p_obj_copy, obj_size);
 
-                ptr::copy(p_obj_actual as *const char, p_obj_copy as *mut char, obj_size);
+                ptr::copy(p_obj_copy as *const char, p_obj_actual as *mut char, obj_size);
 
                 p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
 

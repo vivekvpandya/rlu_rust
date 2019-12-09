@@ -13,7 +13,17 @@ struct Node {
 
 #[test]
 fn rlu_basic() {
-   let mut handles = Vec::new(); 
+
+            //rlu_thread_init(d_ptr); 
+            /*rlu_init(0,1);
+            let tid = rlu_thread_init(rlu_new_thread_data());
+            rlu_reader_lock(rlu_get_thread_data(tid));
+            let ptr = rlu_alloc(size_of::<Node>());
+            let n_ptr : *mut Node = ptr as *mut Node;
+            (*n_ptr).value = 100;
+            (*n_ptr).next = std::ptr::null_mut();*/
+
+   /*let mut handles = Vec::new(); 
    for i in 0..5 {
         handles.push(thread::spawn(|| {
             
@@ -35,5 +45,5 @@ fn rlu_basic() {
     
     for handle in handles {
         handle.join();
-    }
+    }*/
 }

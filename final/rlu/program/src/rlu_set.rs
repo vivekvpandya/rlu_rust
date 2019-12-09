@@ -4,7 +4,7 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT};
+use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT, rlu_abort};
 
 struct Node<T> {
     pub value : T,
@@ -36,7 +36,7 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
   }
   pub fn new() -> RluSet<T> {
     // Need to init/global data here
-       RLU_INIT(0, 2);
+       RLU_INIT(0, 1);
        let tid = RLU_THREAD_INIT(rlu_new_thread_data()); 
        RLU_READER_LOCK(RLU_GET_THREAD_DATA(tid));
        let p = RLU_ALLOC(size_of::<*mut Node<T>>()) as *mut *mut Node<T>;
@@ -158,16 +158,20 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
                 println!("reader - lock is aquired");
-            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), temp) != 0 {
+            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) != 0 {
                 println!("object lock is aquired");
                 let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
                 RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
                 RLU_ASSIGN_POINTER(temp, p_new_node); 
+                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+
                 return true;
             } else {
                 println!("Try lock unsuccesful in insert");
+                rlu_abort(RLU_GET_THREAD_DATA(self.tid));
                 return false; // TODO: need to hnadle abort
             }
+            
             RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
             //RLU_READER_LOCK(tdata);
             return false;
