@@ -308,8 +308,12 @@ pub fn rlu_thread_init(self_ : *mut rlu_thread_data_t) ->  usize {
         (*self_).local_version = 0;
         (*self_).writer_version = u32::max_value();
         let mut ws_counter : usize = 0;
-        for ws_couter in 0..RLU_MAX_WRITE_SETS {
+        /*for ws_couter in 0..RLU_MAX_WRITE_SETS {
             rlu_reset_write_set(self_, ws_counter);
+        }*/
+        while ws_counter < RLU_MAX_WRITE_SETS {
+            rlu_reset_write_set(self_, ws_counter);
+            ws_counter = ws_counter + 1; 
         }
         g_rlu_threads[(*self_).uniq_id as usize] = self_;
         //NOTE: should we require something equivalent to __sync_synchronize()
@@ -354,16 +358,17 @@ fn is_ptr_copy<T>(ptr :*mut T) -> bool {
     false
 }
 
-pub fn rlu_alloc(obj_size : usize) -> *mut u8 {
+pub fn rlu_alloc<T>(obj_size : usize) -> *mut T {
     unsafe {
-        let ptr : *mut u8 = libc::malloc(size_of::<rlu_obj_header_t>() + obj_size) as *mut u8;
+        let ptr : *mut T = libc::malloc(size_of::<rlu_obj_header_t>() + obj_size) as *mut T;
+        //let ptr : *mut T = libc::malloc(100 + obj_size) as *mut T;
         if ptr.is_null() {
             panic!("failed to allocate memory");
         }
         let mut p_obj_h : *mut rlu_obj_header_t = ptr as *mut rlu_obj_header_t;
         (*p_obj_h).p_obj_copy = AtomicPtr::new(std::ptr::null_mut()); // 
 
-        return H_TO_OBJ(p_obj_h) as *mut u8;
+        return H_TO_OBJ(p_obj_h) as *mut T;
     }
 }
 
@@ -611,7 +616,7 @@ fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
 //#define RLU_MAX_WRITE_SETS (200) // Minimum value is 2
 // #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
 fn WS_INDEX(ws_counter : usize) -> usize {
-    ws_counter % 20
+    ws_counter % 200
 }
 
 fn TRY_CAS_PTR_OBJ_COPY<T>(p_obj : *mut T, new_ptr_obj_copy: *mut T ) -> bool {
@@ -713,14 +718,14 @@ fn FORCE_ACTUAL<T>(p_obj: *mut T) -> *mut T {
 fn MOVE_PTR_FORWARD<T>(ele: *mut T, size: usize) -> *mut T {
    unsafe {
       let t_ele = ele as *mut u8;
-      ele.add(size) as *mut T
+      t_ele.add(size) as *mut T
     }
 }
 
 fn MOVE_PTR_BACK<T>(ele: *mut T, size: usize) -> *mut T {
    unsafe {
       let t_ele = ele as *mut u8;
-      ele.sub(size) as *mut T
+      t_ele.sub(size) as *mut T
     }
 }
 
@@ -1063,7 +1068,7 @@ pub fn RLU_THREAD_FINISH(self_ : *mut rlu_thread_data_t) {
     rlu_thread_finish(self_)
 }
 
-pub fn RLU_ALLOC(obj_size : usize ) -> *mut u8 {
+pub fn RLU_ALLOC<T>(obj_size : usize ) -> *mut T {
     rlu_alloc(obj_size)
 }
 pub fn RLU_INIT(type_ : u32, max_write_sets: usize) {

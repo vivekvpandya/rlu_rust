@@ -114,40 +114,6 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   fn insert(&self, value: T) -> bool {
     println!("In set insert");
     if !self.contains(value) {
-/*        unsafe {
-       
-
-        //if want to allocate memory using alloc() API then
-        // code is as following
-        let layout = Layout::new::<Node<T>>();
-        let ptr =  alloc(layout);
-        let n_ptr : *mut Node<T> =  ptr as *mut Node<T>;
-        
-        // With RLU:
-        //let n_ptr : *mut Node<T> =  self.rlu_new_node();
-
-        (*n_ptr).value =  value;
-        // ?? Use RLU assignment : rlu_assign_pointer,rlu_deref_slow_path
-        // tdata = get_or_init thread_data
-        // RLU_READER_LOCK(tdata);
-        // let p_new_node : *mut Node<T> =  self.rlu_new_node();
-	// p_new_node->val = val;
-	// p_head = (node_t *)RLU_DEREF(self, (p_list->p_head));
-	//  while  (!RLU_TRY_LOCK(tdata, p_head)) {
-	// RLU_ASSIGN_PTR(tdata, &(p_new_node->p_next), p_head);
-	// TODO: Need to figure out how to handle head pointer
-        // RLU_ASSIGN_PTR(tdata, &(p_prev->p_next), p_new_node);
-        // *(self.head.get()) = n_ptr;
-        //
-	// RLU_READER_UNLOCK(self);
-        (*n_ptr).next = UnsafeCell::new(*(self.head.get())); 
-        *(self.head.get()) = n_ptr;
-        }
-        true
-    } else {
-       false
-    }
-*/
         let mut temp : *mut *mut Node<T> = self.head;
         unsafe {
             if (temp).is_null() {
@@ -157,7 +123,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-                println!("reader - lock is aquired");
+                //println!("reader - lock is aquired");
             if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) != 0 {
                 println!("object lock is aquired");
                 let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
@@ -169,6 +135,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             } else {
                 println!("Try lock unsuccesful in insert");
                 rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
                 return false; // TODO: need to hnadle abort
             }
             
