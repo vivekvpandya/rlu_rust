@@ -4,7 +4,7 @@ use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
 use std::mem::{size_of};
-use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT, rlu_abort};
+use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT, rlu_abort, RLU_FREE};
 
 struct Node<T> {
     pub value : T,
@@ -149,31 +149,40 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn delete(&self, value: T) -> bool {
-    //let mut temp = self.head.get();
-    //let mut prev = self.head.get();
-    /*unsafe {
-    let mut node = *temp;
-        while !(*temp).is_null() {
-            node = *temp;
-            if (*node).value == value {
-                break;
-            }
-            prev = temp;
-            temp = (*node).next.get();
-        }
-        if node.is_null() {
-            return false;
-        }
-        if node == *(self.head.get()) {
-            // removing first node
-            *(self.head.get()) = *((*node).next.get())  ;
-        } else {
-            let next = (*node).next.get();
-            (*(*prev)).next = UnsafeCell::new(*next);
-        }
 
-    }*/
-    true
+    if !self.contains(value) {
+        return false;
+    }
+    let mut temp = self.head;
+    let mut prev = self.head;
+    //TODO: need to handle delete of list contains only one element
+    unsafe {
+       RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+       let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+       let mut prev = node; 
+       while !(node).is_null() {
+           if (*node).value == value {
+	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut ((*prev).next) as  *mut *mut  Node<T>) == 0) {
+                   rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+	            //goto restart;
+	       }
+	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node as *mut *mut  Node<T>) == 0) {
+                   rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+	            //goto restart;
+	       }
+                
+               RLU_ASSIGN_POINTER( &mut ((*prev).next) as *mut *mut Node<T>, (*node).next as *mut Node<T>); 
+	       RLU_FREE(RLU_GET_THREAD_DATA(self.tid), node);
+               RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+               return true;
+           }
+           prev = node; 
+           node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+       }
+       RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+
+    }
+    false
   }
 
   fn clone_ref(&self) -> Self {
