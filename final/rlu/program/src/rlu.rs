@@ -308,8 +308,9 @@ pub fn rlu_thread_init(self_ : *mut rlu_thread_data_t) ->  usize {
         (*self_).local_version = 0;
         (*self_).writer_version = u32::max_value();
         let mut ws_counter : usize = 0;
-        for ws_counter in 0..RLU_MAX_WRITE_SETS {
+        while ws_counter < RLU_MAX_WRITE_SETS {
             rlu_reset_write_set(self_, ws_counter);
+            ws_counter = ws_counter + 1; 
         }
         g_rlu_threads[(*self_).uniq_id as usize] = self_;
         //NOTE: should we require something equivalent to __sync_synchronize()
@@ -354,16 +355,17 @@ fn is_ptr_copy<T>(ptr :*mut T) -> bool {
     false
 }
 
-pub fn rlu_alloc(obj_size : usize) -> *mut u8 {
+pub fn rlu_alloc<T>(obj_size : usize) -> *mut T {
     unsafe {
-        let ptr : *mut u8 = libc::malloc(size_of::<rlu_obj_header_t>() + obj_size) as *mut u8;
+        let ptr : *mut T = libc::malloc(size_of::<rlu_obj_header_t>() + obj_size) as *mut T;
+        //let ptr : *mut T = libc::malloc(100 + obj_size) as *mut T;
         if ptr.is_null() {
             panic!("failed to allocate memory");
         }
         let mut p_obj_h : *mut rlu_obj_header_t = ptr as *mut rlu_obj_header_t;
         (*p_obj_h).p_obj_copy = AtomicPtr::new(std::ptr::null_mut()); // 
 
-        return H_TO_OBJ(p_obj_h) as *mut u8;
+        return H_TO_OBJ(p_obj_h) as *mut T;
     }
 }
 
@@ -447,7 +449,7 @@ fn rlu_add_obj_copy_to_write_set<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut
     // !!!! I hope this works, I really doubt
     unsafe {
         let mut p_cur = (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur;
-        ptr::copy(p_obj as *const char, p_cur as *mut char, obj_size);
+        ptr::copy(p_obj as *const u8, p_cur as *mut u8, obj_size);
         p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         // increment num_of_objs
@@ -611,7 +613,7 @@ fn rlu_reset_write_set(self_ : *mut rlu_thread_data_t, ws_counter : usize) {
 //#define RLU_MAX_WRITE_SETS (200) // Minimum value is 2
 // #define WS_INDEX(ws_counter) ((ws_counter) % RLU_MAX_WRITE_SETS)
 fn WS_INDEX(ws_counter : usize) -> usize {
-    ws_counter % 20
+    ws_counter % 200
 }
 
 fn TRY_CAS_PTR_OBJ_COPY<T>(p_obj : *mut T, new_ptr_obj_copy: *mut T ) -> bool {
@@ -764,7 +766,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                // TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
                //         self->writer_version, p_obj_actual, p_obj_copy, obj_size);
 
-                ptr::copy(p_obj_copy as *const char, p_obj_actual as *mut char, obj_size);
+                ptr::copy(p_obj_copy as *const u8, p_obj_actual as *mut u8, obj_size);
 
                 p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
                 /*RLU_ASSERT_MSG(GET_THREAD_ID(p_obj_actual) == self->uniq_id,
@@ -1062,7 +1064,7 @@ pub fn RLU_THREAD_FINISH(self_ : *mut rlu_thread_data_t) {
     rlu_thread_finish(self_)
 }
 
-pub fn RLU_ALLOC(obj_size : usize ) -> *mut u8 {
+pub fn RLU_ALLOC<T>(obj_size : usize ) -> *mut T {
     rlu_alloc(obj_size)
 }
 pub fn RLU_INIT(type_ : u32, max_write_sets: usize) {
