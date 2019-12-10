@@ -162,7 +162,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
        let mut prev = node; 
        while !(node).is_null() {
            if (*node).value == value {
-	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut ((*prev).next) as  *mut *mut  Node<T>) == 0) {
+	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut prev as  *mut *mut  Node<T>) == 0) {
                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
 	            //goto restart;
 	       }
