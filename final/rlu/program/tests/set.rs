@@ -1,4 +1,8 @@
 extern crate rand;
+use std::sync::{
+        atomic::{AtomicU32, Ordering},
+            Arc,
+};
 
 use rlu::{RluSet, ConcurrentSet};
 use std::thread;
@@ -17,6 +21,28 @@ fn set_my_test() {
 // set.insert(1);
  set.delete(1);
  println!("{:?}", set.to_string());
+}
+
+#[test]
+fn set_my_threaded() {
+let set = RluSet::new();
+set.insert(100);
+//let num =  Arc::new(AtomicU32::new(0));
+
+  let thread = || {
+    let set = set.clone_ref();
+    thread::spawn(move || {
+        //num.fetch_add(1, Ordering::SeqCst);
+        //set.insert(num.load(Ordering::SeqCst));
+        set.insert(1);
+    })
+  };
+    
+  let readers: Vec<_> = (0..1).map(|_| thread()).collect();
+
+  for t in readers {
+    t.join().unwrap();
+  }
 }
 
 #[test]
@@ -87,9 +113,14 @@ fn set_thread() {
     })
   };
 
-  let readers: Vec<_> = (0..16).map(|_| reader()).collect();
-  let writers: Vec<_> = (0..4).map(|_| writer()).collect();
-
+  // original
+  //let readers: Vec<_> = (0..16).map(|_| reader()).collect();
+  //let writers: Vec<_> = (0..4).map(|_| writer()).collect();
+    
+  // small test, 2 reader 1 writer
+  let readers: Vec<_> = (0..2).map(|_| reader()).collect();
+  let writers: Vec<_> = (0..1).map(|_| writer()).collect();
+  
   for t in readers {
     t.join().unwrap();
   }

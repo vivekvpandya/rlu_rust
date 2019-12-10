@@ -186,6 +186,10 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn clone_ref(&self) -> Self {
-    unimplemented!()
+       let tid = RLU_THREAD_INIT(rlu_new_thread_data()); 
+       RluSet {
+           head: self.head,
+           tid: tid
+       }
   }
 }
