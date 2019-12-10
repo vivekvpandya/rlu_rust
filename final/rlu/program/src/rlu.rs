@@ -452,7 +452,7 @@ fn rlu_add_obj_copy_to_write_set<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut
     // !!!! I hope this works, I really doubt
     unsafe {
         let mut p_cur = (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur;
-        ptr::copy(p_obj as *const char, p_cur as *mut char, obj_size);
+        ptr::copy(p_obj as *const u8, p_cur as *mut u8, obj_size);
         p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
         (*self_).obj_write_set[(*self_).ws_cur_id as usize].p_cur = p_cur;
         // increment num_of_objs
@@ -769,7 +769,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                // TRACE_2(self, "[%ld] rlu_writeback_and_unlock: copy [%p] <- [%p] [%zu]\n",
                //         self->writer_version, p_obj_actual, p_obj_copy, obj_size);
 
-                ptr::copy(p_obj_copy as *const char, p_obj_actual as *mut char, obj_size);
+                ptr::copy(p_obj_copy as *const u8, p_obj_actual as *mut u8, obj_size);
 
                 p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
 
