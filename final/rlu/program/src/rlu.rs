@@ -574,7 +574,7 @@ fn rlu_init_quiescence(self_ : *mut rlu_thread_data_t) {
 
             (*self_).q_threads[th_id as usize].is_wait = 0;
 
-            if (th_id == (*self_).uniq_id.try_into().unwrap()) {
+            if (th_id == (*self_).uniq_id) {
             // No need to wait for myself
                 continue;
             }
@@ -806,7 +806,7 @@ fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, version_limit : u32) 
 	let mut iters = 0;
 	let cur_threads = *g_rlu_cur_threads.get_mut();
 	for th_id in 0..cur_threads {
-    	    while ((*self_).q_threads[th_id as usize].is_wait != 1) {
+    	    while ((*self_).q_threads[th_id as usize].is_wait != 0) {
 		iters = iters + 1;
 		if ((*self_).q_threads[th_id as usize].run_counter != *(*g_rlu_threads[th_id as usize]).run_counter.get_mut()) {
                     (*self_).q_threads[th_id as usize].is_wait = 0;

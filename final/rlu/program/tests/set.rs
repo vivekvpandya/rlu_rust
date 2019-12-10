@@ -26,6 +26,7 @@ fn set_my_test() {
 #[test]
 fn set_my_threaded() {
 let set = RluSet::new();
+set.insert(100);
 //let num =  Arc::new(AtomicU32::new(0));
 
   let thread = || {
@@ -112,9 +113,14 @@ fn set_thread() {
     })
   };
 
-  let readers: Vec<_> = (0..16).map(|_| reader()).collect();
-  let writers: Vec<_> = (0..4).map(|_| writer()).collect();
-
+  // original
+  //let readers: Vec<_> = (0..16).map(|_| reader()).collect();
+  //let writers: Vec<_> = (0..4).map(|_| writer()).collect();
+    
+  // small test, 2 reader 1 writer
+  let readers: Vec<_> = (0..2).map(|_| reader()).collect();
+  let writers: Vec<_> = (0..1).map(|_| writer()).collect();
+  
   for t in readers {
     t.join().unwrap();
   }
