@@ -66,6 +66,7 @@ fn set_simple() {
   println!("Contains");
 
   assert!(set.delete(1));
+  //assert!(set.delete(0));
   println!("Del 1: {}", set.to_string());
 
   assert!(!set.contains(1));
@@ -107,6 +108,7 @@ fn set_thread() {
         if random() {
           set.insert(i);
         } else {
+          //set.insert(i);
           set.delete(i);
         }
       }

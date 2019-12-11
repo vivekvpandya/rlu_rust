@@ -114,11 +114,12 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn insert(&self, value: T) -> bool {
+    //println!("In set insert");
     if !self.contains(value) {
         let mut temp : *mut *mut Node<T> = self.head;
         unsafe {
             if (temp).is_null() {
-                println!("temp is null in insert");
+                //println!("temp is null in insert");
                 return  false; //Should be assert
             }
 
@@ -127,68 +128,179 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
                 //println!("reader - lock is aquired");
-            if RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) != 0 {
-                println!("object lock is aquired");
+            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) == 0) {
+                rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+
+                //println!("reader - lock is failed");
+                return false;
+            }
+                //println!("object lock is aquired");
                 let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
                 RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
                 RLU_ASSIGN_POINTER(temp, p_new_node); 
                 RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-                println!("insert completed {:?} {:?}", value, thread::current().id());
+                //println!("Element insertion is compete");
                 return true;
-            } else {
-                println!("Try lock unsuccesful in insert");
-                rlu_abort(RLU_GET_THREAD_DATA(self.tid));
-                //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-                return false; // TODO: need to hnadle abort
-            }
-            
-            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-            //RLU_READER_LOCK(tdata);
-            return false;
 
         }
     }
     return false;
   }
-
+  
   fn delete(&self, value: T) -> bool {
 
     if !self.contains(value) {
         return false;
     }
-    let mut temp = self.head;
-    let mut prev = self.head;
+   let mut restart = true;
+   let mut do_loop = true;
+   unsafe {
+      while (restart) {
+	RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+	restart = false;
+	let mut p_prev = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), self.head));
+        if p_prev.is_null() {
+             break;
+        }
+	let mut p_next = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next);
+        if (*p_prev).value == value {
+            //let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next);
+            // need to delete first element
+            let mut head = self.head;
+	    let mut n = (RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next));
+            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut head as  *mut *mut *mut  Node<T>) == 0) {
+                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                    //goto restart;
+                    restart = true;
+                    do_loop = false;
+                    
+            } else if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_prev as *mut *mut  Node<T>) == 0) {
+                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                    //goto restart;
+                    restart = true;
+                    do_loop = false;
+                     
+            } else {
+                    RLU_ASSIGN_POINTER(head, n);
+                    
+                    RLU_FREE(RLU_GET_THREAD_DATA(self.tid), p_prev);
+                    
+                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                    
+                    return true;
+
+            }
+        }
+	while (do_loop) {
+		//p_node = (node_t *)RLU_DEREF(self, p_next);
+	        if p_next.is_null() {
+                    break;
+                }
+		let v = (*p_next).value;
+		
+		if (v == value) {
+                    let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_next).next);
+                    
+                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_prev) == 0) {
+                            rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                            //goto restart;
+                            restart = true;
+                            break;
+                    }
+                    
+                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_next) == 0) {
+                            rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                            //goto restart;
+                            restart = true;
+                            break;
+                    }
+                    
+                    RLU_ASSIGN_POINTER( &mut ((*p_prev).next), n);
+                    
+                    RLU_FREE(RLU_GET_THREAD_DATA(self.tid), p_next);
+                    
+                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                    
+                    return true;
+		}
+		
+		p_prev = p_next;
+		p_next = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), ((*p_prev).next));
+	 }
+      }
+        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        return false	
+    }
+ }
+
+
+
+  /*fn delete(&self, value: T) -> bool {
+
+    println!("In set delete");
+    if !self.contains(value) {
+        return false;
+    }
+    let mut head = self.head;
     //TODO: need to handle delete of list contains only one element
     unsafe {
        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-       let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+       let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), head)); 
        let mut prev = node; 
+       let mut is_first = true;
        while !(node).is_null() {
            if (*node).value == value {
-               println!("Trying to delete: {:?}, {:?} {:?}", (*node).value, (*prev).value, thread::current().id());
-	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut prev as  *mut *mut  Node<T>) == 0) {
+               if (is_first) {
+                   if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut head as  *mut *mut *mut  Node<T>) == 0) {
+                       rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                       RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                       return false;
+                        //goto restart;
+                   }
+                   if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node as *mut *mut  Node<T>) == 0) {
+                       rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                       RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                       return false;
+                        //goto restart;
+                   }
+                   let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next);
+                   RLU_ASSIGN_POINTER(head, n); 
+                   RLU_FREE(RLU_GET_THREAD_DATA(self.tid), node);
+                   RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                   return true;
+
+               }
+	       if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut prev as  *mut *mut  Node<T>) == 0) {
                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                   RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                   return false;
 	            //goto restart;
 	       }
-	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node as *mut *mut  Node<T>) == 0) {
+	       if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node as *mut *mut  Node<T>) == 0) {
                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                   RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                   return false;
 	            //goto restart;
 	       }
                 
-               RLU_ASSIGN_POINTER( &mut ((*prev).next) as *mut *mut Node<T>, (*node).next as *mut Node<T>); 
+               println!("locks for delete are aquired");
+               let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next);
+               RLU_ASSIGN_POINTER( &mut ((*prev).next) as *mut *mut Node<T>, n); 
 	       RLU_FREE(RLU_GET_THREAD_DATA(self.tid), node);
                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-               println!("Delete succeded: {:?}, {:?} {:?}", (*node).value, (*prev).value, thread::current().id());
+               println!("Element is deleted");
                return true;
            }
            prev = node; 
+           is_first = false;
            node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
        }
        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
 
     }
     false
-  }
+  }*/
 
   fn clone_ref(&self) -> Self {
        let tid = RLU_THREAD_INIT(rlu_new_thread_data()); 

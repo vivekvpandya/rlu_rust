@@ -1,5 +1,5 @@
 use std::sync::atomic::{AtomicU32, AtomicPtr, AtomicUsize,  Ordering};
-use std::alloc::{alloc, Layout};
+use std::alloc::{alloc, Layout, alloc_zeroed};
 use std::mem::{size_of};
 use std::convert::TryInto;
 extern crate libc;
@@ -144,7 +144,7 @@ pub fn rlu_get_thread_data(uniq_id : usize) -> *mut rlu_thread_data_t {
 pub fn rlu_new_thread_data() -> *mut rlu_thread_data_t {
     unsafe {
         let layout = Layout::new::<rlu_thread_data_t>();
-        let ptr = alloc(layout);
+        let ptr = alloc_zeroed(layout);
         let thp = ptr as *mut rlu_thread_data_t;
         (*thp).uniq_id = 0;
         (*thp).is_check_locks = 0;
@@ -660,7 +660,7 @@ fn UNLOCK<T>(p_obj : *mut T) {
     unsafe {
         let p_obj_h = OBJ_TO_H(p_obj);
         (*p_obj_h).p_obj_copy.store(std::ptr::null_mut() as *mut u32, Ordering::SeqCst);
-        println!("{:?}", (*p_obj_h).p_obj_copy.load(Ordering::SeqCst) as usize);
+        //println!("{:?}", (*p_obj_h).p_obj_copy.load(Ordering::SeqCst) as usize);
     }
 }
 
