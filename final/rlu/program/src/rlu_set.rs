@@ -114,6 +114,56 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn insert(&self, value: T) -> bool {
+        let mut temp = self.head;
+        unsafe {
+            if (temp).is_null() {
+                return  false // should be assert
+            }
+            let p_new_node : *mut Node<T> =  self.rlu_new_node();
+            (*p_new_node).value = value;
+            (*p_new_node).next  = std::ptr::null_mut();
+            let mut restart = true;
+            while (restart) {
+                RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+                let mut p_node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp));
+                if (p_node.is_null()) {
+                // inserting first element in the list
+                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as  *mut *mut *mut  Node<T>) == 0) {
+                        restart = true;
+                        break;
+                    } else {
+                         restart = false;
+                         RLU_ASSIGN_POINTER(temp, p_new_node);
+                         RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                         return true;
+                    }
+
+                } else {
+                    let mut node : *mut Node<T> = (RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), p_node));
+                    while !((node).is_null()) {
+                        restart = false;
+                        if ((*node).next).is_null() {
+                            // Place to insert new element
+                            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node) == 0) {
+                                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                                    //goto restart;
+                                    restart = true;
+                                    break;
+                            }
+                            RLU_ASSIGN_POINTER(&mut ((*node).next), p_new_node);
+                            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                            return true;
+                        }
+                        node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+                    }
+                }
+            }
+            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        }
+        false
+  }
+
+  /*fn insert(&self, value: T) -> bool {
     //println!("In set insert");
     if !self.contains(value) {
         let mut temp : *mut *mut Node<T> = self.head;
@@ -152,7 +202,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
     }
    // RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
     return false;
-  }
+  }*/
   
   fn delete(&self, value: T) -> bool {
     //return true;
