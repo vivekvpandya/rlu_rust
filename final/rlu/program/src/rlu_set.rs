@@ -3,6 +3,7 @@ use std::fmt::Debug;
 use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
+use std::thread;
 use std::mem::{size_of};
 use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT, rlu_abort, RLU_FREE};
 
@@ -121,6 +122,8 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 //println!("temp is null in insert");
                 return  false; //Should be assert
             }
+
+    println!("In set insert {:?} {:?}", value, thread::current().id());
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
@@ -138,7 +141,6 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 RLU_ASSIGN_POINTER(temp, p_new_node); 
                 RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
                 //println!("Element insertion is compete");
-
                 return true;
 
         }

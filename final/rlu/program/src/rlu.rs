@@ -394,6 +394,10 @@ pub fn rlu_free<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut T) {
 fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
     // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
+
+        if (*(*self_).run_counter.get_mut() & 0x1) != 0 {
+            assert!((*(*self_).run_counter.get_mut() & 0x1) == 0);
+        }
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
         //(*self_).local_version = *(g_rlu_array[64 * 2].get_mut()) as u32;
         (*self_).local_version = *(g_rlu_writer_version.get_mut()) as u32;
@@ -404,6 +408,7 @@ fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
 fn rlu_unregister_thread(self_ : *mut rlu_thread_data_t) {
     // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
+        assert!((*(*self_).run_counter.get_mut() & 0x1) != 0);
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
     }
 }
@@ -462,6 +467,9 @@ fn rlu_add_obj_copy_to_write_set<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut
 
 fn rlu_send_sync_request(th_id : usize) {
     unsafe {
+        if (th_id > 31) {
+            assert!(th_id < 32);
+        }
         (*(g_rlu_threads[th_id])).is_sync = (*(g_rlu_threads[th_id])).is_sync + 1;
         //MEMBARSTLD(); see NOTE in rlu_thread_init()
     }
@@ -994,6 +1002,7 @@ fn rlu_deref_slow_path<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut T) -> *mu
 
     let mut p_ws_obj_h : *mut rlu_ws_obj_header_t = PTR_GET_WS_HEADER(p_obj_copy);
     th_id = WS_GET_THREAD_ID(p_ws_obj_h);
+    assert!(th_id < 32);
     if (th_id == (*self_).uniq_id) {
     // p_obj is locked by this thread -> return the copy
     // TRACE_1(self, "got pointer to a copy. p_obj = %p th_id = %ld.\n", p_obj, th_id);
