@@ -123,14 +123,14 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 return  false; //Should be assert
             }
 
-    println!("In set insert {:?} {:?}", value, thread::current().id());
+    //println!("In set insert {:?} {:?}", value, thread::current().id());
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
                 //println!("reader - lock is aquired");
             if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) == 0) {
                 rlu_abort(RLU_GET_THREAD_DATA(self.tid));
-                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
 
                 //println!("reader - lock is failed");
                 return false;
@@ -149,7 +149,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
   
   fn delete(&self, value: T) -> bool {
-
+    return true;
     if !self.contains(value) {
         return false;
     }
@@ -157,6 +157,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
    let mut do_loop = true;
    unsafe {
       while (restart) {
+    //println!("In set delete {:?} {:?}", value, thread::current().id());
 	RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
 	restart = false;
 	let mut p_prev = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), self.head));
