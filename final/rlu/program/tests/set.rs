@@ -115,12 +115,12 @@ fn set_thread() {
   };
 
   // original
-  //let readers: Vec<_> = (0..16).map(|_| reader()).collect();
-  //let writers: Vec<_> = (0..4).map(|_| writer()).collect();
+  let readers: Vec<_> = (0..16).map(|_| reader()).collect();
+  let writers: Vec<_> = (0..4).map(|_| writer()).collect();
     
   // small test, 2 reader 1 writer
-  let readers: Vec<_> = (0..2).map(|_| reader()).collect();
-  let writers: Vec<_> = (0..2).map(|_| writer()).collect();
+  //let readers: Vec<_> = (0..2).map(|_| reader()).collect();
+  //let writers: Vec<_> = (0..2).map(|_| writer()).collect();
   
   for t in readers {
     t.join().unwrap();
