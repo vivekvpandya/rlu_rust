@@ -896,7 +896,7 @@ fn  rlu_sync_and_writeback(self_ : *mut rlu_thread_data_t) {
 
         g_rlu_commit_version.fetch_add(1, Ordering::SeqCst);
 
-        if ((*self_).is_sync == 1) {
+        if ((*self_).is_sync != 0) {
             (*self_).is_sync = 0;
         }
 

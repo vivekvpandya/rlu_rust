@@ -103,12 +103,11 @@ fn set_thread() {
     thread::spawn(move || {
       let mut rng = thread_rng();
 
-      for _ in 0..1000 {
+      for _ in 0..10000 {
         let i = rng.gen_range(0, 499) * 2 + 1;
         if random() {
           set.insert(i);
         } else {
-          //set.insert(i);
           set.delete(i);
         }
       }
@@ -121,7 +120,7 @@ fn set_thread() {
     
   // small test, 2 reader 1 writer
   let readers: Vec<_> = (0..2).map(|_| reader()).collect();
-  let writers: Vec<_> = (0..1).map(|_| writer()).collect();
+  let writers: Vec<_> = (0..2).map(|_| writer()).collect();
   
   for t in readers {
     t.join().unwrap();
