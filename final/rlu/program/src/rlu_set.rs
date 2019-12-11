@@ -124,27 +124,33 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             }
 
     //println!("In set insert {:?} {:?}", value, thread::current().id());
+            let mut restart = true;
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
-	    (*p_new_node).value = value;
-            RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-                //println!("reader - lock is aquired");
-            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) == 0) {
-                rlu_abort(RLU_GET_THREAD_DATA(self.tid));
-                //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+            (*p_new_node).value = value;
+             while (restart) {
+                    RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+                        //println!("reader - lock is aquired");
+                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as *mut *mut *mut Node<T>) == 0) {
+                        rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                        //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
 
-                //println!("reader - lock is failed");
-                return false;
-            }
-                //println!("object lock is aquired");
-                let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
-                RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
-                RLU_ASSIGN_POINTER(temp, p_new_node); 
-                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-                //println!("Element insertion is compete");
-                return true;
+                        //println!("reader - lock is failed");
+                        
+                    } else {
+                        //println!("object lock is aquired");
+                        restart = false;
+                        let mut cur_first : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+                        RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
+                        RLU_ASSIGN_POINTER(temp, p_new_node); 
+                        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                        //println!("Element insertion is compete");
+                        return true;
+                    }
+              }
 
-        }
+         }
     }
+   // RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
     return false;
   }
   
