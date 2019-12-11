@@ -8,7 +8,7 @@ use std::mem;
 use arr_macro::arr;
 // Some handy constants if you want fixed-size arrays of the relevant constructs.
 const RLU_MAX_LOG_SIZE: usize = 128;
-const RLU_MAX_THREADS: usize = 128;
+const RLU_MAX_THREADS: usize = 1024;
 const RLU_MAX_FREE_NODES: usize = 100;
 const RLU_MAX_WRITE_SETS : usize = 200;
 const RLU_MAX_WRITE_SET_BUFFER_SIZE : usize = 100000;
@@ -117,8 +117,7 @@ static mut g_rlu_data : rlu_data = rlu_data{
 
 static mut g_rlu_max_write_sets : usize = 0;
 static mut g_rlu_cur_threads : AtomicUsize =  AtomicUsize::new(0);
-//static mut g_rlu_cur_threads : usize = 0;
-static mut g_rlu_threads : [*mut rlu_thread_data_t; 128] = [0 as *mut rlu_thread_data_t; 128] ;
+static mut g_rlu_threads : [*mut rlu_thread_data_t; RLU_MAX_THREADS] = [0 as *mut rlu_thread_data_t; RLU_MAX_THREADS] ;
 static mut g_rlu_writer_locks : [AtomicUsize; 20000] = arr![AtomicUsize::new(0); 20000];
 //static mut g_rlu_array : [AtomicUsize; 4096] =  arr![AtomicUsize::new(0); 4096];
 //static mut g_rlu_array : [AtomicUsize; 4096] = [0; 4096];
@@ -134,8 +133,8 @@ macro_rules! RLU_ASSERT {
 }
 
 pub fn rlu_get_thread_data(uniq_id : usize) -> *mut rlu_thread_data_t {
-    if uniq_id > 128 {
-        panic!("maximum 32 thread allowed, i.e uniq_id must be in range 0..31");
+    if uniq_id > RLU_MAX_THREADS {
+        panic!("maximum RLU_MAX_THREAD thread allowed, i.e uniq_id must be in range 0..RLU_MAX_THREADS");
     }
     unsafe {
         return g_rlu_threads[uniq_id];
@@ -411,7 +410,9 @@ fn rlu_register_thread(self_ : *mut rlu_thread_data_t) {
 fn rlu_unregister_thread(self_ : *mut rlu_thread_data_t) {
     // NOTE: For perf we might want to change Ordering::SeqCst to Ordering::Relaxed
     unsafe {
-        assert!((*(*self_).run_counter.get_mut() & 0x1) != 0);
+        if (*(*self_).run_counter.get_mut() & 0x1) == 0 {
+            assert!((*(*self_).run_counter.get_mut() & 0x1) != 0);
+        }
         (*self_).run_counter.fetch_add(1, Ordering::SeqCst); // does this really need to be atomic in thread_data_t
     }
 }
@@ -470,8 +471,9 @@ fn rlu_add_obj_copy_to_write_set<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut
 
 fn rlu_send_sync_request(th_id : usize) {
     unsafe {
-        if (th_id > 31) {
-            //assert!(th_id < 32);
+        if (th_id > RLU_MAX_THREADS) {
+            println!("th_id: {:?}", th_id);
+            assert!(th_id < RLU_MAX_THREADS);
         }
         (*(g_rlu_threads[th_id])).is_sync = (*(g_rlu_threads[th_id])).is_sync + 1;
         //MEMBARSTLD(); see NOTE in rlu_thread_init()
@@ -509,6 +511,12 @@ fn rlu_try_lock<T>(self_ : *mut rlu_thread_data_t, p_p_obj : *mut*mut T, obj_siz
     if (PTR_IS_LOCKED(p_obj_copy)) {
         let p_ws_obj_h = PTR_GET_WS_HEADER(p_obj_copy);
         th_id = WS_GET_THREAD_ID(p_ws_obj_h);
+        if (th_id > RLU_MAX_THREADS) {
+            println!("p_obj: {:?}", p_obj as usize);
+            println!("p_obj_copy: {:?}", p_obj_copy as usize);
+            println!("p_ws_obj_h: {:?}", p_ws_obj_h as usize);
+            println!("expected th_id: {:?}", (*self_).uniq_id);
+        }
         if (th_id == (*self_).uniq_id) {
             if (*(*self_).run_counter.get_mut() == WS_GET_RUN_COUNTER(p_ws_obj_h)) {
                 // p_obj already locked by current execution of this thread.
@@ -832,9 +840,11 @@ fn rlu_wait_for_quiescence(self_ : *mut rlu_thread_data_t, version_limit : u32) 
 		        break;
 		    }
 	        }
-                let Q_ITERS_LIMIT = 100000000;
+                let Q_ITERS_LIMIT = 10000;
 		if (iters > Q_ITERS_LIMIT) {
-                    iters = 0;
+                    iters = 0;// after waiting long time assume some thread is dead
+                        (*self_).q_threads[th_id as usize].is_wait = 0;
+		        break;
 		    /*printf("[%ld] waiting for [%d] with: local_version = %ld , run_cnt = %ld\n", self->uniq_id, th_id,
                     (*g_rlu_threads[th_id]).local_version, (*g_rlu_threads[th_id]).run_counter);*/
 		}
@@ -1010,7 +1020,13 @@ fn rlu_deref_slow_path<T>(self_ : *mut rlu_thread_data_t, p_obj : *mut T) -> *mu
 
     let mut p_ws_obj_h : *mut rlu_ws_obj_header_t = PTR_GET_WS_HEADER(p_obj_copy);
     th_id = WS_GET_THREAD_ID(p_ws_obj_h);
-    //assert!(th_id < 32);
+    if (th_id > RLU_MAX_THREADS) {
+        println!("p_obj {:?}", p_obj as usize);
+        println!("p_obj_copy {:?}", p_obj_copy as usize);
+        println!("p_ws_obj_h {:?}", p_ws_obj_h as usize);
+        println!("th_id: {:?}", th_id);
+        assert!(th_id < RLU_MAX_THREADS);
+    }
     if (th_id == (*self_).uniq_id) {
     // p_obj is locked by this thread -> return the copy
     // TRACE_1(self, "got pointer to a copy. p_obj = %p th_id = %ld.\n", p_obj, th_id);

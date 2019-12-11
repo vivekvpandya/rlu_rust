@@ -155,7 +155,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
   
   fn delete(&self, value: T) -> bool {
-
+    // return true;
     if !self.contains(value) {
         return false;
     }
@@ -163,6 +163,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
    let mut do_loop = true;
    unsafe {
       while (restart) {
+    //println!("In set delete {:?} {:?}", value, thread::current().id());
 	RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
 	restart = false;
 	let mut p_prev = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), self.head));
