@@ -155,7 +155,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
   
   fn delete(&self, value: T) -> bool {
-    return true;
+    //return true;
     if !self.contains(value) {
         return false;
     }

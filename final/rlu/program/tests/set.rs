@@ -121,7 +121,6 @@ fn set_thread() {
   // small test, 2 reader 1 writer
   //let readers: Vec<_> = (0..2).map(|_| reader()).collect();
   //let writers: Vec<_> = (0..2).map(|_| writer()).collect();
->>>>>>> edd98384cf6d7ecdd9590bca3c89a43af67301a8
   
   for t in readers {
     t.join().unwrap();
