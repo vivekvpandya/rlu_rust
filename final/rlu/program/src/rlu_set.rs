@@ -3,6 +3,7 @@ use std::fmt::Debug;
 use std::marker::{Unpin, PhantomData};
 use std::cell::UnsafeCell;
 use std::alloc::{alloc, Layout};
+use std::thread;
 use std::mem::{size_of};
 use crate::rlu::{RLU_ALLOC, RLU_GET_THREAD_DATA, RLU_DEREF, RLU_ASSIGN_POINTER, RLU_READER_LOCK, RLU_READER_UNLOCK, RLU_TRY_LOCK,rlu_new_thread_data, RLU_THREAD_INIT, RLU_INIT, rlu_abort, RLU_FREE};
 
@@ -84,6 +85,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
             while !(node).is_null() {
                 if (*node).value == value {
+                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
                     return true;
                 }
                 node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
@@ -112,7 +114,6 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   }
 
   fn insert(&self, value: T) -> bool {
-    println!("In set insert");
     if !self.contains(value) {
         let mut temp : *mut *mut Node<T> = self.head;
         unsafe {
@@ -120,6 +121,8 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 println!("temp is null in insert");
                 return  false; //Should be assert
             }
+
+    println!("In set insert {:?} {:?}", value, thread::current().id());
             let p_new_node : *mut Node<T> =  self.rlu_new_node();
 	    (*p_new_node).value = value;
             RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
@@ -130,12 +133,12 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 RLU_ASSIGN_POINTER((&mut(*p_new_node).next) as *mut *mut Node<T>, cur_first); 
                 RLU_ASSIGN_POINTER(temp, p_new_node); 
                 RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
-
+                println!("insert completed {:?} {:?}", value, thread::current().id());
                 return true;
             } else {
                 println!("Try lock unsuccesful in insert");
                 rlu_abort(RLU_GET_THREAD_DATA(self.tid));
-                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
                 return false; // TODO: need to hnadle abort
             }
             
@@ -162,7 +165,8 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
        let mut prev = node; 
        while !(node).is_null() {
            if (*node).value == value {
-	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut ((*prev).next) as  *mut *mut  Node<T>) == 0) {
+               println!("Trying to delete: {:?}, {:?} {:?}", (*node).value, (*prev).value, thread::current().id());
+	       while (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid),  &mut prev as  *mut *mut  Node<T>) == 0) {
                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
 	            //goto restart;
 	       }
@@ -174,6 +178,7 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                RLU_ASSIGN_POINTER( &mut ((*prev).next) as *mut *mut Node<T>, (*node).next as *mut Node<T>); 
 	       RLU_FREE(RLU_GET_THREAD_DATA(self.tid), node);
                RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+               println!("Delete succeded: {:?}, {:?} {:?}", (*node).value, (*prev).value, thread::current().id());
                return true;
            }
            prev = node; 
