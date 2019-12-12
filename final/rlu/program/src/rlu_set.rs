@@ -60,14 +60,14 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
             return res
         }
          res.push_str("head -> ");
-
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+        let th_data = RLU_GET_THREAD_DATA(self.tid);
+        RLU_READER_LOCK(th_data);
+        let mut node : *mut Node<T> = *(RLU_DEREF(th_data, temp)); 
         while !(node).is_null() {
             res.push_str(format!("{:?} -> ", (*node).value).as_str());
-            node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+            node = RLU_DEREF(th_data, (*node).next); 
         }
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        RLU_READER_UNLOCK(th_data);
         res.push_str(format!("null").as_str());
     }
     res
@@ -81,16 +81,17 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             if (temp).is_null() {
                 return  false // should be assert
             }
-            RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-            let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+            let th_data = RLU_GET_THREAD_DATA(self.tid);
+            RLU_READER_LOCK(th_data);
+            let mut node : *mut Node<T> = *(RLU_DEREF(th_data, temp)); 
             while !(node).is_null() {
                 if (*node).value == value {
-                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                    RLU_READER_UNLOCK(th_data);
                     return true;
                 }
-                node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+                node = RLU_DEREF(th_data, (*node).next); 
             }
-            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+            RLU_READER_UNLOCK(th_data);
         }
         false
   }
@@ -102,13 +103,14 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
         if (*temp).is_null() {
             return  0; 
         }
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-        let mut node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp)); 
+        let th_data = RLU_GET_THREAD_DATA(self.tid);
+        RLU_READER_LOCK(th_data);
+        let mut node : *mut Node<T> = *(RLU_DEREF(th_data, temp)); 
         while !(node).is_null() {
              len = len + 1;
-            node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+            node = RLU_DEREF(th_data, (*node).next); 
         }
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        RLU_READER_UNLOCK(th_data);
     }
     len
   }
@@ -123,42 +125,43 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             (*p_new_node).value = value;
             (*p_new_node).next  = std::ptr::null_mut();
             let mut restart = true;
+            let th_data = RLU_GET_THREAD_DATA(self.tid);
             while (restart) {
-                RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
-                let mut p_node : *mut Node<T> = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), temp));
+                RLU_READER_LOCK(th_data);
+                let mut p_node : *mut Node<T> = *(RLU_DEREF(th_data, temp));
                 if (p_node.is_null()) {
                 // inserting first element in the list
-                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut temp as  *mut *mut *mut  Node<T>) == 0) {
+                    if (RLU_TRY_LOCK(th_data, &mut temp as  *mut *mut *mut  Node<T>) == 0) {
                         restart = true;
                         break;
                     } else {
                          restart = false;
                          RLU_ASSIGN_POINTER(temp, p_new_node);
-                         RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                         RLU_READER_UNLOCK(th_data);
                          return true;
                     }
 
                 } else {
-                    let mut node : *mut Node<T> = (RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), p_node));
+                    let mut node : *mut Node<T> = (RLU_DEREF(th_data, p_node));
                     while !((node).is_null()) {
                         restart = false;
                         if ((*node).next).is_null() {
                             // Place to insert new element
-                            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut node) == 0) {
-                                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                            if (RLU_TRY_LOCK(th_data, &mut node) == 0) {
+                                    rlu_abort(th_data);
                                     //goto restart;
                                     restart = true;
                                     break;
                             }
                             RLU_ASSIGN_POINTER(&mut ((*node).next), p_new_node);
-                            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                            RLU_READER_UNLOCK(th_data);
                             return true;
                         }
-                        node = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*node).next); 
+                        node = RLU_DEREF(th_data, (*node).next); 
                     }
                 }
             }
-            RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+            RLU_READER_UNLOCK(th_data);
         }
         false
   }
@@ -206,34 +209,35 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
   
   fn delete(&self, value: T) -> bool {
     //return true;
-    if !self.contains(value) {
+    /*if !self.contains(value) {
         return false;
-    }
+    }*/
    let mut restart = true;
    let mut do_loop = true;
+   let th_data = RLU_GET_THREAD_DATA(self.tid);
    unsafe {
       while (restart) {
     //println!("In set delete {:?} {:?}", value, thread::current().id());
-	RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+	RLU_READER_LOCK(th_data);
 	restart = false;
-	let mut p_prev = *(RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), self.head));
+	let mut p_prev = *(RLU_DEREF(th_data, self.head));
         if p_prev.is_null() {
              break;
         }
-	let mut p_next = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next);
+	let mut p_next = RLU_DEREF(th_data, (*p_prev).next);
         if (*p_prev).value == value {
             //let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next);
             // need to delete first element
             let mut head = self.head;
-	    let mut n = (RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_prev).next));
-            if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut head as  *mut *mut *mut  Node<T>) == 0) {
-                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+	    let mut n = (RLU_DEREF(th_data, (*p_prev).next));
+            if (RLU_TRY_LOCK(th_data, &mut head as  *mut *mut *mut  Node<T>) == 0) {
+                    rlu_abort(th_data);
                     //goto restart;
                     restart = true;
                     do_loop = false;
                     
-            } else if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_prev as *mut *mut  Node<T>) == 0) {
-                    rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+            } else if (RLU_TRY_LOCK(th_data, &mut p_prev as *mut *mut  Node<T>) == 0) {
+                    rlu_abort(th_data);
                     //goto restart;
                     restart = true;
                     do_loop = false;
@@ -241,9 +245,9 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             } else {
                     RLU_ASSIGN_POINTER(head, n);
                     
-                    RLU_FREE(RLU_GET_THREAD_DATA(self.tid), p_prev);
+                    RLU_FREE(th_data, p_prev);
                     
-                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                    RLU_READER_UNLOCK(th_data);
                     
                     return true;
 
@@ -257,17 +261,17 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
 		let v = (*p_next).value;
 		
 		if (v == value) {
-                    let n = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), (*p_next).next);
+                    let n = RLU_DEREF(th_data, (*p_next).next);
                     
-                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_prev) == 0) {
-                            rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                    if (RLU_TRY_LOCK(th_data, &mut p_prev) == 0) {
+                            rlu_abort(th_data);
                             //goto restart;
                             restart = true;
                             break;
                     }
                     
-                    if (RLU_TRY_LOCK(RLU_GET_THREAD_DATA(self.tid), &mut p_next) == 0) {
-                            rlu_abort(RLU_GET_THREAD_DATA(self.tid));
+                    if (RLU_TRY_LOCK(th_data, &mut p_next) == 0) {
+                            rlu_abort(th_data);
                             //goto restart;
                             restart = true;
                             break;
@@ -275,18 +279,18 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                     
                     RLU_ASSIGN_POINTER( &mut ((*p_prev).next), n);
                     
-                    RLU_FREE(RLU_GET_THREAD_DATA(self.tid), p_next);
+                    RLU_FREE(th_data, p_next);
                     
-                    RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+                    RLU_READER_UNLOCK(th_data);
                     
                     return true;
 		}
 		
 		p_prev = p_next;
-		p_next = RLU_DEREF(RLU_GET_THREAD_DATA(self.tid), ((*p_prev).next));
+		p_next = RLU_DEREF(th_data, ((*p_prev).next));
 	 }
       }
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        RLU_READER_UNLOCK(th_data);
         return false	
     }
  }

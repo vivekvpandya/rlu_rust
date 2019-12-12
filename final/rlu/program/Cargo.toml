@@ -12,4 +12,3 @@ libc = "0.2.66"
 arr_macro = "0.1.3"
 
 [profile.release]
-debug = true
