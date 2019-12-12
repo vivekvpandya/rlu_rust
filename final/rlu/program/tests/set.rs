@@ -17,6 +17,7 @@ fn set_my_test() {
  set.insert(1);
  assert!(set.contains(1));
  set.insert(100);
+ set.insert(100);
  assert!(set.contains(100));
 // set.insert(1);
  set.delete(1);

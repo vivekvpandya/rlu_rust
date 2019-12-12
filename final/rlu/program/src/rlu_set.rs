@@ -29,9 +29,9 @@ impl<T> RluSet<T> where T: PartialEq + PartialOrd + Copy + Clone + Debug + Unpin
 
   unsafe fn rlu_new_node(&self) -> *mut Node<T> {
     unsafe {
-        RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
+        //RLU_READER_LOCK(RLU_GET_THREAD_DATA(self.tid));
         let p = RLU_ALLOC(size_of::<Node<T>>()) as *mut Node<T>;
-        RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
+        //RLU_READER_UNLOCK(RLU_GET_THREAD_DATA(self.tid));
         p
     }
   }
@@ -121,9 +121,6 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
             if (temp).is_null() {
                 return  false // should be assert
             }
-            let p_new_node : *mut Node<T> =  self.rlu_new_node();
-            (*p_new_node).value = value;
-            (*p_new_node).next  = std::ptr::null_mut();
             let mut restart = true;
             let th_data = RLU_GET_THREAD_DATA(self.tid);
             while (restart) {
@@ -136,6 +133,9 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                         break;
                     } else {
                          restart = false;
+                        let p_new_node : *mut Node<T> =  self.rlu_new_node();
+                        (*p_new_node).value = value;
+                        (*p_new_node).next  = std::ptr::null_mut();
                          RLU_ASSIGN_POINTER(temp, p_new_node);
                          RLU_READER_UNLOCK(th_data);
                          return true;
@@ -144,6 +144,12 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                 } else {
                     let mut node : *mut Node<T> = (RLU_DEREF(th_data, p_node));
                     while !((node).is_null()) {
+                        // TODO: Uncomment this
+                        /*if (*node).value == value {
+                            // value already exists
+                            RLU_READER_UNLOCK(th_data);
+                            return false;
+                        }*/
                         restart = false;
                         if ((*node).next).is_null() {
                             // Place to insert new element
@@ -153,6 +159,9 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                                     restart = true;
                                     break;
                             }
+                            let p_new_node : *mut Node<T> =  self.rlu_new_node();
+                            (*p_new_node).value = value;
+                            (*p_new_node).next  = std::ptr::null_mut();
                             RLU_ASSIGN_POINTER(&mut ((*node).next), p_new_node);
                             RLU_READER_UNLOCK(th_data);
                             return true;
