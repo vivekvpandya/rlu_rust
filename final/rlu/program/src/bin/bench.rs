@@ -109,8 +109,8 @@ where S: ConcurrentSet<usize> + 'static
 fn benchmark(opts: BenchOpts) {
   println!("write_frac,num_threads,throughput");
 
-  for write_frac in &[0.02, 0.2, 0.4] {
-    for num_threads in 1..=8 {
+  for write_frac in &[0.5, 0.2, 0.4] {
+    for num_threads in 5..=7 {
       let opts = BenchOpts { write_frac: *write_frac, num_threads, ..opts };
       let ops: Vec<BenchResult> = (0..opts.num_iters)
         .map(|_| {

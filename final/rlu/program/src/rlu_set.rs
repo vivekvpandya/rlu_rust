@@ -145,11 +145,11 @@ impl<T> ConcurrentSet<T> for RluSet<T> where T: PartialEq + PartialOrd + Copy + 
                     let mut node : *mut Node<T> = (RLU_DEREF(th_data, p_node));
                     while !((node).is_null()) {
                         // TODO: Uncomment this
-                        /*if (*node).value == value {
+                        if (*node).value == value {
                             // value already exists
                             RLU_READER_UNLOCK(th_data);
                             return false;
-                        }*/
+                        }
                         restart = false;
                         if ((*node).next).is_null() {
                             // Place to insert new element

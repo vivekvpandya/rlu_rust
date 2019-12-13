@@ -298,7 +298,7 @@ fn rlu_unlock_objs(self_: *mut rlu_thread_data_t, ws_counter : usize) {
         p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_ws_obj_header_t>());
         p_obj_h = p_cur as *mut rlu_obj_header_t;
 
-        RLU_ASSERT!(((*p_obj_h).p_obj_copy.load(Ordering::Relaxed) as usize) == 0x12341234 );
+        RLU_ASSERT!(((*p_obj_h).p_obj_copy.load(Ordering::SeqCst) as usize) == 0x12341234 );
 
         p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
 
@@ -840,7 +840,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
                 p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_ws_obj_header_t>());
                 let p_obj_h = p_cur as *mut rlu_obj_header_t;
 
-                //RLU_ASSERT!(((*p_obj_h).p_obj_copy as usize)== 0x12341234);
+                RLU_ASSERT!((*(*p_obj_h).p_obj_copy.get_mut() as usize) == 0x12341234);
 
                 p_cur = MOVE_PTR_FORWARD(p_cur, size_of::<rlu_obj_header_t>());
 
@@ -851,7 +851,7 @@ fn rlu_writeback_write_set(self_ : *mut rlu_thread_data_t, ws_counter: usize) {
 
                 ptr::copy(p_obj_copy as *const u8, p_obj_actual as *mut u8, obj_size);
 
-                p_cur = MOVE_PTR_FORWARD(p_cur, ALIGN_OBJ_SIZE(obj_size));
+                p_cur = MOVE_PTR_FORWARD(p_cur, obj_size);
 
                 RLU_ASSERT!((WS_GET_THREAD_ID(PTR_GET_WS_HEADER(GET_COPY(p_obj_actual)))) == (*self_).uniq_id);
                 /*RLU_ASSERT_MSG(GET_THREAD_ID(p_obj_actual) == self->uniq_id,
